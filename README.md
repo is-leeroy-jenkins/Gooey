@@ -3,7 +3,7 @@
 The free-forever version PySimpleGUI software.
 
 <p align="center">
-  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/app/gooey-series.gif">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/app/Gooey-Github.png">
 </p>
 
 ```bash
