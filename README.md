@@ -419,6 +419,20 @@ the .whl file to .zip you can open it just like any normal zip file. You will fi
 Gooey.py file in one of the folders. Copy this file to your application's folder and you're
 done.
 
+---
+
+## 🧪 How to Run
+
+```bash
+git clone https://github.com/is-leeroy-jenkins/Gooey.git
+cd Gooey/venv/Scripts
+./activate.bat
+cd venv/Scripts 
+cd ../../
+pip install -r requirements.txt
+
+```
+
 The PyPI link for the tkinter version of Gooey is:
 https://pypi.org/project/Gooey/#files
 
@@ -714,7 +728,8 @@ You can interact with everything on your desktop, clicking through a full-screen
 # Themes
 
 Tired of the default grey GUIs? Gooey makes it trivial for your window to look nice by
-making a single call to the `theme` function. There are over 150 different color themes available
+making a single call to the `theme` f
+unction. There are over 150 different color themes available
 for you to choose:
 <p align="center">
 <a href=""><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/ThemePreview.jpg"  alt="img" width="900px"></a>
@@ -743,16 +758,6 @@ This single line of code changes the window's appearance entirely:
 The theme changed colors of the background, text, input background, input text, and button colors.
 In other GUI packages, to change color schemes like this, you would need to specify the colors of
 each widget individually, requiring numerous changes to your code.
-
-<hr>
-
-# Distribution
-
-Want to share your Gooey program with friends and family that don't have Python installed on their
-computer? Try the GUI front-end for PyInstaller that you'll find in
-the [psgcompiler](https://github.com/Gooey/psgcompiler) project.
-
-![](https://raw.githubusercontent.com/Gooey/psgcompiler/main/screenshot_for_readme/psgcompiler_screenshot.jpg?token=ALAGMY3Z33WHFX3RTFXEZ73BTEUPO)
 
 <hr>
 
