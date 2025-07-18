@@ -421,7 +421,7 @@ done.
 
 ---
 
-### 🧪 How to Run
+### 🧪 Environment Set-up
 
 ```bash
 git clone https://github.com/is-leeroy-jenkins/Gooey.git
