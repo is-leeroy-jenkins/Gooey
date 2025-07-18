@@ -421,7 +421,7 @@ done.
 
 ---
 
-## 🧪 How to Run
+### 🧪 How to Run
 
 ```bash
 git clone https://github.com/is-leeroy-jenkins/Gooey.git
