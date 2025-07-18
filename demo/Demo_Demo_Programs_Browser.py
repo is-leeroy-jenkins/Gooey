@@ -11,12 +11,12 @@ import FreeSimpleGUI as sg
     Originaly written for PySimpleGUI demo Programs, but expanded to
     be a general purpose tool. Enable Advanced Mode in settings for more fun
 
-    Use to filter and search your source code tree.
+    Use to filter and search your Source code tree.
         Then run or edit your files
 
     Filter the list of :
         * Search using filename
-        * Searching within the programs' source code (like grep)
+        * Searching within the programs' Source code (like grep)
 
     The basic file operations are
         * Edit a file in your editor

@@ -12235,7 +12235,7 @@ def shell_with_animation(
 # Interface to saving / loading user program settings in json format
 # This is a new set of APIs supplied by PySimpleGUI that enables users to easily set/save/load individual
 # settings.  They are automatically saved to a JSON file. If no file/path is specified then a filename is
-# created from the source file filename.
+# created from the Source file filename.
 
 
 class UserSettings:

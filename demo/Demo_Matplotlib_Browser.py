@@ -530,10 +530,10 @@ def PyplotRadarChart():
         # The following data is from the Denver Aerosol Sources and Health study.
         # See  doi:10.1016/j.atmosenv.2008.12.017
         #
-        # The data are pollution source profile estimates for five modeled
+        # The data are pollution Source profile estimates for five modeled
         # pollution sources (e.g., cars, wood-burning, etc) that emit 7-9 chemical
         # species. The radar charts are experimented with here to see if we can
-        # nicely visualize how the modeled source profiles change across four
+        # nicely visualize how the modeled Source profiles change across four
         # scenarios:
         #  1) No gas-phase species present, just seven particulate counts on
         #     Sulfate
@@ -883,7 +883,7 @@ while True:
         delete_figure_agg(figure_agg)
     choice = values['-LISTBOX-'][0]                 # get first listbox item chosen (returned as a list)
     func = fig_dict[choice]                         # get function to call from the dictionary
-    window['-MULTILINE-'].update(inspect.getsource(func))  # show source code to function in multiline
+    window['-MULTILINE-'].update(inspect.getsource(func))  # show Source code to function in multiline
     try:
         fig = func()                                    # call function to get the figure
         figure_agg = draw_figure(window['-CANVAS-'].TKCanvas, fig)  # draw the figure

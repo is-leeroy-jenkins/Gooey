@@ -17,7 +17,7 @@ import base64
     Where icon is a variable you created using the contents of the clipboard folowing running this program.
 
     Input: a single image file
-    Output: clipboard will contain the Base64 Byte String of the source image
+    Output: clipboard will contain the Base64 Byte String of the Source image
 
     Copyright 2021 PySimpleGUI
 """

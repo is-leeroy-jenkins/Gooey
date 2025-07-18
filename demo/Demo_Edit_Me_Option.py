@@ -7,7 +7,7 @@ import FreeSimpleGUI as sg
 
     It's a big time saver to be able to right click and choose "Edit me" to edit a program you're developing.
     It's maybe an even bigger time saver if you've not worked on it for some time and have forgotten where
-        the source code is located on your computer.
+        the Source code is located on your computer.
 
     You can add this capability to your program by adding a right click menu to your window and calling the
     editor that you set up in the global PySimpleGUI options.

@@ -91,7 +91,7 @@ def demo_one_line_progress_meter():
 '''
     Manually Updated Test
     Here is an example for when you want to "sprinkle" progress bar updates in multiple
-    places within your source code and you're not running an event loop.
+    places within your Source code and you're not running an event loop.
     Note that UpdateBar is special compared to other Update methods. It also refreshes
     the containing window and checks for window closure events
     The sleep calls are here only for demonstration purposes.  You should NOT be adding

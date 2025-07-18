@@ -6,7 +6,7 @@ import FreeSimpleGUI as sg
     Shows how to:
     * Use popup_animated
     * Use animated GIF in a custom window layout
-    * Store your GIFs in base64 format inside this source file (copy and paste into your source file)
+    * Store your GIFs in base64 format inside this Source file (copy and paste into your Source file)
 
     The first image that uses popup_animated will stop after a few seconds on its own.
     The remaining images are shown 1 at a time. To move on to the next image, click the current image.

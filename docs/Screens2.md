@@ -1020,7 +1020,7 @@ form_rows = [[gg.Text('PDF Image Extraction')],
              [gg.Text('Destination Folder', size=(15, 1)), gg.InputText('Dest'), gg.FolderBrowse()],
              [gg.Submit(), gg.Cancel()]]
 
-# (button, (source, dest)) = gg.FlexForm('PDF Image Extract', auto_size_text=True).LayoutAndShow(form_rows)
+# (button, (Source, dest)) = gg.FlexForm('PDF Image Extract', auto_size_text=True).LayoutAndShow(form_rows)
 event, values = gg.FlexForm('PDF Image Extract', form_rows, auto_size_text=True).read()
 print(event, values)
 ```

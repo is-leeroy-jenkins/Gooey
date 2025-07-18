@@ -536,10 +536,10 @@ def PyplotRadarChart():
         # The following data is from the Denver Aerosol Sources and Health study.
         # See  doi:10.1016/j.atmosenv.2008.12.017
         #
-        # The data are pollution source profile estimates for five modeled
+        # The data are pollution Source profile estimates for five modeled
         # pollution sources (e.g., cars, wood-burning, etc) that emit 7-9 chemical
         # species. The radar charts are experimented with here to see if we can
-        # nicely visualize how the modeled source profiles change across four
+        # nicely visualize how the modeled Source profiles change across four
         # scenarios:
         #  1) No gas-phase species present, just seven particulate counts on
         #     Sulfate
@@ -884,7 +884,7 @@ col_listbox = [[sg.Listbox(values=listbox_values, change_submits=True, size=(28,
 col_multiline = sg.Col([[sg.MLine(size=(70, 35), key='-MULTILINE-')]])
 col_canvas = sg.Col([[sg.Canvas(size=(figure_w, figure_h), key='-CANVAS-')]])
 col_instructions = sg.Col([[sg.Pane([col_canvas, col_multiline], size=(800, 600))],
-                           [sg.Text('Grab square above and slide upwards to view source code for graph')]])
+                           [sg.Text('Grab square above and slide upwards to view Source code for graph')]])
 
 layout = [[sg.Text('Matplotlib Plot Test', font=('ANY 18'))],
           [sg.Col(col_listbox), col_instructions], ]
@@ -907,7 +907,7 @@ while True:
     choice = values['-LISTBOX-'][0]
     # get function to call from the dictionary
     func = fig_dict[choice]
-    # show source code to function in multiline
+    # show Source code to function in multiline
     window['-MULTILINE-'].update(inspect.getsource(func))
     try:
         fig = func()                                    # call function to get the figure

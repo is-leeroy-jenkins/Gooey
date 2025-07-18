@@ -56,7 +56,7 @@ thread_queue = queue.Queue()
 
 def external_thread(thread_queue:queue.Queue):
     """
-    Represents some external source of data.
+    Represents some external Source of data.
     You would not include this code as a starting point with this demo Program. Your data is assumed to
     come from somewhere else. The important part is that you add data to the thread_queue
     :param thread_queue:
