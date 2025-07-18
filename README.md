@@ -1,6 +1,4 @@
-# Gooey-Py
-
-The free-forever version PySimpleGUI software.
+###### Gooey-Py
 
 <p align="center">
   <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/app/Gooey-Github.png">
