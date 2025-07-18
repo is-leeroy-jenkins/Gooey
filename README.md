@@ -746,14 +746,4 @@ each widget individually, requiring numerous changes to your code.
 
 <hr>
 
-# Distribution
-
-Want to share your Gooey program with friends and family that don't have Python installed on their
-computer? Try the GUI front-end for PyInstaller that you'll find in
-the [psgcompiler](https://github.com/Gooey/psgcompiler) project.
-
-![](https://raw.githubusercontent.com/Gooey/psgcompiler/main/screenshot_for_readme/psgcompiler_screenshot.jpg?token=ALAGMY3Z33WHFX3RTFXEZ73BTEUPO)
-
-<hr>
-
 © Copyright 2025
