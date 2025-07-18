@@ -756,18 +756,6 @@ the [psgcompiler](https://github.com/Gooey/psgcompiler) project.
 
 ![](https://raw.githubusercontent.com/Gooey/psgcompiler/main/screenshot_for_readme/psgcompiler_screenshot.jpg?token=ALAGMY3Z33WHFX3RTFXEZ73BTEUPO)
 
-
 <hr>
-
-# Support 💪
-
-Your first stop should be the [documentation](http://www.Gooey.org)
-and [demo programs](http://Demos.Gooey.org).
-
-Be sure and install the Demo Browser (instructions in the Cookbook) so that you can search and run
-the 100s of demo programs.
-
-![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_cookbook/Project_Browser_Main_Window_Explained.jpg)
-
 
 © Copyright 2025
