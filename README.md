@@ -14,44 +14,44 @@ To migrate from PySimpleGUI:
 
 ```diff
 - import PySimpleGUI as sg
-+ import FreeSimpleGUI as sg
++ import Gooey as sg
 ```
 
 ### Support
 
 If you encounter any issues or have any questions, please feel welcome
-to [open an issue](https://github.com/spyoungtech/FreeSimpleGUI/issues/new).
+to [open an issue](https://github.com/spyoungtech/Gooey/issues/new).
 
-Documentation for FreeSimpleGUI is available at: https://freesimplegui.readthedocs.io/en/latest/.
-FreeSimpleGUI.org is still in progress.
+Documentation for Gooey is available at: https://freesimplegui.readthedocs.io/en/latest/.
+Gooey.org is still in progress.
 
 ### Contributions
 
 Contributions are welcome! Contributions can be made via pull request. Ideally, please try to make
-sure there is an open [issue](https://github.com/spyoungtech/FreeSimpleGUI/issues) associated with
+sure there is an open [issue](https://github.com/spyoungtech/Gooey/issues) associated with
 your pull request first or create one if necessary.
 
 --------------------------
 
-# What Is FreeSimpleGUI ❓
+# What Is Gooey ❓
 
-FreeSimpleGUI is a Python package that enables Python programmers of all levels to create GUIs. You
+Gooey is a Python package that enables Python programmers of all levels to create GUIs. You
 specify your GUI window using a "layout" which contains widgets (they're called "Elements" in
-FreeSimpleGUI). Your layout is used to create a window using one of the 4 supported frameworks to
+Gooey). Your layout is used to create a window using one of the 4 supported frameworks to
 display and interact with your window. Supported frameworks include tkinter, Qt, WxPython, or Remi.
 The term "wrapper" is sometimes used for these kinds of packages.
 
-Your FreeSimpleGUI code is simpler and shorter than writing directly using the underlying framework
-because FreeSimpleGUI implements much of the "boilerplate code" for you. Additionally, interfaces
+Your Gooey code is simpler and shorter than writing directly using the underlying framework
+because Gooey implements much of the "boilerplate code" for you. Additionally, interfaces
 are simplified to require as little code as possible to get the desired result. Depending on the
-program and framework used, a FreeSimpleGUI program may require 1/2 to 1/10th amount of code to
+program and framework used, a Gooey program may require 1/2 to 1/10th amount of code to
 create an identical window using one of the frameworks directly.
 
 While the goal is to encapsulate/hide the specific objects and code used by the GUI framework you
 are running on top of, if needed you can access the frameworks' dependent widgets and windows
-directly. If a setting or feature is not yet exposed or accessible using the FreeSimpleGUI APIs, you
+directly. If a setting or feature is not yet exposed or accessible using the Gooey APIs, you
 are not walled off from the framework. You can expand capabilities without directly modifying the
-FreeSimpleGUI package itself.
+Gooey package itself.
 
 ## Example 1 - The One-Shot Window
 
@@ -59,12 +59,12 @@ This type of program is called a "one-shot" window because the window is display
 values collected, and then it is closed. It doesn't remain open for a long time like you would in a
 Word Processor.
 
-### Anatomy of a Simple FreeSimpleGUI Program
+### Anatomy of a Simple Gooey Program
 
-There are 5 sections to a FreeSimpleGUI program
+There are 5 sections to a Gooey program
 
 ```python
-import FreeSimpleGUI as sg                        # Part 1 - The import
+import Gooey as sg                        # Part 1 - The import
 
 # Define the window's contents
 layout = [  [sg.Text("What's your name?")],     # Part 2 - The Layout
@@ -78,7 +78,7 @@ window = sg.Window('Window Title', layout)      # Part 3 - Window Defintion
 event, values = window.read()                   # Part 4 - Event loop or Window.read call
 
 # Do something with the information gathered
-print('Hello', values[0], "! Thanks for trying FreeSimpleGUI")
+print('Hello', values[0], "! Thanks for trying Gooey")
 
 # Finish up by removing from the screen
 window.close()                                  # Part 5 - Close the Window
@@ -87,7 +87,7 @@ window.close()                                  # Part 5 - Close the Window
 The code produces this window
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ex1-tkinter.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-tkinter.jpg">
 </p>
 
 
@@ -101,7 +101,7 @@ window is the addition of an "Event Loop". The Event Loop reads events and input
 The heart of your application lives in the event loop.
 
 ```python
-import FreeSimpleGUI as sg
+import Gooey as sg
 
 # Define the window's contents
 layout = [[sg.Text("What's your name?")],
@@ -119,7 +119,7 @@ while True:
     if event == sg.WINDOW_CLOSED or event == 'Quit':
         break
     # Output a message to the window
-    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying FreeSimpleGUI")
+    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying Gooey")
 
 # Finish up by removing from the screen
 window.close()
@@ -127,14 +127,14 @@ window.close()
 
 This is the window that Example 2 produces.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Example2-1.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Example2-1.jpg">
 </p>
 
 
 
 And here's what it looks like after you enter a value into the Input field and click the Ok button.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Example2-2.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Example2-2.jpg">
 </p>
 
 Let's take a quick look at some of the differences between this example and the one-shot window.
@@ -174,7 +174,7 @@ that could have happened is the user clicked the "Ok" button. The last statement
 is this one:
 
 ```python
-    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying FreeSimpleGUI")
+    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying Gooey")
 ```
 
 This statement updates the `Text` element that has the key `-OUTPUT-` with a string.
@@ -187,7 +187,7 @@ If we wanted the text to be yellow, then that can be accomplished by adding a `t
 to the `update` method so that it reads:
 
 ```python
-    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying FreeSimpleGUI",
+    window['-OUTPUT-'].update('Hello ' + values['-INPUT-'] + "! Thanks for trying Gooey",
                               text_color='yellow')
 ```
 
@@ -195,31 +195,31 @@ After adding the `text_color` parameter, this is our new resulting window:
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Example2-3.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Example2-3.jpg">
 </p>
 
 
 The parameters available for each element are documented in both
-the [call reference documentation](http://calls.FreeSimpleGUI.org) as well as the docstrings.
-FreeSimpleGUI has extensive documentation to help you understand all of the options available to
+the [call reference documentation](http://calls.Gooey.org) as well as the docstrings.
+Gooey has extensive documentation to help you understand all of the options available to
 you. If you lookup the `update` method for the `Text` element, you'll find this definition for the
 call:
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/TextUpdate.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/TextUpdate.jpg">
 </p>
 
 
 As you can see several things can be changed for a `Text` element. The call reference documentation
-is a valuable resource that will make programming in FreeSimpleGUI, uhm, simple.
+is a valuable resource that will make programming in Gooey, uhm, simple.
 
 <hr>
 
 ## Jump Start! Get the Demo Programs & Demo Browser 🔎
 
 The over 300 Demo Programs will give you a jump-start and provide many design patterns for you to
-learn how to use FreeSimpleGUI and how to integrate FreeSimpleGUI with other packages. By far the
+learn how to use Gooey and how to integrate Gooey with other packages. By far the
 best way to experience these demos is using the Demo Browser. This tool enables you to search, edit
 and run the Demo Programs.
 
@@ -259,7 +259,7 @@ Each row of this layout is a list of elements that will be displayed on that row
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/layout-with-rows.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/layout-with-rows.jpg">
 </p>
 
 
@@ -271,7 +271,7 @@ single line of code.
 These 3 lines of code:
 
 ```python
-import FreeSimpleGUI as sg
+import Gooey as sg
 
 layout = [[sg.Button(f'{row}, {col}') for col in range(4)] for row in range(4)]
 
@@ -281,7 +281,7 @@ event, values = sg.Window('List Comprehensions', layout).read(close=True)
 produces this window which has a 4 x 4 grid of buttons:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/4x4grid.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/4x4grid.jpg">
 </p>
 
 Recall how "fun" is one of the goals of the project. It's fun to directly apply Python's powerful
@@ -298,12 +298,12 @@ event, values = sg.Window('Window Title', [[sg.Text("What's your name?")],[sg.In
 ```
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ex1-tkinter.jpg">
+  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-tkinter.jpg">
 </p>
 
 
 The same window is shown and returns the same values as the example showing the sections of a
-FreeSimpleGUI program. Being able to do so much with so little enables you to quickly and easily add
+Gooey program. Being able to do so much with so little enables you to quickly and easily add
 GUIs to your Python code. If you want to display some data and get a choice from your user, it can
 be done in a line of code instead of a page of code.
 
@@ -318,21 +318,21 @@ event, values = sg.Window('Window Title', [[sg.T("What's your name?")],[sg.I()],
 
 ### Code Portability
 
-FreeSimpleGUI is currently capable of running on 4 Python GUI Frameworks. The framework to use is
+Gooey is currently capable of running on 4 Python GUI Frameworks. The framework to use is
 specified using the import statement. Change the import and you'll change the underlying GUI
 framework. For some programs, no other changes are needed than the import statement to run on a
-different GUI framework. In the example above, changing the import from `FreeSimpleGUI` to
+different GUI framework. In the example above, changing the import from `Gooey` to
 `FreeSimpleGUIQt`, `FreeSimpleGUIWx`, `FreeSimpleGUIWeb` will change the framework.
 
 | Import Statement | Resulting Window |
 |--|--|
-| FreeSimpleGUI |  ![](https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ex1-tkinter.jpg) |
-| FreeSimpleGUIQt |  ![](https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ex1-Qt.jpg) |
-| FreeSimpleGUIWx |  ![](https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ex1-WxPython.jpg) |
-| FreeSimpleGUIWeb |  ![](https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ex1-Remi.jpg) |
+| Gooey |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-tkinter.jpg) |
+| FreeSimpleGUIQt |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-Qt.jpg) |
+| FreeSimpleGUIWx |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-WxPython.jpg) |
+| FreeSimpleGUIWeb |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-Remi.jpg) |
 
 Porting GUI code from one framework to another (e.g. moving your code from tkinter to Qt) usually
-requires a rewrite of your code. FreeSimpleGUI is designed to enable you to have easy movement
+requires a rewrite of your code. Gooey is designed to enable you to have easy movement
 between the frameworks. Sometimes some changes are required of you, but the goal is to have highly
 portable code with minimal changes.
 
@@ -369,7 +369,7 @@ repo available for each:
  pymunk | Physics engine|
  psutil | System environment statistics |
  prawn | Reddit API |
- json | FreeSimpleGUI wraps a special API to store "User Settings" |
+ json | Gooey wraps a special API to store "User Settings" |
  weather | Integrates with several weather APIs to make weather apps |
  mido | MIDI playback |
  beautiful soup | Web Scraping (GitHub issue watcher example) |
@@ -378,10 +378,10 @@ repo available for each:
 
 # Installing 💾
 
-Two common ways of installing FreeSimpleGUI:
+Two common ways of installing Gooey:
 
 1. pip to install from PyPI
-2. Download the file FreeSimpleGUI.py and place in your application's folder
+2. Download the file Gooey.py and place in your application's folder
 
 ### Pip Installing & Upgrading
 
@@ -390,27 +390,27 @@ Previously the command `pip` or `pip3` was directly onto a command-line / shell.
 
 Initial install for Windows:
 
-`python -m pip install FreeSimpleGUI`
+`python -m pip install Gooey`
 
 Initial install for Linux and MacOS:
 
-`python3 -m pip install FreeSimpleGUI`
+`python3 -m pip install Gooey`
 
 To upgrade using `pip`, you simply add 2 parameters to the line `--upgrade --no-cache-dir`.
 
 Upgrade installation on Windows:
 
-`python -m pip install --upgrade --no-cache-dir FreeSimpleGUI`
+`python -m pip install --upgrade --no-cache-dir Gooey`
 
 Upgrade for Linux and MacOS:
 
-`python3 -m pip install --upgrade --no-cache-dir FreeSimpleGUI`
+`python3 -m pip install --upgrade --no-cache-dir Gooey`
 
 ### Single File Installing
 
-FreeSimpleGUI was created as a single .py file so that it would be very easy for you to install it,
+Gooey was created as a single .py file so that it would be very easy for you to install it,
 even on systems that are not connected to the internet like a Raspberry Pi. It's as simple as
-placing the FreeSimpleGUI.py file into the same folder as your application that imports it. Python
+placing the Gooey.py file into the same folder as your application that imports it. Python
 will use your local copy when performing the import.
 
 When installing using just the .py file, you can get it from either PyPI or if you want to run the
@@ -418,14 +418,14 @@ most recent unreleased version then you'll download it from GitHub.
 
 To install from PyPI, download either the wheel or the .gz file and unzip the file. If you rename
 the .whl file to .zip you can open it just like any normal zip file. You will find the
-FreeSimpleGUI.py file in one of the folders. Copy this file to your application's folder and you're
+Gooey.py file in one of the folders. Copy this file to your application's folder and you're
 done.
 
-The PyPI link for the tkinter version of FreeSimpleGUI is:
-https://pypi.org/project/FreeSimpleGUI/#files
+The PyPI link for the tkinter version of Gooey is:
+https://pypi.org/project/Gooey/#files
 
 The GitHub repo's latest version can be found here:
-https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/FreeSimpleGUI.py
+https://raw.githubusercontent.com/spyoungtech/Gooey/main/Gooey.py
 
 Now some of you are thinking, "yea, but, wait, having a single huge source file is a terrible idea".
 And, yea, *sometimes* it can be a terrible idea. In this case, the benefits greatly outweighed the
@@ -443,7 +443,7 @@ justice to the awesome creations people are making.
 ### User Submitted Gallery
 
 The first is
-a [user submitted screenshots issue](https://github.com/spyoungtech/FreeSimpleGUI/issues/10) located
+a [user submitted screenshots issue](https://github.com/spyoungtech/Gooey/issues/10) located
 on the GitHub. It's an informal way for people to show off what they've made. It's not ideal, but it
 was a start.
 
@@ -451,22 +451,22 @@ was a start.
 
 The second is
 a [massive gallery of over 3,000 images](https://www.dropbox.com/sh/g67ms0darox0i2p/AAAMrkIM6C64nwHLDkboCWnaa?dl=0)
-scraped from 1,000 projects on GitHub that are reportedly using FreeSimpleGUI. It's not been
+scraped from 1,000 projects on GitHub that are reportedly using Gooey. It's not been
 hand-filtered and there are plenty of old screenshots that were used in the early documentation.
 But, you may find something in there that sparks your imagination.
 
 <hr>
 
-# Uses for FreeSimpleGUI 🔨
+# Uses for Gooey 🔨
 
-The following sections showcase a fraction of the uses for FreeSimpleGUI. There are over 1,000
-projects on GitHub alone that use FreeSimpleGUI. It's truly amazing how possibilities have opened up
+The following sections showcase a fraction of the uses for Gooey. There are over 1,000
+projects on GitHub alone that use Gooey. It's truly amazing how possibilities have opened up
 for so many people. Many users have spoken about previously attempting to create a GUI in Python and
-failing, but finally achieving their dreams when they tried FreeSimpleGUI.
+failing, but finally achieving their dreams when they tried Gooey.
 
 ## Your First GUI
 
-Of course one of the best uses of FreeSimpleGUI is getting you into making GUIs for your Python
+Of course one of the best uses of Gooey is getting you into making GUIs for your Python
 projects. You can start as small as requesting a filename. For this, you only need to make a single
 call to one of the "high-level functions" called `popup`. There are all kinds of popups, some
 collect information.
@@ -479,7 +479,7 @@ Adding a single line to get a filename instead of specifying a filename on the c
 transform your program into one that "normal people" will feel comfortable using.
 
 ```python
-import FreeSimpleGUI as sg
+import Gooey as sg
 
 filename = sg.popup_get_file('Enter the file you wish to process')
 sg.popup('You entered', filename)
@@ -489,13 +489,13 @@ This code will display 2 popup windows. One to get the filename, which can be br
 into the input box.
 
 <p align="center">
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/First_GUI1.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/First_GUI1.jpg"  alt="img" width="400px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI1.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI1.jpg"  alt="img" width="400px"></a>
 </p>
 
 The other window will output what is collected.
 
 <p align="center">
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/First_GUI2.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/First_GUI2.jpg"  alt="img" width="175px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI2.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI2.jpg"  alt="img" width="175px"></a>
 
 </p>
 
@@ -504,10 +504,10 @@ The other window will output what is collected.
 
 ## Rainmeter-Style Windows
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/RainmeterStyleWidgets.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/RainmeterStyleWidgets.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/RainmeterStyleWidgets.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/RainmeterStyleWidgets.jpg"  alt="img" align="right" width="500px"></a>
 The default settings for GUI frameworks don't tend to produce the nicest looking windows. However,
 with some attention to detail, you can do several things to make windows look attractive.
-FreeSimpleGUI makes it easier to manipulate colors and features like removing the title bar. The
+Gooey makes it easier to manipulate colors and features like removing the title bar. The
 result is windows that don't look like your typical tkinter windows.
 
 Here is an example of how you can create windows that don't look like your typical tkinter in
@@ -517,11 +517,11 @@ much like those found when using Rainmeter, a desktop widget program.
 <br><br>
 You can easily set the transparency of a window as well. Here are more examples of desktop widgets
 in the same Rainmeter style. Some are dim appearing because they are semi-transparent.
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/semi-transparent.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/semi-transparent.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/semi-transparent.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/semi-transparent.jpg"  alt="img" align="right" width="500px"></a>
 
 Both of these effects; removing the titlebar and making a window semi-transparent, are achieved by
-setting 2 parameters when creating the window. This is an example of how FreeSimpleGUI enables easy
-access to features. And because FreeSimpleGUI code is portable across the GUI frameworks, these same
+setting 2 parameters when creating the window. This is an example of how Gooey enables easy
+access to features. And because Gooey code is portable across the GUI frameworks, these same
 parameters work for the other ports such as Qt.
 
 Changing the Window creation call in Example 1 to this line of code produces a similar
@@ -533,28 +533,28 @@ window = sg.Window('My window', layout, no_titlebar=True, alpha_channel=0.5)
 
 ## Games
 
-While not specifically written as a game development SDK, FreeSimpleGUI makes the development of
+While not specifically written as a game development SDK, Gooey makes the development of
 some games quite easy.
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Chess.png"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Chess.png"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Chess.png"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Chess.png"  alt="img" align="right" width="500px"></a>
 This Chess program not only plays chess, but it integrates with the Stockfish chess-playing AI.
 
 <br><br><br><br><br><br><br><br><br>
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Minesweeper.gif"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Minesweeper.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Minesweeper.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Minesweeper.gif"  alt="img" align="right" width="500px"></a>
 Several variants of Minesweeper have been released by users.
 
 <br><br><br><br>
 <br><br><br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/minesweeper_israel_dryer.png"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/minesweeper_israel_dryer.png"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/minesweeper_israel_dryer.png"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/minesweeper_israel_dryer.png"  alt="img" align="right" width="500px"></a>
 <br><br><br><br><br><br><br><br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Solitaire.gif"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Solitaire.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Solitaire.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Solitaire.gif"  alt="img" align="right" width="500px"></a>
 <br><br>
-Card games work well with FreeSimpleGUI as manipulating images is simple when using the
-FreeSimpleGUI `Graph` element.
+Card games work well with Gooey as manipulating images is simple when using the
+Gooey `Graph` element.
 
-While not specifically written as a game development SDK, FreeSimpleGUI makes development of some
+While not specifically written as a game development SDK, Gooey makes development of some
 games quite easy.
 <br><br>
 <br><br>
@@ -562,9 +562,9 @@ games quite easy.
 
 ## Media Capture and Playback
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/OpenCV.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/OpenCV.jpg"  alt="img" align="right" width="400px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/OpenCV.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/OpenCV.jpg"  alt="img" align="right" width="400px"></a>
 
-Capturing and displaying video from your webcam in a GUI is 4 lines of FreeSimpleGUI code. Even more
+Capturing and displaying video from your webcam in a GUI is 4 lines of Gooey code. Even more
 impressive is that these 4 lines of code work with the tkinter, Qt, and Web ports. You can display
 your webcam, in realtime, in a browser using the same code that displays the image using tkinter.
 
@@ -577,7 +577,7 @@ is available to you as a starting point for your own creations.
 
 ## Artificial Intelligence
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/YOLO_GIF.gif"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/YOLO_GIF.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO_GIF.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO_GIF.gif"  alt="img" align="right" width="500px"></a>
 
 AI and Python have long been a recognized superpower when the two are paired together. What's often
 missing however is a way for users to interact with these AI algorithms familiarly, using a GUI.
@@ -591,14 +591,14 @@ once, when you launch the application, see how they perform, stop the applicatio
 parameters, and finally restart the application with the new parameters.
 <br><br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/YOLO%20Object%20Detection.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/YOLO%20Object%20Detection.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO%20Object%20Detection.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO%20Object%20Detection.jpg"  alt="img" align="right" width="500px"></a>
 
 Contrast those steps against what can be done using a GUI. A GUI enables you to modify these
 parameters in real-time. You can immediately get feedback on how they are affecting the algorithm.
 
 <br><br><br><br><br>
 <br><br>
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Colorizer.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Colorizer.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Colorizer.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Colorizer.jpg"  alt="img" align="right" width="500px"></a>
 
 There are SO many AI programs that have been published that are command-line driven. This in itself
 isn't a huge hurdle, but it's enough of a "pain in the ass" to type/paste the filename you want to
@@ -616,9 +616,9 @@ the ease of use that a GUI could bring.
 
 ## Graphing
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"  alt="img" align="right" width="500px"></a>
 
-Displaying and interacting with data in a GUI is simple with FreeSimpleGUI. You have several
+Displaying and interacting with data in a GUI is simple with Gooey. You have several
 options.
 
 You can use the built-in drawing/graphing capabilities to produce custom graphs. This CPU usage
@@ -627,9 +627,9 @@ monitor uses the `Graph` element
 <br><br>
 <br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Matplotlib.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Matplotlib.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib.jpg"  alt="img" align="right" width="500px"></a>
 
-Matplotlib is a popular choice with Python users. FreeSimpleGUI can enable you to embed Matplotlib
+Matplotlib is a popular choice with Python users. Gooey can enable you to embed Matplotlib
 graphs directly into your GUI window. You can even embed the interactive controls into your window
 if you want to retain the Matplotlib interactive features.
 
@@ -638,8 +638,8 @@ if you want to retain the Matplotlib interactive features.
 <br><br>
 <br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Matplotlib2.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Matplotlib2.jpg"  alt="img" align="right" width="500px"></a>
-Using FreeSimpleGUI's color themes, you can produce graphs that are a notch above default graphs
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib2.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib2.jpg"  alt="img" align="right" width="500px"></a>
+Using Gooey's color themes, you can produce graphs that are a notch above default graphs
 that most people create in Matplotlib.
 
 <br><br>
@@ -654,9 +654,9 @@ that most people create in Matplotlib.
 
 ## Front-ends
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/JumpCutter.png"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/JumpCutter.png"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/JumpCutter.png"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/JumpCutter.png"  alt="img" align="right" width="500px"></a>
 
-The "GUI Gap" mentioned earlier can be easily solved using FreeSimpleGUI. You don't even need to
+The "GUI Gap" mentioned earlier can be easily solved using Gooey. You don't even need to
 have the source code to the program you wish to add a GUI onto. A "front-end" GUI is one that
 collects information that is then passed to a command-line application.
 
@@ -674,9 +674,9 @@ in yellow the command that was executed.
 
 ## Raspberry Pi
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Raspberry%20Pi.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Raspberry%20Pi.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Raspberry%20Pi.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Raspberry%20Pi.jpg"  alt="img" align="right" width="500px"></a>
 
-Because FreeSimpleGUI is compatible back to Python 3.4, it is capable of creating a GUI for your
+Because Gooey is compatible back to Python 3.4, it is capable of creating a GUI for your
 Raspberry Pi projects. It works particularly well when paired with a touchscreen. You can also use
 FreeSimpleGUIWeb to control your Pi if it doesn't have a monitor attached.
 
@@ -688,24 +688,24 @@ FreeSimpleGUIWeb to control your Pi if it doesn't have a monitor attached.
 
 ## Easy Access to Advanced Features
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Customized%20Titlebar.gif"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Customized%20Titlebar.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Customized%20Titlebar.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Customized%20Titlebar.gif"  alt="img" align="right" width="500px"></a>
 
 Because it's very easy to access many of the underlying GUI frameworks' features, it's possible to
 piece together capabilities to create applications that look nothing like those produced using the
 GUI framework directly.
 
 For example, it's not possible to change the color/look-and-feel of a titlebar using tkinter or the
-other GUI packages, but with FreeSimpleGUI it's easy to create windows that appear as if they have a
+other GUI packages, but with Gooey it's easy to create windows that appear as if they have a
 custom titlebar.
 <br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"  alt="img" align="right" width="500px"></a>
 
 Unbelievably, this window is using tkinter to achieve what appears to be something like a
 screensaver.
 
 On windows, tkinter can completely remove the background from your application. Once again,
-FreeSimpleGUI makes accessing these capabilities trivial. Creating a transparent window requires
+Gooey makes accessing these capabilities trivial. Creating a transparent window requires
 adding a single parameter to the call that creates your `Window`. One parameter change can result in
 a simple application with this effect:
 
@@ -715,11 +715,11 @@ You can interact with everything on your desktop, clicking through a full-screen
 
 # Themes
 
-Tired of the default grey GUIs? FreeSimpleGUI makes it trivial for your window to look nice by
+Tired of the default grey GUIs? Gooey makes it trivial for your window to look nice by
 making a single call to the `theme` function. There are over 150 different color themes available
 for you to choose:
 <p align="center">
-<a href=""><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/ThemePreview.jpg"  alt="img" width="900px"></a>
+<a href=""><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ThemePreview.jpg"  alt="img" width="900px"></a>
 </p>
 
 
@@ -738,7 +738,7 @@ sg.theme('dark grey 9')
 This single line of code changes the window's appearance entirely:
 
 <p align="center">
-<a href=""><img src="https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_readme/DarkGrey.jpg"  alt="img" width="400px"></a>
+<a href=""><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/DarkGrey.jpg"  alt="img" width="400px"></a>
 </p>
 
 
@@ -752,25 +752,25 @@ each widget individually, requiring numerous changes to your code.
 
 Want to share your Gooey program with friends and family that don't have Python installed on their
 computer? Try the GUI front-end for PyInstaller that you'll find in
-the [psgcompiler](https://github.com/FreeSimpleGUI/psgcompiler) project.
+the [psgcompiler](https://github.com/Gooey/psgcompiler) project.
 
-![](https://raw.githubusercontent.com/FreeSimpleGUI/psgcompiler/main/screenshot_for_readme/psgcompiler_screenshot.jpg?token=ALAGMY3Z33WHFX3RTFXEZ73BTEUPO)
+![](https://raw.githubusercontent.com/Gooey/psgcompiler/main/screenshot_for_readme/psgcompiler_screenshot.jpg?token=ALAGMY3Z33WHFX3RTFXEZ73BTEUPO)
 
 
 <hr>
 
 # Support 💪
 
-Your first stop should be the [documentation](http://www.FreeSimpleGUI.org)
-and [demo programs](http://Demos.FreeSimpleGUI.org).
+Your first stop should be the [documentation](http://www.Gooey.org)
+and [demo programs](http://Demos.Gooey.org).
 
 Be sure and install the Demo Browser (instructions in the Cookbook) so that you can search and run
 the 100s of demo programs.
 
-![](https://raw.githubusercontent.com/spyoungtech/FreeSimpleGUI/main/images/for_cookbook/Project_Browser_Main_Window_Explained.jpg)
+![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_cookbook/Project_Browser_Main_Window_Explained.jpg)
 
 If you still have a question or need help... no problem... help is available to you, at no cost.
-Simply [file an Issue](http://Issues.FreeSimpleGUI.org) on the Gooey GitHub repo and you'll get
+Simply [file an Issue](http://Issues.Gooey.org) on the Gooey GitHub repo and you'll get
 help.
 
 Nearly all software companies have a form that accompanies bug reports. It's not a bad trade... fill
