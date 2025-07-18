@@ -1,0 +1,14 @@
+FreeSimpleGUI
+typing
+configparser
+pillow
+numpy
+matplotlib
+fitz
+pandas
+psutil
+pyperclip
+pywin32
+requests
+click
+scipy
