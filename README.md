@@ -7,7 +7,7 @@ The free-forever version PySimpleGUI software.
 </p>
 
 ```bash
-pip install FreeSimpleGUI
+pip install Gooey
 ```
 
 To migrate from PySimpleGUI:
