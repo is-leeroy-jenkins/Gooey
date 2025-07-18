@@ -769,19 +769,5 @@ the 100s of demo programs.
 
 ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_cookbook/Project_Browser_Main_Window_Explained.jpg)
 
-If you still have a question or need help... no problem... help is available to you, at no cost.
-Simply [file an Issue](http://Issues.Gooey.org) on the Gooey GitHub repo and you'll get
-help.
 
-Nearly all software companies have a form that accompanies bug reports. It's not a bad trade... fill
-in the form, get free software support. This information helps get you an answer efficiently.
-
-In addition to requesting information such as the version numbers of Gooey and underlying GUI
-frameworks, you're also given a checklist of items that may help you solve your problem.
-
-***Please fill in the form.***  It may feel pointless to you. It may feel painful, despite it taking
-just a moment. It helps get you a solution faster. If it wasn't useful and necessary information to
-help you get a speedy reply and fix, you wouldn't be asked to fill it out.  "Help me help you".
-
-© Copyright 2024, Gooey authors
-© Copyright 2021, 2022 PySimpleGui
+© Copyright 2025
