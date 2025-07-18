@@ -87,7 +87,7 @@ window.close()                                  # Part 5 - Close the Window
 The code produces this window
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-tkinter.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/ex1-tkinter.jpg">
 </p>
 
 
@@ -127,14 +127,14 @@ window.close()
 
 This is the window that Example 2 produces.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Example2-1.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Example2-1.jpg">
 </p>
 
 
 
 And here's what it looks like after you enter a value into the Input field and click the Ok button.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Example2-2.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Example2-2.jpg">
 </p>
 
 Let's take a quick look at some of the differences between this example and the one-shot window.
@@ -195,7 +195,7 @@ After adding the `text_color` parameter, this is our new resulting window:
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Example2-3.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Example2-3.jpg">
 </p>
 
 
@@ -207,7 +207,7 @@ call:
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/TextUpdate.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/TextUpdate.jpg">
 </p>
 
 
@@ -259,7 +259,7 @@ Each row of this layout is a list of elements that will be displayed on that row
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/layout-with-rows.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/layout-with-rows.jpg">
 </p>
 
 
@@ -281,7 +281,7 @@ event, values = sg.Window('List Comprehensions', layout).read(close=True)
 produces this window which has a 4 x 4 grid of buttons:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/4x4grid.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/4x4grid.jpg">
 </p>
 
 Recall how "fun" is one of the goals of the project. It's fun to directly apply Python's powerful
@@ -298,7 +298,7 @@ event, values = sg.Window('Window Title', [[sg.Text("What's your name?")],[sg.In
 ```
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-tkinter.jpg">
+  <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/ex1-tkinter.jpg">
 </p>
 
 
@@ -489,13 +489,13 @@ This code will display 2 popup windows. One to get the filename, which can be br
 into the input box.
 
 <p align="center">
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI1.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI1.jpg"  alt="img" width="400px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/First_GUI1.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/First_GUI1.jpg"  alt="img" width="400px"></a>
 </p>
 
 The other window will output what is collected.
 
 <p align="center">
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI2.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/First_GUI2.jpg"  alt="img" width="175px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/First_GUI2.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/First_GUI2.jpg"  alt="img" width="175px"></a>
 
 </p>
 
@@ -504,7 +504,7 @@ The other window will output what is collected.
 
 ## Rainmeter-Style Windows
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/RainmeterStyleWidgets.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/RainmeterStyleWidgets.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/RainmeterStyleWidgets.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/RainmeterStyleWidgets.jpg"  alt="img" align="right" width="500px"></a>
 The default settings for GUI frameworks don't tend to produce the nicest looking windows. However,
 with some attention to detail, you can do several things to make windows look attractive.
 Gooey makes it easier to manipulate colors and features like removing the title bar. The
@@ -517,7 +517,7 @@ much like those found when using Rainmeter, a desktop widget program.
 <br><br>
 You can easily set the transparency of a window as well. Here are more examples of desktop widgets
 in the same Rainmeter style. Some are dim appearing because they are semi-transparent.
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/semi-transparent.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/semi-transparent.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/semi-transparent.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/semi-transparent.jpg"  alt="img" align="right" width="500px"></a>
 
 Both of these effects; removing the titlebar and making a window semi-transparent, are achieved by
 setting 2 parameters when creating the window. This is an example of how Gooey enables easy
@@ -536,20 +536,20 @@ window = sg.Window('My window', layout, no_titlebar=True, alpha_channel=0.5)
 While not specifically written as a game development SDK, Gooey makes the development of
 some games quite easy.
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Chess.png"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Chess.png"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Chess.png"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Chess.png"  alt="img" align="right" width="500px"></a>
 This Chess program not only plays chess, but it integrates with the Stockfish chess-playing AI.
 
 <br><br><br><br><br><br><br><br><br>
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Minesweeper.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Minesweeper.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Minesweeper.gif"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Minesweeper.gif"  alt="img" align="right" width="500px"></a>
 Several variants of Minesweeper have been released by users.
 
 <br><br><br><br>
 <br><br><br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/minesweeper_israel_dryer.png"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/minesweeper_israel_dryer.png"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/minesweeper_israel_dryer.png"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/minesweeper_israel_dryer.png"  alt="img" align="right" width="500px"></a>
 <br><br><br><br><br><br><br><br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Solitaire.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Solitaire.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Solitaire.gif"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Solitaire.gif"  alt="img" align="right" width="500px"></a>
 <br><br>
 Card games work well with Gooey as manipulating images is simple when using the
 Gooey `Graph` element.
@@ -562,7 +562,7 @@ games quite easy.
 
 ## Media Capture and Playback
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/OpenCV.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/OpenCV.jpg"  alt="img" align="right" width="400px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/OpenCV.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/OpenCV.jpg"  alt="img" align="right" width="400px"></a>
 
 Capturing and displaying video from your webcam in a GUI is 4 lines of Gooey code. Even more
 impressive is that these 4 lines of code work with the tkinter, Qt, and Web ports. You can display
@@ -577,7 +577,7 @@ is available to you as a starting point for your own creations.
 
 ## Artificial Intelligence
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO_GIF.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO_GIF.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/YOLO_GIF.gif"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/YOLO_GIF.gif"  alt="img" align="right" width="500px"></a>
 
 AI and Python have long been a recognized superpower when the two are paired together. What's often
 missing however is a way for users to interact with these AI algorithms familiarly, using a GUI.
@@ -591,14 +591,14 @@ once, when you launch the application, see how they perform, stop the applicatio
 parameters, and finally restart the application with the new parameters.
 <br><br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO%20Object%20Detection.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/YOLO%20Object%20Detection.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/YOLO%20Object%20Detection.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/YOLO%20Object%20Detection.jpg"  alt="img" align="right" width="500px"></a>
 
 Contrast those steps against what can be done using a GUI. A GUI enables you to modify these
 parameters in real-time. You can immediately get feedback on how they are affecting the algorithm.
 
 <br><br><br><br><br>
 <br><br>
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Colorizer.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Colorizer.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Colorizer.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Colorizer.jpg"  alt="img" align="right" width="500px"></a>
 
 There are SO many AI programs that have been published that are command-line driven. This in itself
 isn't a huge hurdle, but it's enough of a "pain in the ass" to type/paste the filename you want to
@@ -616,7 +616,7 @@ the ease of use that a GUI could bring.
 
 ## Graphing
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/CPU%20Cores%20Dashboard%202.gif"  alt="img" align="right" width="500px"></a>
 
 Displaying and interacting with data in a GUI is simple with Gooey. You have several
 options.
@@ -627,7 +627,7 @@ monitor uses the `Graph` element
 <br><br>
 <br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Matplotlib.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Matplotlib.jpg"  alt="img" align="right" width="500px"></a>
 
 Matplotlib is a popular choice with Python users. Gooey can enable you to embed Matplotlib
 graphs directly into your GUI window. You can even embed the interactive controls into your window
@@ -638,7 +638,7 @@ if you want to retain the Matplotlib interactive features.
 <br><br>
 <br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib2.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Matplotlib2.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Matplotlib2.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Matplotlib2.jpg"  alt="img" align="right" width="500px"></a>
 Using Gooey's color themes, you can produce graphs that are a notch above default graphs
 that most people create in Matplotlib.
 
@@ -654,7 +654,7 @@ that most people create in Matplotlib.
 
 ## Front-ends
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/JumpCutter.png"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/JumpCutter.png"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/JumpCutter.png"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/JumpCutter.png"  alt="img" align="right" width="500px"></a>
 
 The "GUI Gap" mentioned earlier can be easily solved using Gooey. You don't even need to
 have the source code to the program you wish to add a GUI onto. A "front-end" GUI is one that
@@ -674,7 +674,7 @@ in yellow the command that was executed.
 
 ## Raspberry Pi
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Raspberry%20Pi.jpg"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Raspberry%20Pi.jpg"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Raspberry%20Pi.jpg"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Raspberry%20Pi.jpg"  alt="img" align="right" width="500px"></a>
 
 Because Gooey is compatible back to Python 3.4, it is capable of creating a GUI for your
 Raspberry Pi projects. It works particularly well when paired with a touchscreen. You can also use
@@ -688,7 +688,7 @@ FreeSimpleGUIWeb to control your Pi if it doesn't have a monitor attached.
 
 ## Easy Access to Advanced Features
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Customized%20Titlebar.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Customized%20Titlebar.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Customized%20Titlebar.gif"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Customized%20Titlebar.gif"  alt="img" align="right" width="500px"></a>
 
 Because it's very easy to access many of the underlying GUI frameworks' features, it's possible to
 piece together capabilities to create applications that look nothing like those produced using the
@@ -699,7 +699,7 @@ other GUI packages, but with Gooey it's easy to create windows that appear as if
 custom titlebar.
 <br><br><br>
 
-<a href="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"  alt="img" align="right" width="500px"></a>
+<a href="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/Desktop%20Bouncing%20Balls.gif"  alt="img" align="right" width="500px"></a>
 
 Unbelievably, this window is using tkinter to achieve what appears to be something like a
 screensaver.
@@ -719,7 +719,7 @@ Tired of the default grey GUIs? Gooey makes it trivial for your window to look n
 making a single call to the `theme` function. There are over 150 different color themes available
 for you to choose:
 <p align="center">
-<a href=""><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ThemePreview.jpg"  alt="img" width="900px"></a>
+<a href=""><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/ThemePreview.jpg"  alt="img" width="900px"></a>
 </p>
 
 
@@ -738,7 +738,7 @@ sg.theme('dark grey 9')
 This single line of code changes the window's appearance entirely:
 
 <p align="center">
-<a href=""><img src="https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/DarkGrey.jpg"  alt="img" width="400px"></a>
+<a href=""><img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/for_readme/DarkGrey.jpg"  alt="img" width="400px"></a>
 </p>
 
 
