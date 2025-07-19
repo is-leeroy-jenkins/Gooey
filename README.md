@@ -8,10 +8,10 @@
 pip install Gooey
 ```
 
-To migrate from PySimpleGUI:
+To migrate from FreeSimpleGUI:
 
 ```diff
-- import PySimpleGUI as sg
+- import FreeSimpleGUI as sg
 + import Gooey as sg
 ```
 
