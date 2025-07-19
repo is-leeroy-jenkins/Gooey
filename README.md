@@ -18,7 +18,7 @@ To migrate from PySimpleGUI:
 ### Support
 
 If you encounter any issues or have any questions, please feel welcome
-to [open an issue](https://github.com/spyoungtech/Gooey/issues/new).
+to [open an issue](https://github.com/is-leeroy-jenkins/Gooey/issues/new).
 
 Documentation for Gooey is available at: https://freesimplegui.readthedocs.io/en/latest/.
 Gooey.org is still in progress.
@@ -26,7 +26,7 @@ Gooey.org is still in progress.
 ### Contributions
 
 Contributions are welcome! Contributions can be made via pull request. Ideally, please try to make
-sure there is an open [issue](https://github.com/spyoungtech/Gooey/issues) associated with
+sure there is an open [issue](https://github.com/is-leeroy-jenkins/Gooey/issues) associated with
 your pull request first or create one if necessary.
 
 --------------------------
@@ -324,10 +324,10 @@ different GUI framework. In the example above, changing the import from `Gooey` 
 
 | Import Statement | Resulting Window |
 |--|--|
-| Gooey |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-tkinter.jpg) |
-| FreeSimpleGUIQt |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-Qt.jpg) |
-| FreeSimpleGUIWx |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-WxPython.jpg) |
-| FreeSimpleGUIWeb |  ![](https://raw.githubusercontent.com/spyoungtech/Gooey/main/images/for_readme/ex1-Remi.jpg) |
+| Gooey |  ![](https://raw.githubusercontent.com/is-leeroy-jenkins/Gooey/main/images/for_readme/ex1-tkinter.jpg) |
+| FreeSimpleGUIQt |  ![](https://raw.githubusercontent.com/is-leeroy-jenkins/Gooey/main/images/for_readme/ex1-Qt.jpg) |
+| FreeSimpleGUIWx |  ![](https://raw.githubusercontent.com/is-leeroy-jenkins/Gooey/main/images/for_readme/ex1-WxPython.jpg) |
+| FreeSimpleGUIWeb |  ![](https://raw.githubusercontent.com/is-leeroy-jenkins/Gooey/main/images/for_readme/ex1-Remi.jpg) |
 
 Porting GUI code from one framework to another (e.g. moving your code from tkinter to Qt) usually
 requires a rewrite of your code. Gooey is designed to enable you to have easy movement
@@ -437,7 +437,7 @@ The PyPI link for the tkinter version of Gooey is:
 https://pypi.org/project/Gooey/#files
 
 The GitHub repo's latest version can be found here:
-https://raw.githubusercontent.com/spyoungtech/Gooey/main/Gooey.py
+https://raw.githubusercontent.com/is-leeroy-jenkins/Gooey/main/Gooey.py
 
 Now some of you are thinking, "yea, but, wait, having a single huge source file is a terrible idea".
 And, yea, *sometimes* it can be a terrible idea. In this case, the benefits greatly outweighed the
@@ -455,7 +455,7 @@ justice to the awesome creations people are making.
 ### User Submitted Gallery
 
 The first is
-a [user submitted screenshots issue](https://github.com/spyoungtech/Gooey/issues/10) located
+a [user submitted screenshots issue](https://github.com/is-leeroy-jenkins/Gooey/issues/10) located
 on the GitHub. It's an informal way for people to show off what they've made. It's not ideal, but it
 was a start.
 
