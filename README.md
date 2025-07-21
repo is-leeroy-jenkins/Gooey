@@ -761,4 +761,9 @@ each widget individually, requiring numerous changes to your code.
 
 <hr>
 
-© Copyright 2025
+## 📝 License
+
+Mathy is published under the [MIT General Public License v3](https://github.com/is-leeroy-jenkins/Gooey/blob/main/LICENSE).
+
+
+© Copyright 2024
