@@ -47,7 +47,7 @@ import base64
 from enum import Enum
 import FreeSimpleGUI as sg
 import fitz
-from FreeSimpleGUI import Text
+from FreeSimpleGUI import Text, Frame, Sizegrip
 from googlesearch import search
 import random
 import io
@@ -4149,6 +4149,7 @@ class BudgetForm( Dark ):
 	secondlayout: list[ list[ Text ] ]
 	thirdlayout: list[ list[ Text ] ]
 	fourthlayout: list[ list[ Text ] ]
+	formlayout: list[ list[ Text ] ]
 
 
 	def __init__( self ):
@@ -4436,7 +4437,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def set_layout( self ) -> list:
+	def set_layout( self ) -> list[ list[ Frame ] | list[ Sizegrip ] ] | None:
 		'''
 
             Purpose:
