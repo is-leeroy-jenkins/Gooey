@@ -47,6 +47,7 @@ import base64
 from enum import Enum
 import FreeSimpleGUI as sg
 import fitz
+from FreeSimpleGUI import Text
 from googlesearch import search
 import random
 import io
@@ -4145,6 +4146,9 @@ class BudgetForm( Dark ):
 	titlelayout: list[ list[ Text | Any ] ]
 	headerlayout: list[ list[ Text ] ]
 	firstlayout: list[ list[ Text ] ]
+	secondlayout: list[ list[ Text ] ]
+	thirdlayout: list[ list[ Text ] ]
+	fourthlayout: list[ list[ Text ] ]
 
 
 	def __init__( self ):
@@ -4314,7 +4318,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def create_second( self, items: list ) -> list:
+	def create_second( self, items: list ) -> list[ list[ Text | Any ] ] | None:
 		'''
 
             Purpose:
@@ -4343,7 +4347,7 @@ class BudgetForm( Dark ):
 				            [ sg.Push( ), sg.Text( 'Block 2 line 4', font = _hdr ), sg.Push( ) ],
 				            [ sg.Push( ), sg.Text( 'Block 2 line 5', font = _hdr ), sg.Push( ) ],
 				            [ sg.Push( ), sg.Text( 'Block 2 line 6', font = _hdr ), sg.Push( ) ] ]
-				self.__secondlayout = _second
+				self.secondlayout = _second
 				return _second
 			except Exception as e:
 				exception = Error( e )
