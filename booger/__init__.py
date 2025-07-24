@@ -5595,7 +5595,7 @@ class ChatBot( ):
 				font=('Roboto', ' 11'),
 				default_button_element_size=(8, 2),
 				return_keyboard_events=True,
-				size = self.form_size,
+				size=self.form_size,
 				keep_on_top=True )
 
 			# ---===--- Loop taking in user path and using it  --- #
