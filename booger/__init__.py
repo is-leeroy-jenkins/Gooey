@@ -4243,6 +4243,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
+
 	def create_header( self, items: list ) -> list[ list[ str | Any ] ] | None:
 		'''
 
@@ -4357,7 +4358,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def create_third( self, items: list ) -> list:
+	def create_third( self, items: list ) -> list[ list[ Text | Any ] ] | None:
 		'''
 
             Purpose:
@@ -4386,7 +4387,7 @@ class BudgetForm( Dark ):
 				           [ sg.Push( ), sg.Text( 'Block 3 line 4', font = _hdr ), sg.Push( ) ],
 				           [ sg.Push( ), sg.Text( 'Block 3 line 5', font = _hdr ), sg.Push( ) ],
 				           [ sg.Push( ), sg.Text( 'Block 3 line 6', font = _hdr ), sg.Push( ) ] ]
-				self.__thirdlayout = _third
+				self.thirdlayout = _third
 				return _third
 			except Exception as e:
 				exception = Error( e )
@@ -4396,7 +4397,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def create_fourth( self, items: list ) -> list:
+	def create_fourth( self, items: list ) -> list[ list[ Text | Any ] ] | None:
 		'''
 
             Purpose:
@@ -4425,7 +4426,7 @@ class BudgetForm( Dark ):
 				            [ sg.Push( ), sg.Text( 'Block 4 line 4', font = _hdr ), sg.Push( ) ],
 				            [ sg.Push( ), sg.Text( 'Block 4 line 5', font = _hdr ), sg.Push( ) ],
 				            [ sg.Push( ), sg.Text( 'Block 4 line 6', font = _hdr ), sg.Push( ) ] ]
-				self.__fourthlayout = _fourth
+				self.fourthlayout = _fourth
 				return _fourth
 			except Exception as e:
 				exception = Error( e )
