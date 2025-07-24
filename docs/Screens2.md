@@ -1015,12 +1015,12 @@ A surprising amount of the code still works.  The unpacking of the values dictio
 ```python
 import FreeSimpleGUI as gg
 form_rows = [[gg.Text('PDF Image Extraction')],
-             [gg.Text('Choose Source and Destination Folders')],
-             [gg.Text('Source Folder', size=(15, 1)), gg.InputText('Source'), gg.FolderBrowse()],
+             [gg.Text('Choose booger and Destination Folders')],
+             [gg.Text('booger Folder', size=(15, 1)), gg.InputText('booger'), gg.FolderBrowse()],
              [gg.Text('Destination Folder', size=(15, 1)), gg.InputText('Dest'), gg.FolderBrowse()],
              [gg.Submit(), gg.Cancel()]]
 
-# (button, (Source, dest)) = gg.FlexForm('PDF Image Extract', auto_size_text=True).LayoutAndShow(form_rows)
+# (button, (booger, dest)) = gg.FlexForm('PDF Image Extract', auto_size_text=True).LayoutAndShow(form_rows)
 event, values = gg.FlexForm('PDF Image Extract', form_rows, auto_size_text=True).read()
 print(event, values)
 ```

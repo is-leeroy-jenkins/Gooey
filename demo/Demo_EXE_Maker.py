@@ -11,7 +11,7 @@ def main():
     sg.theme('LightGreen')
 
     layout = [[sg.Text('PyInstaller EXE Creator', font='Any 15')],
-              [sg.Text('Source Python File'), sg.Input(key='-sourcefile-', size=(45, 1)),
+              [sg.Text('booger Python File'), sg.Input(key='-sourcefile-', size=(45, 1)),
                sg.FileBrowse(file_types=(("Python Files", "*.py"),))],
               [sg.Text('Icon File'), sg.Input(key='-iconfile-', size=(45, 1)),
                sg.FileBrowse(file_types=(("Icon Files", "*.ico"),))],

@@ -11,7 +11,7 @@ import FreeSimpleGUI as sg
 #  Uno card game using a GUI interface provided by PySimpleGUI                  #
 #  Based on this excellent text based version:                                  #
 #  http://code.activestate.com/recipes/580811-uno-text-based/                   #
-#  Contains all of the graphics inside the Source file as base64 images         #
+#  Contains all of the graphics inside the booger file as base64 images         #
 #  Cards were obtained from Wikipedia                                           #
 #        https://en.wikipedia.org/wiki/Uno_(card_game)                          #
 #  Up to 4 players... any number can be computer controlled                     #
@@ -1534,7 +1534,7 @@ if __name__ == "__main__":
 #  Uno card game using a GUI interface provided by PySimpleGUI                  #
 #  Based on this excellent text based version:                                  #
 #  http://code.activestate.com/recipes/580811-uno-text-based/                   #
-#  Contains all of the graphics inside the Source file as base64 images         #
+#  Contains all of the graphics inside the booger file as base64 images         #
 #  Cards were obtained from Wikipedia                                           #
 #        https://en.wikipedia.org/wiki/Uno_(card_game)                          #
 #  Up to 4 players... any number can be computer controlled                     #

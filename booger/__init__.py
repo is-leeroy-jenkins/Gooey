@@ -1,14 +1,14 @@
 '''
   ******************************************************************************************
       Assembly:                Gooey
-      Filename:                Booger.py
+      Filename:                init.py
       Author:                  Terry D. Eppler
       Created:                 05-31-2022
 
       Last Modified By:        Terry D. Eppler
       Last Modified On:        05-01-2025
   ******************************************************************************************
-  <copyright file="Boooger.py" company="Terry D. Eppler">
+  <copyright file="init.py" company="Terry D. Eppler">
 
 	     Boo is a df analysis tool integrating GenAI, Text Processing, and Machine-Learning
 	     algorithms for federal analysts.
@@ -42,6 +42,7 @@
   </summary>
   ******************************************************************************************
   '''
+from __future__ import annotations
 import base64
 from enum import Enum
 import FreeSimpleGUI as sg
@@ -61,13 +62,14 @@ import os
 from pandas import read_csv as CsvReader
 from pandas import read_excel as ExcelReader
 from PIL import Image, ImageTk, ImageSequence
-from src.static import EXT, Client
+from static import EXT, Client
 from sys import exit, exc_info
-from src.minion import App
+from minion import App
 import traceback
 import urllib.request
 import webbrowser
 from typing import Dict, List, Tuple
+
 
 class Error( Exception ):
 	'''
@@ -83,9 +85,10 @@ class Error( Exception ):
 
     '''
 
-	def __init__( self, error: Exception, heading: str = None, cause: str = None,
-	              method: str = None, module: str = None ):
+	def __init__( self, error: Exception, heading: str=None, cause: str=None,
+	              method: str=None, module: str=None ):
 		super( ).__init__( )
+		self.error = error
 		self.heading = heading
 		self.cause = cause
 		self.method = method
@@ -110,8 +113,7 @@ class Error( Exception ):
 			str | None
 
 		'''
-		if self.info is not None:
-			return self.info
+		return self.info
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -129,7 +131,7 @@ class Error( Exception ):
 			List[ str ] | None
 
 		'''
-		return [ 'message', 'cause',
+		return [ 'message', 'cause', 'error',
 		         'method', 'module', 'scaler',
 		         'stack_trace', 'info' ]
 
@@ -151,6 +153,7 @@ class ButtonIcon( ):
 		self.button = r'C:\Users\terry\source\repos\Gooey\resources\img\button'
 		self.file_path = self.button + r'\\' + self.name + '.png'
 
+
 	def __str__( self ) -> str | None:
 		'''
 
@@ -167,7 +170,8 @@ class ButtonIcon( ):
 			str | None
 
 		'''
-		return self.file_path
+		return self.name
+
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -187,6 +191,7 @@ class ButtonIcon( ):
 		'''
 		return [ 'button', 'name', 'file_path' ]
 
+
 class TitleIcon( ):
 	'''
 
@@ -204,6 +209,7 @@ class TitleIcon( ):
 		self.name = ico.name
 		self.folder = r'C:\Users\terry\source\repos\Gooey\resources\ico'
 		self.file_path = self.folder + r'\\' + self.name + r'.ico'
+
 
 	def __str__( self ) -> str | None:
 		'''
@@ -255,7 +261,13 @@ class Dark( ):
 
     '''
 
+	class Config:
+		arbitrary_types_allowed = True
+		extra = 'ignore'
+		allow_mutation = True
+
 	def __init__( self ):
+		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
 		sg.theme_element_text_color( '#69B1EF' )
@@ -272,12 +284,13 @@ class Dark( ):
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
+		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		self.form_size = (400, 200)
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -301,6 +314,7 @@ class Dark( ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color' ]
+
 
 class FileDialog( Dark ):
 	'''
@@ -367,8 +381,7 @@ class FileDialog( Dark ):
 			str | None
 
 		'''
-		if self.selected_item is not None:
-			return self.selected_item
+		return self.selected_item
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -421,9 +434,10 @@ class FileDialog( Dark ):
 			            [ sg.OK( size = (8, 1), ), sg.Cancel( size = (10, 1) ) ] ]
 
 			_window = sg.Window( ' Booger', _layout,
-				font = self.theme_font,
-				size = self.form_size,
-				icon = self.icon_path )
+				font=self.theme_font,
+				size=self.form_size,
+				icon=self.icon_path,
+				keep_on_top=True )
 
 			while True:
 				_event, _values = _window.read( )
@@ -441,6 +455,7 @@ class FileDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class FolderDialog( Dark ):
 	'''
@@ -549,9 +564,10 @@ class FolderDialog( Dark ):
 			            [ sg.OK( size = (8, 1) ), sg.Cancel( size = (10, 1) ) ] ]
 
 			_window = sg.Window( '  Booger', _layout,
-				font = self.theme_font,
-				size = self.form_size,
-				icon = self.icon_path )
+				font=self.theme_font,
+				size=self.form_size,
+				icon=self.icon_path,
+				keep_on_top=True )
 
 			while True:
 				_event, _values = _window.read( )
@@ -585,7 +601,7 @@ class SaveFileDialog( Dark ):
 
     '''
 
-	def __init__( self, path = '' ):
+	def __init__( self, path='' ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -676,7 +692,8 @@ class SaveFileDialog( Dark ):
 				title = '  Booger',
 				font = self.theme_font,
 				icon = self.icon_path,
-				save_as = True )
+				save_as=True,
+				keep_on_top=True )
 
 			self.file_name = _filename
 
@@ -804,7 +821,8 @@ class GoogleDialog( Dark ):
 			_window = sg.Window( '  Booger', _layout,
 				icon = self.icon_path,
 				font = self.theme_font,
-				size = self.form_size )
+				size = self.form_size,
+				keep_on_top = True )
 
 			while True:
 				_event, _values = _window.read( )
@@ -968,7 +986,8 @@ class EmailDialog( Dark ):
 
 			_window = sg.Window( '  Send Message', _layout,
 				icon = self.icon_path,
-				size = self.form_size )
+				size = self.form_size,
+				keep_on_top=True )
 
 			while True:  # Event Loop
 				_event, _values = _window.read( )
@@ -1103,9 +1122,10 @@ class MessageDialog( Dark ):
 			              sg.Text( size = (15, 1) ), sg.Cancel( size = _btnsz ) ] ]
 
 			_window = sg.Window( r'  Booger', _layout,
-				icon = self.icon_path,
-				font = self.theme_font,
-				size = self.form_size )
+				icon=self.icon_path,
+				font=self.theme_font,
+				size=self.form_size,
+				keep_on_top=True )
 
 			while True:
 				_event, _values = _window.read( )
@@ -1248,7 +1268,8 @@ class ErrorDialog( Dark ):
 		_window = sg.Window( r' Booger', _layout,
 			icon = self.icon_path,
 			font = self.theme_font,
-			size = self.form_size )
+			size = self.form_size,
+			keep_on_top=True )
 
 		while True:
 			_event, _values = _window.read( )
@@ -1256,6 +1277,7 @@ class ErrorDialog( Dark ):
 				break
 
 		_window.close( )
+
 
 class InputDialog( Dark ):
 	'''
@@ -1370,7 +1392,8 @@ class InputDialog( Dark ):
 			_window = sg.Window( '  Booger', _layout,
 				icon = self.icon_path,
 				font = self.theme_font,
-				size = self.form_size )
+				size = self.form_size,
+				keep_on_top=True )
 
 			while True:
 				_event, _values = _window.read( )
@@ -1391,6 +1414,7 @@ class InputDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class ScrollingDialog( Dark ):
 	'''
@@ -1620,18 +1644,18 @@ class ContactForm( Dark ):
 			              sg.Text( size = (20, 1) ), sg.Cancel( size = (10, 1) ) ] ]
 
 			_window = sg.Window( '  Booger', _layout,
-				icon = self.icon_path,
-				font = self.theme_font,
-				size = self.form_size )
+				icon=self.icon_path,
+				font=self.theme_font,
+				size=self.form_size,
+				keep_on_top=True )
 
 			while True:
 				_event, _values = _window.read( )
 				sg.popup( 'Results', _values, _values[ '-NAME-' ],
 					_values[ '-ADDRESS-' ],
 					_values[ '-PHONE-' ],
-					text_color = self.theme_textcolor,
-					font = self.theme_font,
-					icon = self.icon )
+					text_color=self.theme_textcolor,
+					font=self.theme_font )
 
 				if _event in (sg.WIN_CLOSED, sg.WIN_X_EVENT, 'Cancel'):
 					break
@@ -1644,6 +1668,7 @@ class ContactForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class GridForm( Dark ):
 	'''
@@ -2713,7 +2738,7 @@ class PdfForm( Dark ):
 				dlist_tab = [ None ] * page_count
 				title = 'PyMuPDF display of "%s", pages: %i' % (fname, page_count)
 
-				def get_page( pno, zoom = 0 ):
+				def get_page( pno, zoom=0 ):
 					"""
 
 						Return a PNG image for a document page num.
@@ -2771,7 +2796,9 @@ class PdfForm( Dark ):
 				zoom_buttons = ('Top-L', 'Top-R', 'Bot-L', 'Bot-R')
 
 				window = sg.Window( title, layout,
-					return_keyboard_events = True, use_default_focus = False )
+					return_keyboard_events=True,
+					use_default_focus=False,
+					keep_on_top=True )
 
 				old_page = 0
 				old_zoom = 0  # used for zoom on/off
@@ -4853,16 +4880,6 @@ class ExcelForm( Dark ):
 
 	'''
 
-	@property
-	def header( self ) -> str:
-		if self.__header is not None:
-			return self.__header
-
-	@header.setter
-	def header( self, value: str ):
-		if value is not None:
-			self.__header = value
-
 	def __init__( self ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
@@ -5333,7 +5350,8 @@ class FileBrowser( ):
 			size = (50, 1), key = '-FILENAME-' ), sg.FileBrowse( ), sg.B( 'Clear History' ) ],
 		           [ sg.Button( 'Ok', bind_return_key = True ), sg.Button( 'Cancel' ) ] ]
 
-		window = sg.Window( 'Browser File System', layout )
+		window = sg.Window( 'Browser File System', layout,
+			keep_on_top=True )
 		while True:
 			event, values = window.read( )
 
@@ -5433,9 +5451,10 @@ class ChatWindow( ):
 
 			window = sg.Window( 'Chat Window', _layout,
 				font = ('Roboto', ' 11'),
-				default_button_element_size = (8, 2),
-				use_default_focus = False,
-				size = self.form_size )
+				default_button_element_size=(8, 2),
+				use_default_focus=False,
+				size=self.form_size,
+				keep_on_top=True )
 
 			# The Event Loop
 			while True:
@@ -5537,11 +5556,12 @@ class ChatBot( ):
 				             button_color = (sg.YELLOWS[ 0 ], sg.GREENS[ 0 ]) ) ] ]
 
 			window = sg.Window( 'Chat window with history', layout,
-				default_element_size = (30, 2),
-				font = ('Roboto', ' 11'),
-				default_button_element_size = (8, 2),
-				return_keyboard_events = True,
-				size = self.form_size )
+				default_element_size=(30, 2),
+				font=('Roboto', ' 11'),
+				default_button_element_size=(8, 2),
+				return_keyboard_events=True,
+				size = self.form_size,
+				keep_on_top=True )
 
 			# ---===--- Loop taking in user path and using it  --- #
 			command_history = [ ]
@@ -5584,6 +5604,7 @@ class ChatBot( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class InputWindow( ):
 	"""
@@ -5739,7 +5760,8 @@ class InputWindow( ):
 			# layout = [sg.vtop([col1, col2]),
 			#           [col3]]
 			window = sg.Window( 'Columns and Frames', layout,
-				size = self.form_size )
+				size=self.form_size,
+				keep_on_top=True )
 
 			while True:
 				event, values = window.read( )
@@ -5756,187 +5778,6 @@ class InputWindow( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
-class Executable( ):
-	'''
-	    Make a "Windows os" executable with PyInstaller
-	    Copyright 2023 PySimpleSoft, Inc. and/or its licensors.
-	    All rights reserved.
-	    Redistribution, modification, or any other use of PySimpleGUI or any
-	    portion thereof is subject to the terms of the PySimpleGUI
-	    License Agreement available at https://eula.pysimplegui.com.
-	    You may not redistribute, modify or otherwise use PySimpleGUI or
-	    its contents except pursuant to the PySimpleGUI License Agreement.
-	'''
-
-	def __init__( self ):
-		sg.theme( 'DarkGrey15' )
-		sg.theme_input_text_color( '#FFFFFF' )
-		sg.theme_element_text_color( '#69B1EF' )
-		sg.theme_text_color( '#69B1EF' )
-		self.theme_background = sg.theme_background_color( )
-		self.theme_textcolor = sg.theme_text_color( )
-		self.element_forecolor = sg.theme_element_text_color( )
-		self.element_backcolor = sg.theme_background_color( )
-		self.text_backcolor = sg.theme_text_element_background_color( )
-		self.text_forecolor = sg.theme_element_text_color( )
-		self.input_forecolor = sg.theme_input_text_color( )
-		self.input_backcolor = sg.theme_input_background_color( )
-		self.button_backcolor = sg.theme_button_color_background( )
-		self.button_forecolor = sg.theme_button_color_text( )
-		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
-		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
-		self.form_size = (600, 600)
-
-	def __dir__( self ) -> List[ str ] | None:
-		'''
-
-		    Purpose:
-		    --------
-		    Creates a List[ str ] comprised of type members
-
-		    Parameters:
-		    ----------
-			self
-
-		    Returns:
-		    ---------
-			List[ str ] | None
-
-		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
-
-	def show( self ) -> None:
-		'''
-
-		    Purpose:
-		    --------
-		    Method displays the control/form
-
-		    Parameters:
-		    ----------
-		    self
-
-		    Returns:
-		    --------
-		    None
-
-		'''
-		try:
-			layout = [ [ sg.Text( 'PyInstaller EXE Creator', font = 'Any 15' ) ],
-			           [ sg.Text( 'Source Python File' ),
-			             sg.Input( key = '-sourcefile-', size = (45, 1) ),
-			             sg.FileBrowse( file_types = (("Python Files", "*.py"),) ) ],
-			           [ sg.Text( 'Icon File' ), sg.Input( key = '-iconfile-', size = (45, 1) ),
-			             sg.FileBrowse( file_types = (("Icon Files", "*.ico"),) ) ],
-			           [ sg.Frame( 'Output', font = 'Any 15', layout = [
-					           [ sg.Output( size = (65, 15), font = 'Courier 10' ) ] ] ) ],
-			           [ sg.Button( 'Make EXE', bind_return_key = True ),
-			             sg.Button( 'Quit', button_color = ('white', 'firebrick3') ) ],
-			           [ sg.Text( 'Made with PySimpleGUI (www.PySimpleGUI.org)',
-				           auto_size_text = True,
-				           font = 'Courier 8' ) ] ]
-
-			window = sg.Window( 'PySimpleGUI EXE Maker', layout,
-				size = self.form_size,
-				auto_size_text = False,
-				auto_size_buttons = False,
-				default_element_size = (20, 1),
-				text_justification = 'right' )
-			# ---===--- Loop taking in user path --- #
-			while True:
-				event, values = window.read( )
-				if event in ('Exit', 'Quit', None):
-					break
-
-				source_file = values[ '-sourcefile-' ]
-				icon_file = values[ '-iconfile-' ]
-				icon_option = '-i "{}"'.format( icon_file ) if icon_file else ''
-				source_path, source_filename = os.path.split( source_file )
-				workpath_option = '--workpath "{}"'.format( source_path )
-				dispath_option = '--distpath "{}"'.format( source_path )
-				specpath_option = '--specpath "{}"'.format( source_path )
-				folder_to_remove = os.path.join( source_path, source_filename[ :-3 ] )
-				file_to_remove = os.path.join( source_path, source_filename[ :-3 ] + '.spec' )
-				command_line = 'pyinstaller -wF --clean "{}" {} {} {} {}'.format( source_file,
-					icon_option, workpath_option, dispath_option, specpath_option )
-
-				if event == 'Make EXE':
-					try:
-						print( command_line )
-						print( 'Making EXE...the program has NOT locked up...' )
-						window.refresh( )
-						# print('Running command {}'.format(command_line))
-						out, err = runCommand( command_line, window = window )
-						shutil.rmtree( folder_to_remove )
-						os.remove( file_to_remove )
-						print( '**** DONE ****' )
-					except:
-						sg.PopupError( 'Something went wrong',
-							'close this window and copy command line from documents printed out '
-							'in '
-							'main window',
-							'Here is the cleaned_lines from the run', out )
-						print(
-							'Copy and paste this line into the command prompt to manually run '
-							'PyInstaller:\n\n',
-							command_line )
-		except Exception as e:
-			exception = Error( e )
-			exception.module = 'Booger'
-			exception.cause = 'Executable'
-			exception.method = 'show( self)'
-			error = ErrorDialog( exception )
-			error.show( )
-
-	def run_command( cmd, timeout = None, window = None ):
-		"""
-
-			Purpose:
-			--------
-            run shell command
-
-			Parameters:
-			-----------
-            @param cmd: command to execute
-            @param timeout: timeout for command execution
-
-			Returns:
-			--------
-            @return: (return code from command, command cleaned_lines)
-
-		"""
-		try:
-			p = subprocess.Popen( cmd, shell = True, stdout = subprocess.PIPE,
-				stderr = subprocess.STDOUT )
-			output = ''
-			for line in p.stdout:
-				line = line.decode( errors = 'replace' if (sys.version_info) < (3, 5)
-				else 'backslashreplace' ).rstrip( )
-				output += line
-				print( line )
-				if window:
-					window.Refresh( )
-
-			retval = p.wait( timeout )
-
-			return (retval, output)
-		except Exception as e:
-			exception = Error( e )
-			exception.module = 'Booger'
-			exception.cause = 'Executable'
-			exception.method = 'show( self)'
-			error = ErrorDialog( exception )
-			error.show( )
 
 class ThemeSelector( ):
 	'''
@@ -6022,7 +5863,8 @@ class ThemeSelector( ):
 			           [ sg.Button( 'Exit' ) ] ]
 
 			window = sg.Window( 'Look and Feel Browser', layout,
-				size = self.form_size )
+				size=self.form_size,
+				keep_on_top=True )
 
 			# Event Loop
 			while True:
@@ -6041,6 +5883,7 @@ class ThemeSelector( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class UrlImageViewer( ):
 	'''
@@ -6123,7 +5966,8 @@ class UrlImageViewer( ):
 			             r'/PNG_transparency_demonstration_1.png')
 			layout = [ [ sg.Image( urllib.request.urlopen( image_URL ).read( ) ) ] ]
 			window = sg.Window( 'Image From URL', layout,
-				size = self.form_size )
+				size=self.form_size,
+				keep_on_top=True )
 			while True:
 				event, values = window.read( )
 				if event == sg.WIN_CLOSED or event == 'Exit':
@@ -6137,6 +5981,7 @@ class UrlImageViewer( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class AutoComplete( ):
 	"""
@@ -6369,7 +6214,9 @@ class CheckBox( ):
 			             sg.Text( False, enable_events = True, k = ('-TEXT-', 2) ) ],
 			           [ sg.Button( 'Go' ), sg.Button( 'Exit' ) ] ]
 
-			window = sg.Window( 'Custom Checkboxes', layout, font = "_ 14" )
+			window = sg.Window( 'Custom Checkboxes', layout,
+				font = ( 'Roboto', 14 ),
+				keep_on_top=True )
 			while True:
 				event, values = window.read( )
 				print( event, values )
@@ -6542,7 +6389,8 @@ class MachineLearningWindow( ):
 			           [ sg.Cancel( ) ] ]
 
 			# create_small_embedding the form`
-			window = sg.Window( 'Custom Progress Meter', layout )
+			window = sg.Window( 'Custom Progress Meter', layout,
+				keep_on_top=True )
 			progress_bar = window[ 'progress' ]
 			# loop that would normally do something useful
 			for i in range( 1000 ):

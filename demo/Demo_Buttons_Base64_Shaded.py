@@ -21,7 +21,7 @@ def main():
     sg.theme('Dark Green 7')
     layout = [  [sg.Text('Some Base64 Buttons', font='Default 16')],
                 [sg.Text('The size is modified using the image_subsample parameter')],
-                [sg.Text("All of these buttons are contained in this program's Source code")],
+                [sg.Text("All of these buttons are contained in this program's booger code")],
                 [sg.Text('These are not super-attractive buttons... better are coming... perhaps with your help.')],
                 [sg.Text('The point is that it is not difficult for you to add button graphics to your GUI')],
 

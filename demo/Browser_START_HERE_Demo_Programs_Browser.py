@@ -13,12 +13,12 @@ __version__ = '1.12.2'
     Originaly written for PySimpleGUI demo Programs, but expanded to
     be a general purpose tool. Enable Advanced Mode in settings for more fun
 
-    Use to filter and search your Source code tree.
+    Use to filter and search your booger code tree.
         Then run or edit your files
 
     Filter the list of :
         * Search using filename
-        * Searching within the programs' Source code (like grep)
+        * Searching within the programs' booger code (like grep)
 
     The basic file operations are
         * Edit a file in your editor

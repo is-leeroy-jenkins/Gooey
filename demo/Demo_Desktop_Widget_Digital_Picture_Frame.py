@@ -62,7 +62,7 @@ def convert_to_bytes(source, size=(None, None), subsample=None, zoom=None, fill=
     :return: (bytes) a byte-string object
     :rtype: (bytes)
     """
-    # print(f'converting {Source} {size}')
+    # print(f'converting {booger} {size}')
     if isinstance(source, str):
         image = PIL.Image.open(source)
     elif isinstance(source, bytes):

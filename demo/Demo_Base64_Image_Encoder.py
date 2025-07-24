@@ -12,7 +12,7 @@ import base64
 def main():
     OUTPUT_FILENAME = 'output.py'
 
-    folder = sg.popup_get_folder('Source folder for images\nImages will be encoded and results saved to %s'%OUTPUT_FILENAME,
+    folder = sg.popup_get_folder('booger folder for images\nImages will be encoded and results saved to %s'%OUTPUT_FILENAME,
                                title='Base64 Encoder')
 
     if not folder:

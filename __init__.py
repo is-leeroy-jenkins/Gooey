@@ -771,8 +771,8 @@ else:
 DEFAULT_USER_SETTINGS_WIN_PATH = r'~\AppData\Local\PySimpleGUI\settings'
 DEFAULT_USER_SETTINGS_LINUX_PATH = r'~/.config/PySimpleGUI/settings'
 DEFAULT_USER_SETTINGS_MAC_PATH = r'~/Library/Application Support/PySimpleGUI/settings'
-DEFAULT_USER_SETTINGS_TRINKET_PATH = r'Source'
-DEFAULT_USER_SETTINGS_REPLIT_PATH = r'Source'
+DEFAULT_USER_SETTINGS_TRINKET_PATH = r'booger'
+DEFAULT_USER_SETTINGS_REPLIT_PATH = r'booger'
 DEFAULT_USER_SETTINGS_UNKNOWN_OS_PATH = r'~/Library/Application Support/PySimpleGUI/settings'
 DEFAULT_USER_SETTINGS_PATH = None  # value set by user to override all paths above
 DEFAULT_USER_SETTINGS_PYSIMPLEGUI_PATH = None  # location of the global PySimpleGUI settings
@@ -12235,7 +12235,7 @@ def shell_with_animation(
 # Interface to saving / loading user program settings in json format
 # This is a new set of APIs supplied by PySimpleGUI that enables users to easily set/save/load individual
 # settings.  They are automatically saved to a JSON file. If no file/path is specified then a filename is
-# created from the Source file filename.
+# created from the booger file filename.
 
 
 class UserSettings:
@@ -12494,7 +12494,7 @@ class UserSettings:
             elif running_mac():
                 path = os.path.expanduser(DEFAULT_USER_SETTINGS_MAC_PATH)
             else:
-                path = 'Source'
+                path = 'booger'
 
         full_filename = os.path.join(path, filename)
         return (full_filename, path, filename)

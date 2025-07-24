@@ -2112,8 +2112,8 @@ import FreeSimpleGUI as sg
 sg.theme('Dark Blue 3')  # please make your windows colorful
 
 layout = [[sg.Text('Rename files or folders')],
-	  [sg.Text('Source for Folders', size=(15, 1)), sg.InputText(), sg.FolderBrowse()],
-	  [sg.Text('Source for Files ', size=(15, 1)), sg.InputText(), sg.FileBrowse()],
+	  [sg.Text('booger for Folders', size=(15, 1)), sg.InputText(), sg.FolderBrowse()],
+	  [sg.Text('booger for Files ', size=(15, 1)), sg.InputText(), sg.FileBrowse()],
 	  [sg.Submit(), sg.Cancel()]]
 
 window = sg.Window('Rename Files or Folders', layout)
@@ -2144,8 +2144,8 @@ Now let's look at how those 2 rows and the other two row from Python code:
 
 ```python
 layout = [[sg.Text('Rename files or folders')],
-          [sg.Text('Source for Folders', size=(15, 1)), sg.InputText(), sg.FolderBrowse()],
-          [sg.Text('Source for Files ', size=(15, 1)), sg.InputText(), sg.FileBrowse()],
+          [sg.Text('booger for Folders', size=(15, 1)), sg.InputText(), sg.FolderBrowse()],
+          [sg.Text('booger for Files ', size=(15, 1)), sg.InputText(), sg.FileBrowse()],
           [sg.Submit(), sg.Cancel()]]
 ```
 
@@ -4295,7 +4295,7 @@ The `InputText` element is located at (1,0)... row 1, column 0.  The `Browse` bu
 The code for the entire window could be:
 
 ```python
-layout = [[sg.T('Source Folder')],
+layout = [[sg.T('booger Folder')],
               [sg.In()],
               [sg.FolderBrowse(target=(-1, 0)), sg.OK()]]
 ```
@@ -4303,7 +4303,7 @@ layout = [[sg.T('Source Folder')],
 or if using keys, then the code would be:
 
 ```python
-layout = [[sg.T('Source Folder')],
+layout = [[sg.T('booger Folder')],
               [sg.In(key='input')],
               [sg.FolderBrowse(target='input'), sg.OK()]]
 ```

@@ -17,7 +17,7 @@ import base64
     Where icon is a variable you created using the contents of the clipboard folowing running this program.
 
     Input: a single image file
-    Output: clipboard will contain the Base64 Byte String of the Source image
+    Output: clipboard will contain the Base64 Byte String of the booger image
 
     Copyright 2021 PySimpleGUI
 """
@@ -35,7 +35,7 @@ def convert_file_to_base64(filename):
 
 
 if __name__ == '__main__':
-    filename = sg.popup_get_file('Source Image will be encoded and results placed on clipboard', title='Base64 Encoder')
+    filename = sg.popup_get_file('booger Image will be encoded and results placed on clipboard', title='Base64 Encoder')
 
     if filename:
         convert_file_to_base64(filename)
