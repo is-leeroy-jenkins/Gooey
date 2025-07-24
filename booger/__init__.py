@@ -4274,7 +4274,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def create_first( self, items: list ) -> list[ list[ Text | Any ] ] | None:
+	def create_first( self, items: list ) -> list[ list[ Text ] ] | None:
 		'''
 
             Purpose:
