@@ -4631,16 +4631,6 @@ class ChartPanel( Dark ):
 
     '''
 
-	@property
-	def header( self ) -> str:
-		if self.__header is not None:
-			return self.__header
-
-	@header.setter
-	def header( self, value: str ):
-		if value is not None:
-			self.__header = value
-
 	def __init__( self ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
@@ -4758,6 +4748,7 @@ class ChartPanel( Dark ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+
 class CsvForm( Dark ):
 	'''
 
@@ -4768,16 +4759,6 @@ class CsvForm( Dark ):
         Provides form that reads CSV file with pandas
 
 	'''
-
-	@property
-	def header( self ) -> str:
-		if self.__header is not None:
-			return self.__header
-
-	@header.setter
-	def header( self, value: str ):
-		if value is not None:
-			self.__header = value
 
 	def __init__( self ):
 		super( ).__init__( )
@@ -4804,6 +4785,7 @@ class CsvForm( Dark ):
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
+
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -4826,6 +4808,7 @@ class CsvForm( Dark ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -4899,6 +4882,7 @@ class CsvForm( Dark ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+
 class ExcelForm( Dark ):
 	'''
 
@@ -4935,6 +4919,7 @@ class ExcelForm( Dark ):
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (1250, 700)
 
+
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -4957,6 +4942,7 @@ class ExcelForm( Dark ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -5051,6 +5037,7 @@ class ExcelForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class GraphForm( Dark ):
 	'''
