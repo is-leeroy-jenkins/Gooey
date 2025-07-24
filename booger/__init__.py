@@ -5016,12 +5016,13 @@ class ExcelForm( Dark ):
 			            ) ],
 			            [ sg.Sizegrip( ) ], ]
 			_window = sg.Window( ' Booger', _layout,
-				size = self.form_size,
-				grab_anywhere = True,
-				icon = self.icon_path,
-				font = self.theme_font,
-				resizable = True,
-				right_click_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT )
+				size=self.form_size,
+				keep_on_top=True,
+				grab_anywhere=True,
+				icon=self.icon_path,
+				font=self.theme_font,
+				resizable=True,
+				right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT )
 			_event, _values = _window.read( )
 			if _event in (sg.WIN_X_EVENT, '-CLOSE-'):
 				_window.close( )
