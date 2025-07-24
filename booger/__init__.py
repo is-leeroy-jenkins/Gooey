@@ -61,6 +61,7 @@ import numpy as np
 import os
 from pandas import read_csv as CsvReader
 from pandas import read_excel as ExcelReader
+from pydantic import BaseModel
 from PIL import Image, ImageTk, ImageSequence
 from static import EXT, Client
 from sys import exit, exc_info
@@ -68,8 +69,7 @@ from minion import App
 import traceback
 import urllib.request
 import webbrowser
-from typing import Dict, List, Tuple
-
+from typing import Dict, List, Tuple, Any, Text
 
 class Error( Exception ):
 	'''
@@ -134,6 +134,7 @@ class Error( Exception ):
 		return [ 'message', 'cause', 'error',
 		         'method', 'module', 'scaler',
 		         'stack_trace', 'info' ]
+
 
 class ButtonIcon( ):
 	'''
@@ -248,7 +249,8 @@ class TitleIcon( ):
 		'''
 		return [ 'folder', 'name', 'authority_filepath' ]
 
-class Dark( ):
+
+class Dark( BaseModel ):
 	'''
 
         Constructor:
@@ -2768,7 +2770,7 @@ class PdfForm( Dark ):
 					if zoom == 0:  # total page
 						pix = dlist.get_pixmap( alpha = False )
 					else:
-						pix = dlist.get_pixmap( alpha = False, matrix = mat, clip = clip )
+						pix = dlist.get_pixmap( alpha = False, matrix = mat, clip=clip )
 					return pix.tobytes( )  # return the PNG image
 
 				cur_page = 0
@@ -2870,6 +2872,7 @@ class PdfForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class CalendarDialog( Dark ):
 	'''
@@ -2981,12 +2984,13 @@ class CalendarDialog( Dark ):
 
 			_days = [ 'SUN', 'MON', 'TUE', 'WEC', 'THU', 'FRI', 'SAT' ]
 
-			_cal = sg.popup_get_date( title = 'Calendar',
-				no_titlebar = False,
-				icon = self.icon_path,
-				month_names = _months,
-				day_abbreviations = _days,
-				close_when_chosen = True )
+			_cal = sg.popup_get_date( title='Calendar',
+				no_titlebar=False,
+				icon=self.icon_path,
+				keep_on_top=True,
+				month_names=_months,
+				day_abbreviations=_days,
+				close_when_chosen=True )
 
 			self.selected_item = _cal
 		except Exception as e:
@@ -2996,6 +3000,7 @@ class CalendarDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class ComboBoxDialog( Dark ):
 	'''
@@ -3007,6 +3012,7 @@ class ComboBoxDialog( Dark ):
             Logger object provides form for log printing
 
 	'''
+	selected_item: str
 
 	def __init__( self, data: list = None ):
 		super( ).__init__( )
@@ -3034,6 +3040,7 @@ class ComboBoxDialog( Dark ):
 		self.form_size = (400, 150)
 		self.items = data
 
+
 	def __str__( self ) -> str | None:
 		'''
 
@@ -3053,7 +3060,8 @@ class ComboBoxDialog( Dark ):
 		if self.selected_item is not None:
 			return self.selected_item
 
-	def __dir__( self ) -> List[ str ] | None:
+
+	def __dir__( self ) -> List[ str ]:
 		'''
 
 		    Purpose:
@@ -3075,6 +3083,7 @@ class ComboBoxDialog( Dark ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -3109,8 +3118,9 @@ class ComboBoxDialog( Dark ):
 			              sg.Cancel( size = _btnsz ) ] ]
 
 			_window = sg.Window( '  Booger', _layout,
-				icon = self.icon_path,
-				size = self.form_size )
+				icon=self.icon_path,
+				keep_on_top=True,
+				size=self.form_size )
 
 			while True:
 				_event, _values = _window.read( )
@@ -3132,6 +3142,7 @@ class ComboBoxDialog( Dark ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+
 class ListBoxDialog( Dark ):
 	'''
 
@@ -3142,6 +3153,10 @@ class ListBoxDialog( Dark ):
             List search and selection
 
     '''
+	selected_item: str | None
+	items: List[ str ]
+	image: str
+	form_size: tuple[ int, int ]
 
 	def __init__( self, data: list[ str ] = None ):
 		super( ).__init__( )
@@ -3169,6 +3184,7 @@ class ListBoxDialog( Dark ):
 		self.form_size = (400, 250)
 		self.image = os.getcwd( ) + r'\resources\img\app\dialog\lookup.png'
 		self.items = data
+		self.selected_item = None
 
 	def __str__( self ) -> str | None:
 		'''
@@ -3256,8 +3272,9 @@ class ListBoxDialog( Dark ):
 			              sg.Text( size = (3, 1) ), sg.Button( 'Exit', size = _btnsize ) ] ]
 
 			_window = sg.Window( '  Booger', _layout,
-				size = self.form_size,
-				font = self.theme_font )
+				size=self.form_size,
+				keep_on_top=True,
+				font=self.theme_font )
 
 			while True:
 				_event, _values = _window.read( )
@@ -3286,6 +3303,7 @@ class ListBoxDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class ColorDialog( Dark ):
 	'''
@@ -4111,6 +4129,7 @@ class ColorDialog( Dark ):
 			_error = ErrorDialog( _exception )
 			_error.show( )
 
+
 class BudgetForm( Dark ):
 	'''
 
@@ -4123,6 +4142,10 @@ class BudgetForm( Dark ):
             Class defining basic dashboard for the application
 
     '''
+	titlelayout: list[ list[ Text | Any ] ]
+	headerlayout: list[ list[ Text ] ]
+	firstlayout: list[ list[ Text ] ]
+
 
 	def __init__( self ):
 		super( ).__init__( )
@@ -4178,7 +4201,7 @@ class BudgetForm( Dark ):
 		         'create_first', 'create_second', 'create_third',
 		         'create_fourth', 'set_layout', 'show' ]
 
-	def create_title( self, items: list ) -> list:
+	def create_title( self, items: list ) -> list[ list[ Text | Any ] ] | None:
 		'''
 
             Purpose:
@@ -4206,7 +4229,7 @@ class BudgetForm( Dark ):
 						  sg.Push( background_color = _mblk ),
 						  sg.Text( f'{items[ 1 ]}', font = _font, background_color = _mblk ) ],
 				]
-				self.__titlelayout = _title
+				self.titlelayout = _title
 				return _title
 			except Exception as e:
 				exception = Error( e )
@@ -4216,7 +4239,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def create_header( self, items: list ) -> list:
+	def create_header( self, items: list ) -> list[ list[ str | Any ] ] | None:
 		'''
 
             Purpose:
@@ -4241,7 +4264,7 @@ class BudgetForm( Dark ):
 				_header = [ [ sg.Push( ), sg.Text( f'{items[ 0 ]}', font = _hdr ), sg.Push( ) ],
 				            [ sg.Text( f'{items[ 1 ]}' ) ],
 				            [ sg.Text( f'{items[ 2 ]}' ) ] ]
-				self.__headerlayout = _header
+				self.headerlayout = _header
 				return _header
 			except Exception as e:
 				exception = Error( e )
@@ -4251,7 +4274,7 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-	def create_first( self, items: list ) -> list:
+	def create_first( self, items: list ) -> list[ list[ Text | Any ] ] | None:
 		'''
 
             Purpose:
@@ -4280,7 +4303,7 @@ class BudgetForm( Dark ):
 				           [ sg.Push( ), sg.Text( 'Block 1 line 4', font = _hdr ), sg.Push( ) ],
 				           [ sg.Push( ), sg.Text( 'Block 1 line 5', font = _hdr ), sg.Push( ) ],
 				           [ sg.Push( ), sg.Text( 'Block 1 line 6', font = _hdr ), sg.Push( ) ] ]
-				self.__firstlayout = _first
+				self.firstlayout = _first
 				return _first
 			except Exception as e:
 				exception = Error( e )
