@@ -264,6 +264,18 @@ class Dark( BaseModel ):
 
     '''
 
+	theme_background: str
+	theme_textcolor: str
+	element_forecolor: str
+	element_backcolor: str
+	text_backcolor: str
+	text_forecolor: str
+	input_forecolor: str
+	input_backcolor: str
+	button_backcolor: str
+	button_forecolor: str
+	button_color: tuple[ str, str ]
+
 	class Config:
 		arbitrary_types_allowed = True
 		extra = 'ignore'
@@ -5254,9 +5266,10 @@ class GraphForm( Dark ):
 			            [ sg.Col( _leftcolumn ), sg.Image( key = '-IMAGE-' ) ],
 			            [ sg.B( 'Draw' ), sg.B( 'Exit' ) ] ]
 
-			_window = sg.Window( 'Booger', _layout, finalize = True )
+			_win = sg.Window( 'Booger', _layout,
+				keep_on_top=True, finalize=True )
 
-			return _window
+			return _win
 
 		_window = create_window( )
 
@@ -5279,6 +5292,7 @@ class GraphForm( Dark ):
 					draw_figure( _window[ '-IMAGE-' ], _func( ) )
 
 		_window.close( )
+
 
 class FileBrowser( ):
 	'''
@@ -5346,6 +5360,7 @@ class FileBrowser( ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -5521,6 +5536,7 @@ class ChatBot( ):
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
+
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5543,6 +5559,7 @@ class ChatBot( ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -5810,6 +5827,7 @@ class ThemeSelector( ):
 
 	'''
 
+
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -5834,6 +5852,7 @@ class ThemeSelector( ):
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (300, 400)
 
+
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5856,6 +5875,7 @@ class ThemeSelector( ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -5940,6 +5960,7 @@ class UrlImageViewer( ):
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
+
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5962,6 +5983,7 @@ class UrlImageViewer( ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color', 'input_text', 'show' ]
+
 
 	def show( self ) -> None:
 		'''
@@ -6027,6 +6049,9 @@ class AutoComplete( ):
 	    this behavior to
 	        make it stay at the beignning or the end
 	"""
+	window: sg.Window
+	layout: list
+
 
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
@@ -6054,6 +6079,7 @@ class AutoComplete( ):
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
 
 	def show( self ) -> None:
 		'''
