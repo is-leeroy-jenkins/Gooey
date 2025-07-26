@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 import FreeSimpleGUI as sg
 import cv2 as cv
 # from PIL import Image

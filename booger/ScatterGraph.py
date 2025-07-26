@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import FreeSimpleGUI as sg
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt

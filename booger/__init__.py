@@ -57,6 +57,8 @@ import matplotlib.figure
 from matplotlib import cm
 from mpl_toolkits.mplot3d.axes3d import get_test_data
 from matplotlib.ticker import NullFormatter
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, FigureCanvasAgg
+from matplotlib.figure import Figure
 from mpl_toolkits.axes_grid1.axes_rgb import RGBAxes
 import numpy as np
 import os
@@ -64,6 +66,7 @@ from pandas import read_csv as CsvReader
 from pandas import read_excel as ExcelReader
 from pydantic import BaseModel
 from PIL import Image, ImageTk, ImageSequence
+from random import randint
 from static import EXT, Client
 from sys import exit, exc_info
 from minion import App
@@ -71,6 +74,7 @@ import traceback
 import urllib.request
 import webbrowser
 from typing import Dict, List, Tuple, Any, Text, Optional
+
 
 class Error( Exception ):
 	'''
@@ -4614,6 +4618,7 @@ class BudgetForm( Dark ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+
 class ChartPanel( Dark ):
 	'''
 
@@ -5385,6 +5390,7 @@ class FileBrowser( ):
 
 		window.close( )
 
+
 class ChatWindow( ):
 	'''
 
@@ -5489,6 +5495,7 @@ class ChatWindow( ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class ChatBot( ):
 
@@ -6165,6 +6172,7 @@ class AutoComplete( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+
 class CheckBox( ):
 	"""
 
@@ -6266,6 +6274,7 @@ class CheckBox( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
+
 
 class MachineLearningWindow( ):
 	'''
@@ -6463,3 +6472,82 @@ class MachineLearningWindow( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+
+class AnimatedGraph( ):
+
+	def __init__( self ):
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.theme_font = ('Roboto', 11)
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon = self.icon_path )
+		sg.set_options( font = self.theme_font )
+		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
+
+	def show( self ):
+		NUM_DATAPOINTS = 10000
+		# define the form layout
+		layout = [ [ sg.Text( 'Animated Matplotlib', size = (40, 1),
+			justification = 'center', font = 'Helvetica 20' ) ],
+		           [ sg.Canvas( size = (640, 480), key = '-CANVAS-' ) ],
+		           [ sg.Text( 'Progress through the data' ) ],
+		           [ sg.Slider( range = (0, NUM_DATAPOINTS), size = (60, 10),
+			           orientation = 'h', key = '-SLIDER-' ) ],
+		           [ sg.Text( 'Number of data points to display on screen' ) ],
+		           [ sg.Slider( range = (10, 500), default_value = 40, size = (40, 10),
+			           orientation = 'h', key = '-SLIDER-DATAPOINTS-' ) ],
+		           [ sg.Button( 'Exit', size = (10, 1), pad = ((280, 0), 3),
+			           font = 'Helvetica 14' ) ] ]
+
+		def draw_figure( canvas, figure, loc = (0, 0) ):
+			figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
+			figure_canvas_agg.draw( )
+			figure_canvas_agg.get_tk_widget( ).pack( side = 'top', fill = 'both', expand = 1 )
+			return figure_canvas_agg
+
+		# create the form and show it without the plot
+		window = sg.Window( 'demo Application - Embedding Matplotlib In PySimpleGUI',
+			layout, finalize = True )
+
+		canvas_elem = window[ '-CANVAS-' ]
+		slider_elem = window[ '-SLIDER-' ]
+		canvas = canvas_elem.TKCanvas
+
+		# draw the initial plot in the window
+		fig = Figure( )
+		ax = fig.add_subplot( 111 )
+		ax.set_xlabel( "X axis" )
+		ax.set_ylabel( "Y axis" )
+		ax.grid( )
+		fig_agg = draw_figure( canvas, fig )
+		# make a bunch of random data points
+		dpts = [ randint( 0, 10 ) for x in range( NUM_DATAPOINTS ) ]
+
+		for i in range( len( dpts ) ):
+			event, values = window.read( timeout = 10 )
+			if event in ('Exit', None):
+				exit( 69 )
+			slider_elem.update( i )  # slider shows "progress" through the data points
+			ax.cla( )  # clear the subplot
+			ax.grid( )  # draw the grid
+			data_points = int(
+				values[ '-SLIDER-DATAPOINTS-' ] )  # draw this many data points (on next line)
+			ax.plot( range( data_points ), dpts[ i:i + data_points ], color = 'purple' )
+			fig_agg.draw( )
+
+		window.close( )
