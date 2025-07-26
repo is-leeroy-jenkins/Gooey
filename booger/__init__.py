@@ -52,7 +52,6 @@ from googlesearch import search
 import random
 import io
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasAgg
 import matplotlib.figure
 from matplotlib import cm
 from mpl_toolkits.mplot3d.axes3d import get_test_data
@@ -61,6 +60,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, FigureCanvasAgg
 from matplotlib.figure import Figure
 from mpl_toolkits.axes_grid1.axes_rgb import RGBAxes
 import numpy as np
+from numpy.random import rand
 import os
 from pandas import read_csv as CsvReader
 from pandas import read_excel as ExcelReader
@@ -73,7 +73,13 @@ from minion import App
 import traceback
 import urllib.request
 import webbrowser
+import cv2
 from typing import Dict, List, Tuple, Any, Text, Optional
+from mpl_toolkits.mplot3d.axes3d import get_test_data
+from matplotlib.ticker import NullFormatter
+import inspect
+
+matplotlib.use( 'TkAgg' )
 
 
 class Error( Exception ):
@@ -140,7 +146,6 @@ class Error( Exception ):
 		         'method', 'module', 'scaler',
 		         'stack_trace', 'info' ]
 
-
 class ButtonIcon( ):
 	'''
 
@@ -197,7 +202,6 @@ class ButtonIcon( ):
 		'''
 		return [ 'button', 'name', 'file_path' ]
 
-
 class TitleIcon( ):
 	'''
 
@@ -253,7 +257,6 @@ class TitleIcon( ):
 
 		'''
 		return [ 'folder', 'name', 'authority_filepath' ]
-
 
 class Dark(  ):
 	'''
@@ -315,7 +318,6 @@ class Dark(  ):
 		         'input_forecolor', 'button_color', 'button_backcolor',
 		         'button_forecolor', 'icon_path', 'theme_font',
 		         'scrollbar_color' ]
-
 
 class FileDialog( Dark ):
 	'''
@@ -456,7 +458,6 @@ class FileDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class FolderDialog( Dark ):
 	'''
@@ -1279,7 +1280,6 @@ class ErrorDialog( Dark ):
 
 		_window.close( )
 
-
 class InputDialog( Dark ):
 	'''
 
@@ -1415,7 +1415,6 @@ class InputDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ScrollingDialog( Dark ):
 	'''
@@ -1669,7 +1668,6 @@ class ContactForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class GridForm( Dark ):
 	'''
@@ -2650,6 +2648,7 @@ class ImageSizeEncoder( Dark ):
 			sg.user_settings_set_entry( '-_height-', _values[ '-HEIGHT-' ] )
 		_window.close( )
 
+# noinspection PyShadowingNames
 class PdfForm( Dark ):
 	'''
 
@@ -2739,6 +2738,7 @@ class PdfForm( Dark ):
 				dlist_tab = [ None ] * page_count
 				title = 'PyMuPDF display of "%s", pages: %i' % (fname, page_count)
 
+				# noinspection PyUnresolvedReferences,PyUnboundLocalVariable
 				def get_page( pno, zoom=0 ):
 					"""
 
@@ -2767,9 +2767,10 @@ class PdfForm( Dark ):
 					elif zoom == 3:  # bot-left
 						clip = fitz.Rect( ml, mb )
 					if zoom == 0:  # total page
-						pix = dlist.get_pixmap( alpha = False )
+						pix = dlist.get_pixmap( alpha=False )
 					else:
-						pix = dlist.get_pixmap( alpha = False, matrix = mat, clip=clip )
+						# noinspection PyUnboundLocalVariable
+						pix = dlist.get_pixmap( alpha=False, matrix=mat, clip=clip )
 					return pix.tobytes( )  # return the PNG image
 
 				cur_page = 0
@@ -2799,7 +2800,8 @@ class PdfForm( Dark ):
 				window = sg.Window( title, layout,
 					return_keyboard_events=True,
 					use_default_focus=False,
-					keep_on_top=True )
+					keep_on_top=True,
+					right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
 
 				old_page = 0
 				old_zoom = 0  # used for zoom on/off
@@ -2814,6 +2816,7 @@ class PdfForm( Dark ):
 					if event in ("Escape:27",):  # this spares me a 'Quit' button!
 						break
 					if event[ 0 ] == chr( 13 ):  # surprise: this is 'Enter'!
+						# noinspection PyBroadException
 						try:
 							cur_page = int( values[ 0 ] ) - 1  # check if valid
 							while cur_page < 0:
@@ -2871,7 +2874,6 @@ class PdfForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class CalendarDialog( Dark ):
 	'''
@@ -2999,7 +3001,6 @@ class CalendarDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ComboBoxDialog( Dark ):
 	'''
@@ -3140,7 +3141,6 @@ class ComboBoxDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ListBoxDialog( Dark ):
 	'''
@@ -3302,7 +3302,6 @@ class ListBoxDialog( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ColorDialog( Dark ):
 	'''
@@ -4128,7 +4127,6 @@ class ColorDialog( Dark ):
 			_error = ErrorDialog( _exception )
 			_error.show( )
 
-
 class BudgetForm( Dark ):
 	'''
 
@@ -4242,7 +4240,6 @@ class BudgetForm( Dark ):
 				error = ErrorDialog( exception )
 				error.show( )
 
-
 	def create_header( self, items: list ) -> list[ list[ str | Any ] ] | None:
 		'''
 
@@ -4277,7 +4274,6 @@ class BudgetForm( Dark ):
 				exception.method = 'create_header( self, items )'
 				error = ErrorDialog( exception )
 				error.show( )
-
 
 	def create_first( self, items: list ) -> list[ list[ Text ] ] | None:
 		'''
@@ -4521,17 +4517,17 @@ class BudgetForm( Dark ):
 			_li = 'Roboto 11'
 			_frasz = (450, 150)
 			_hdrsz = (920, 100)
-			self.__titlelayout = [
+			self.titlelayout = [
 					[ sg.Text( 'Booger', font = _hdr, background_color = _mblk,
 						enable_events = True, grab = False ), sg.Push( background_color = _mblk ),
 					  sg.Text( 'Wednesday 27 Oct 2021', font = _hdr, background_color = _mblk ) ],
 			]
-			self.__headerlayout = [ [ sg.Push( ), sg.Text( 'Top Header', font = _hdr ), sg.Push(
+			self.headerlayout = [ [ sg.Push( ), sg.Text( 'Top Header', font = _hdr ), sg.Push(
 			) ],
 			                        [ sg.Image( source = self.image, subsample = 3,
 				                        enable_events = True ), sg.Push( ) ],
 			                        [ sg.Text( 'Top Header line 2' ), sg.Push( ) ] ]
-			self.__firstlayout = [
+			self.firstlayout = [
 					[ sg.Push( ), sg.Text( 'Block 1 Header', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 1 line 1', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 1 line 2', font = _hdr ), sg.Push( ) ],
@@ -4539,7 +4535,7 @@ class BudgetForm( Dark ):
 					[ sg.Push( ), sg.Text( 'Block 1 line 4', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 1 line 5', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 1 line 6', font = _hdr ), sg.Push( ) ] ]
-			self.__secondlayout = [
+			self.secondlayout = [
 					[ sg.Push( ), sg.Text( 'Block 2 Header', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 2 line 1', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 2 line 2', font = _hdr ), sg.Push( ) ],
@@ -4547,7 +4543,7 @@ class BudgetForm( Dark ):
 					[ sg.Push( ), sg.Text( 'Block 2 line 4', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 2 line 5', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 2 line 6', font = _hdr ), sg.Push( ) ] ]
-			self.__thirdlayout = [
+			self.thirdlayout = [
 					[ sg.Push( ), sg.Text( 'Block 3 Header', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 3 line 1', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 3 line 2', font = _hdr ), sg.Push( ) ],
@@ -4555,7 +4551,7 @@ class BudgetForm( Dark ):
 					[ sg.Push( ), sg.Text( 'Block 3 line 4', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 3 line 5', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 3 line 6', font = _hdr ), sg.Push( ) ] ]
-			self.__fourthlayout = [
+			self.fourthlayout = [
 					[ sg.Push( ), sg.Text( 'Block 4 Header', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 4 line 1', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 4 line 2', font = _hdr ), sg.Push( ) ],
@@ -4563,7 +4559,7 @@ class BudgetForm( Dark ):
 					[ sg.Push( ), sg.Text( 'Block 4 line 4', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 4 line 5', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 4 line 6', font = _hdr ), sg.Push( ) ] ]
-			self.__formlayout = [
+			self.formlayout = [
 					[ sg.Frame( '', self.__titlelayout, pad = (0, 0), background_color = _mblk,
 						expand_x = True, border_width = 0, grab = True ) ],
 					[ sg.Frame( '',
@@ -4590,14 +4586,15 @@ class BudgetForm( Dark ):
 						  pad = BPAD_LEFT, background_color = _blu, border_width = 0,
 						  expand_x = True, expand_y = True ), ],
 					[ sg.Sizegrip( background_color = _mblk ) ] ]
-			_window = sg.Window( '  Booger', self.__formlayout,
-				size = self.form_size,
-				margins = (0, 0),
-				background_color = _blk,
-				grab_anywhere = True,
-				no_titlebar = True,
-				resizable = True,
-				right_click_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
+			_window = sg.Window( '  Booger', self.formlayout,
+				size=self.form_size,
+				margins=(0, 0),
+				background_color=_blk,
+				grab_anywhere=True,
+				no_titlebar=True,
+				keep_on_top=True,
+				resizable=True,
+				right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
 			while True:
 				_event, _values = _window.read( )
 				print( _event, _values )
@@ -4617,7 +4614,6 @@ class BudgetForm( Dark ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ChartPanel( Dark ):
 	'''
@@ -4714,11 +4710,12 @@ class ChartPanel( Dark ):
 			            [ sg.Sizegrip( background_color = _black ) ] ]
 
 			_window = sg.Window( 'Booger', _layout,
-				finalize = True,
-				resizable = True,
-				icon = self.icon_path,
-				font = self.theme_font,
-				size = self.form_size )
+				finalize=True,
+				resizable=True,
+				icon=self.icon_path,
+				keep_on_top=True,
+				font=self.theme_font,
+				size=self.form_size )
 
 			_graph = _window[ '-GRAPH-' ]
 
@@ -4746,7 +4743,6 @@ class ChartPanel( Dark ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class CsvForm( Dark ):
 	'''
@@ -4880,7 +4876,6 @@ class CsvForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ExcelForm( Dark ):
 	'''
@@ -5037,7 +5032,6 @@ class ExcelForm( Dark ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class GraphForm( Dark ):
 	'''
@@ -5280,7 +5274,6 @@ class GraphForm( Dark ):
 
 		_window.close( )
 
-
 class FileBrowser( ):
 	'''
         File Chooser - with clearable history
@@ -5390,7 +5383,6 @@ class FileBrowser( ):
 
 		window.close( )
 
-
 class ChatWindow( ):
 	'''
 
@@ -5495,7 +5487,6 @@ class ChatWindow( ):
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ChatBot( ):
 
@@ -5628,7 +5619,6 @@ class ChatBot( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class InputWindow( ):
 	"""
@@ -5793,7 +5783,7 @@ class InputWindow( ):
 				if event == sg.WIN_CLOSED:
 					break
 
-				window.close( )
+			window.close( )
 		except Exception as e:
 			exception = Error( e )
 			exception.module = 'Booger'
@@ -5801,7 +5791,6 @@ class InputWindow( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class ThemeSelector( ):
 	'''
@@ -5911,7 +5900,6 @@ class ThemeSelector( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
-
 class UrlImageViewer( ):
 	'''
 	    Purpose:
@@ -6010,7 +5998,6 @@ class UrlImageViewer( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class AutoComplete( ):
 	"""
@@ -6172,7 +6159,6 @@ class AutoComplete( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
-
 class CheckBox( ):
 	"""
 
@@ -6274,7 +6260,6 @@ class CheckBox( ):
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
-
 
 class MachineLearningWindow( ):
 	'''
@@ -6387,15 +6372,15 @@ class MachineLearningWindow( ):
 
 			sg.set_options( text_justification = 'left' )
 
-			window = sg.Window( 'Machine Learning',
-				layout, font = ("Helvetica", 12) )
+			window = sg.Window( 'Machine Learning', layout,
+				font=("Helvetica", 12), keep_on_top=True )
 			window.read( )
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
 			exception.module = 'Booger'
 			exception.cause = 'MachineLearningWindow'
-			exception.method = '__build_window( self)'
+			exception.method = 'build_window( self)'
 			error = ErrorDialog( exception )
 			error.show( )
 
@@ -6472,7 +6457,6 @@ class MachineLearningWindow( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
-
 class AnimatedGraph( ):
 
 	def __init__( self ):
@@ -6498,56 +6482,497 @@ class AnimatedGraph( ):
 		sg.set_options( font = self.theme_font )
 		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
+	# noinspection PyUnusedLocal
+	def show( self ):
+		try:
+			NUM_DATAPOINTS = 10000
+			# define the form layout
+			layout = [ [ sg.Text( 'Animated Matplotlib', size = (40, 1),
+				justification = 'center', font = 'Helvetica 20' ) ],
+			           [ sg.Canvas( size = (640, 480), key = '-CANVAS-' ) ],
+			           [ sg.Text( 'Progress through the data' ) ],
+			           [ sg.Slider( range = (0, NUM_DATAPOINTS), size = (60, 10),
+				           orientation = 'h', key = '-SLIDER-' ) ],
+			           [ sg.Text( 'Number of data points to display on screen' ) ],
+			           [ sg.Slider( range = (10, 500), default_value = 40, size = (40, 10),
+				           orientation = 'h', key = '-SLIDER-DATAPOINTS-' ) ],
+			           [ sg.Button( 'Exit', size = (10, 1), pad = ((280, 0), 3),
+				           font = 'Helvetica 14' ) ] ]
+
+			# noinspection PyShadowingNames
+			def draw_figure( canvas, figure ):
+				figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
+				figure_canvas_agg.draw( )
+				figure_canvas_agg.get_tk_widget( ).pack( side = 'top', fill = 'both', expand = 1 )
+				return figure_canvas_agg
+
+			# create the form and show it without the plot
+			window = sg.Window( 'Embedding Matplotlib In Booger', layout,
+				finalize=True,
+				keep_on_top=True,
+				right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT)
+
+			canvas_elem = window[ '-CANVAS-' ]
+			slider_elem = window[ '-SLIDER-' ]
+			canvas = canvas_elem.TKCanvas
+
+			# draw the initial plot in the window
+			fig = Figure( )
+			ax = fig.add_subplot( 111 )
+			ax.set_xlabel( "X axis" )
+			ax.set_ylabel( "Y axis" )
+			ax.grid( )
+			fig_agg = draw_figure( canvas, fig )
+			# make a bunch of random data points
+			dpts = [ randint( 0, 10 ) for x in range( NUM_DATAPOINTS ) ]
+
+			for i in range( len( dpts ) ):
+				event, values = window.read( timeout = 10 )
+				while True:
+					if event in ('Exit', None):
+						window.close( )
+
+					slider_elem.update( i )  # slider shows "progress" through the data points
+					ax.cla( )  # clear the subplot
+					ax.grid( )  # draw the grid
+					data_points = int(
+						values[ '-SLIDER-DATAPOINTS-' ] )  # draw this many data points (on next line)
+					ax.plot( range( data_points ), dpts[ i:i + data_points ], color = 'purple' )
+					fig_agg.draw( )
+
+			window.close( )
+		except Exception as e:
+			exception = Error( e )
+			exception.module = 'Booger'
+			exception.cause = 'AnimatedGraph'
+			exception.method = 'show( self)'
+			error = ErrorDialog( exception )
+			error.show( )
+
+class BarGraph( ):
+
+	def __init__( self ):
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.theme_font = ('Roboto', 11)
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon = self.icon_path )
+		sg.set_options( font = self.theme_font )
+		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
+	def draw_figure( self, canvas, figure ):
+		figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
+		figure_canvas_agg.draw( )
+		figure_canvas_agg.get_tk_widget( ).pack( side = 'top', fill = 'both', expand = 1 )
+		return figure_canvas_agg
 
 	def show( self ):
-		NUM_DATAPOINTS = 10000
-		# define the form layout
-		layout = [ [ sg.Text( 'Animated Matplotlib', size = (40, 1),
-			justification = 'center', font = 'Helvetica 20' ) ],
-		           [ sg.Canvas( size = (640, 480), key = '-CANVAS-' ) ],
-		           [ sg.Text( 'Progress through the data' ) ],
-		           [ sg.Slider( range = (0, NUM_DATAPOINTS), size = (60, 10),
-			           orientation = 'h', key = '-SLIDER-' ) ],
-		           [ sg.Text( 'Number of data points to display on screen' ) ],
-		           [ sg.Slider( range = (10, 500), default_value = 40, size = (40, 10),
-			           orientation = 'h', key = '-SLIDER-DATAPOINTS-' ) ],
-		           [ sg.Button( 'Exit', size = (10, 1), pad = ((280, 0), 3),
-			           font = 'Helvetica 14' ) ] ]
+		label = [ 'Adventure', 'Action', 'Drama', 'Comedy', 'Thriller/Suspense', 'Horror',
+		          'Romantic Comedy', 'Musical',
+		          'Documentary', 'Black Comedy', 'Western', 'Concert/Performance',
+		          'Multiple Genres', 'Reality' ]
+		no_movies = [ 941, 854, 4595, 2125, 942,
+		              509, 548, 149, 1952, 161, 64, 61, 35, 5 ]
 
-		def draw_figure( canvas, figure, loc = (0, 0) ):
-			figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
-			figure_canvas_agg.draw( )
-			figure_canvas_agg.get_tk_widget( ).pack( side = 'top', fill = 'both', expand = 1 )
-			return figure_canvas_agg
+		index = np.arange( len( label ) )
+		plt.bar( index, no_movies )
+		plt.xlabel( 'Genre', fontsize=5 )
+		plt.ylabel( 'No of Movies', fontsize=5 )
+		plt.xticks( index, label, fontsize=5, rotation=30 )
+		plt.title( 'Market Share for Each Genre 1995-2017' )
+		# ------------------------------- END OF YOUR MATPLOTLIB CODE -------------------------------
+		sg.theme( 'DarkGrey15' )
+		fig = plt.gcf( )
+		figure_x, figure_y, figure_w, figure_h = fig.bbox.bounds
+		layout = [ [ sg.Text( 'Plot test', font='Any 18' ) ],
+		           [ sg.Canvas( size=(figure_w, figure_h), key='-CANVAS-' ) ],
+		           [ sg.OK( pad=((figure_w / 2, 0), 3), size=(4, 2) ) ] ]
+		window = sg.Window( 'Embedding Matplotlib', layout,
+			force_toplevel=True,
+			finalize=True,
+			keep_on_top=True,
+			right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
+		self.draw_figure( window[ '-CANVAS-' ].TKCanvas, fig )
+		event, values = window.read( )
+		if event in ('Exit', 'Cancel', None):
+			window.close( )
+
+		window.close()
+
+class ScatterGraph( ):
+
+	def __init__( self ):
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.theme_font = ('Roboto', 11)
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon = self.icon_path )
+		sg.set_options( font = self.theme_font )
+		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
+	def draw_figure( self, canvas, figure ):
+		figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
+		figure_canvas_agg.draw( )
+		figure_canvas_agg.get_tk_widget( ).pack( side='top', fill='both', expand=1 )
+		return figure_canvas_agg
+
+	def show( self ):
+		layout = [ [ sg.Text( 'Animated Matplotlib', size=(40, 1), justification='center',
+			font='Helvetica 20' ) ],
+		           [ sg.Canvas( size=(640, 480), key='-CANVAS-' ) ],
+		           [ sg.Button( 'Exit', size=(10, 2), pad=((280, 0), 3), font='Helvetica 14' ) ] ]
 
 		# create the form and show it without the plot
-		window = sg.Window( 'demo Application - Embedding Matplotlib In PySimpleGUI',
-			layout, finalize = True )
+		window = sg.Window( 'Embedding Matplotlib With Booger', layout,
+			finalize=True,
+			keep_on_top=True,
+			right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
 
 		canvas_elem = window[ '-CANVAS-' ]
-		slider_elem = window[ '-SLIDER-' ]
 		canvas = canvas_elem.TKCanvas
+		# draw the intitial scatter plot
+		fig, ax = plt.subplots( )
+		ax.grid( True )
+		fig_agg = self.draw_figure( canvas, fig )
 
-		# draw the initial plot in the window
-		fig = Figure( )
-		ax = fig.add_subplot( 111 )
-		ax.set_xlabel( "X axis" )
-		ax.set_ylabel( "Y axis" )
-		ax.grid( )
-		fig_agg = draw_figure( canvas, fig )
-		# make a bunch of random data points
-		dpts = [ randint( 0, 10 ) for x in range( NUM_DATAPOINTS ) ]
-
-		for i in range( len( dpts ) ):
+		while True:
 			event, values = window.read( timeout = 10 )
 			if event in ('Exit', None):
-				exit( 69 )
-			slider_elem.update( i )  # slider shows "progress" through the data points
-			ax.cla( )  # clear the subplot
-			ax.grid( )  # draw the grid
-			data_points = int(
-				values[ '-SLIDER-DATAPOINTS-' ] )  # draw this many data points (on next line)
-			ax.plot( range( data_points ), dpts[ i:i + data_points ], color = 'purple' )
+				break
+
+			ax.cla( )
+			ax.grid( True )
+			for color in [ 'red', 'green', 'blue' ]:
+				n = 750
+				x, y = rand( 2, n )
+				scale = 200.0 * rand( n )
+				ax.scatter( x, y, c=color, s=scale, label=color, alpha=0.3, edgecolors='none' )
+			ax.legend( )
 			fig_agg.draw( )
 
 		window.close( )
+
+class StyleGraph( ):
+
+	def __init__( self ):
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.theme_font = ('Roboto', 11)
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon = self.icon_path )
+		sg.set_options( font = self.theme_font )
+		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
+	def create_axis_grid( self ):
+		plt.close( 'all' )
+
+		def get_demo_image( ):
+			# prepare image
+			delta = 0.5
+			extent = (-3, 4, -4, 3)
+			x = np.arange( -3.0, 4.001, delta )
+			y = np.arange( -4.0, 3.001, delta )
+			X, Y = np.meshgrid( x, y )
+			Z1 = np.exp( -X ** 2 - Y ** 2 )
+			Z2 = np.exp( -(X - 1) ** 2 - (Y - 1) ** 2 )
+			Z = (Z1 - Z2) * 2
+			return Z, extent
+
+		def get_rgb( ):
+			Z, extent = get_demo_image( )
+			Z[ Z < 0 ] = 0.
+			Z = Z / Z.max( )
+			R = Z[ :13, :13 ]
+			G = Z[ 2:, 2: ]
+			B = Z[ :13, 2: ]
+			return R, G, B
+
+		fig = plt.figure( 1 )
+		ax = RGBAxes( fig, [ 0.1, 0.1, 0.8, 0.8 ] )
+		r, g, b = get_rgb( )
+		kwargs = dict( origin = "lower", interpolation = "nearest" )
+		ax.imshow_rgb( r, g, b, **kwargs )
+		ax.RGB.set_xlim( 0., 9.5 )
+		ax.RGB.set_ylim( 0.9, 10.6 )
+		plt.draw( )
+		return plt.gcf( )
+
+	def create_figure( self ):
+		# ------------------------------- START OF YOUR MATPLOTLIB CODE -------------------------------
+		fig = matplotlib.figure.Figure( figsize = (5, 4), dpi = 100 )
+		t = np.arange( 0, 3, .01 )
+		fig.add_subplot( 111 ).plot( t, 2 * np.sin( 2 * np.pi * t ) )
+		return fig
+
+	def create_subplot_3d( self ):
+		fig = plt.figure( )
+		ax = fig.add_subplot( 1, 2, 1, projection = '3d' )
+		X = np.arange( -5, 5, 0.25 )
+		Y = np.arange( -5, 5, 0.25 )
+		X, Y = np.meshgrid( X, Y )
+		R = np.sqrt( X ** 2 + Y ** 2 )
+		Z = np.sin( R )
+		surf = ax.plot_surface( X, Y, Z, rstride = 1, cstride = 1, cmap = cm.jet,
+			linewidth = 0, antialiased = False )
+		ax.set_zlim3d( -1.01, 1.01 )
+		fig.colorbar( surf, shrink = 0.5, aspect = 5 )
+		ax = fig.add_subplot( 1, 2, 2, projection = '3d' )
+		X, Y, Z = get_test_data( 0.05 )
+		ax.plot_wireframe( X, Y, Z, rstride = 10, cstride = 10 )
+		return fig
+
+	def create_pyplot_scales( self ):
+		plt.close( 'all' )
+		# Fixing random state for reproducibility
+		np.random.seed( 19680801 )
+
+		# make up some data in the interval ]0, 1[
+		y = np.random.normal( loc = 0.5, scale = 0.4, size = 1000 )
+		y = y[ (y > 0) & (y < 1) ]
+		y.sort( )
+		x = np.arange( len( y ) )
+
+		# plot with various axes scales
+		plt.figure( 1 )
+
+		# linear
+		plt.subplot( 221 )
+		plt.plot( x, y )
+		plt.yscale( 'linear' )
+		plt.title( 'linear' )
+		plt.grid( True )
+
+		# log
+		plt.subplot( 222 )
+		plt.plot( x, y )
+		plt.yscale( 'log' )
+		plt.title( 'log' )
+		plt.grid( True )
+
+		# symmetric log
+		plt.subplot( 223 )
+		plt.plot( x, y - y.mean( ) )
+		plt.yscale( 'symlog', linthreshy = 0.01 )
+		plt.title( 'symlog' )
+		plt.grid( True )
+
+		# logit
+		plt.subplot( 224 )
+		plt.plot( x, y )
+		plt.yscale( 'logit' )
+		plt.title( 'logit' )
+		plt.grid( True )
+		# Format the minor tick labels of the y-axis into empty strings with
+		# `NullFormatter`, to avoid cumbering the axis with too many labels.
+		plt.gca( ).yaxis.set_minor_formatter( NullFormatter( ) )
+		# Adjust the subplot layout, because the logit one may take more space
+		# than usual, due to y-tick labels like "1 - 10^{-3}"
+		plt.subplots_adjust( top = 0.92, bottom = 0.08, left = 0.10, right = 0.95, hspace = 0.25,
+			wspace = 0.35 )
+		return plt.gcf( )
+	# ----------------------------- The draw figure helpful function -----------------------------
+	def draw_figure( self, element, figure ):
+		"""
+		Draws the previously created "figure" in the supplied Image Element
+
+		:param element: an Image Element
+		:param figure: a Matplotlib figure
+		:return: The figure canvas
+		"""
+
+		plt.close( 'all' )  # erases previously drawn plots
+		canv = FigureCanvasAgg( figure )
+		buf = io.BytesIO( )
+		canv.print_figure( buf, format = 'png' )
+		if buf is None:
+			return None
+		buf.seek( 0 )
+		element.update( data = buf.read( ) )
+		return canv
+
+		self.dictionary_of_figures = { 'Axis Grid': self.create_axis_grid,
+		                          'Subplot 3D': self.create_subplot_3d,
+		                          'Scales': self.create_pyplot_scales,
+		                          'Basic Figure': self.create_figure }
+	# ----------------------------- The GUI Section -----------------------------
+	def create_window( self ):
+		"""
+
+			Defines the window's layout and creates the window object.
+			This function is used so that the window's theme can be changed and the window "re-started".
+
+			:return: The Window object
+			:rtype: sg.Window
+
+		"""
+
+		left_col = [ [ sg.T( 'Figures to Draw' ) ],
+		             [ sg.Listbox( list( self.dictionary_of_figures ),
+			             default_values = [ list( self.dictionary_of_figures )[ 0 ] ], size = (15, 5),
+			             key = '-LB-' ) ],
+		             [ sg.T( 'Matplotlib Styles' ) ],
+		             [ sg.Combo( plt.style.available, size = (15, 10), key = '-STYLE-' ) ],
+		             [ sg.T( 'Booger Themes' ) ],
+		             [ sg.Combo( sg.theme_list( ), default_value = sg.theme( ), size = (15, 10),
+			             key = '-THEME-' ) ] ]
+		layout = [ [ sg.T( 'Matplotlib Example', font = 'Any 20' ) ],
+		           [ sg.Col( left_col ), sg.Image( key = '-IMAGE-' ) ],
+		           [ sg.B( 'Draw' ), sg.B( 'Exit' ) ] ]
+		window = sg.Window( 'Matplotlib Embedded Template', layout, finalize=True,
+			keep_on_top=True,
+			right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
+		return window
+
+	def show( self ):
+		window = self.create_window( )
+		while True:
+			event, values = window.read( )
+			print( event, values )
+			if event == 'Exit' or event == sg.WIN_CLOSED:
+				break
+			if event == 'Draw':
+				if values[ '-THEME-' ] != sg.theme( ):  # if new theme chosen, create a new window
+					window.close( )
+					sg.theme( values[ '-THEME-' ] )
+					window = self.create_window( )
+				if values[ '-LB-' ]:  # make sure something selected to draw
+					func = self.dictionary_of_figures[ values[ '-LB-' ][ 0 ] ]
+					if values[ '-STYLE-' ]:
+						plt.style.use( values[ '-STYLE-' ] )
+					self.draw_figure( window[ '-IMAGE-' ], func( ) )
+
+		window.close( )
+
+class WebCamera( ):
+
+	def __init__( self ):
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.theme_font = ('Roboto', 11)
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon = self.icon_path )
+		sg.set_options( font = self.theme_font )
+		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+
+	def show( self ):
+		sg.theme( 'LightGreen' )
+
+		# define the window layout
+		layout = [
+				[ sg.Text( 'OpenCV demo', size = (60, 1), justification = 'center' ) ],
+				[ sg.Image( filename = '', key = '-IMAGE-' ) ],
+				[ sg.Radio( 'None', 'Radio', True, size = (10, 1) ) ],
+				[ sg.Radio( 'threshold', 'Radio', size = (10, 1), key = '-THRESH-' ),
+				  sg.Slider( (0, 255), 128, 1, orientation = 'h', size = (40, 15),
+					  key = '-THRESH SLIDER-' ) ],
+				[ sg.Radio( 'canny', 'Radio', size = (10, 1), key = '-CANNY-' ),
+				  sg.Slider( (0, 255), 128, 1, orientation = 'h', size = (20, 15),
+					  key = '-CANNY SLIDER A-' ),
+				  sg.Slider( (0, 255), 128, 1, orientation = 'h', size = (20, 15),
+					  key = '-CANNY SLIDER B-' ) ],
+				[ sg.Radio( 'blur', 'Radio', size = (10, 1), key = '-BLUR-' ),
+				  sg.Slider( (1, 11), 1, 1, orientation = 'h', size = (40, 15), key = '-BLUR SLIDER-' ) ],
+				[ sg.Radio( 'hue', 'Radio', size = (10, 1), key = '-HUE-' ),
+				  sg.Slider( (0, 225), 0, 1, orientation = 'h', size = (40, 15), key = '-HUE SLIDER-' ) ],
+				[ sg.Radio( 'enhance', 'Radio', size = (10, 1), key = '-ENHANCE-' ),
+				  sg.Slider( (1, 255), 128, 1, orientation = 'h', size = (40, 15),
+					  key = '-ENHANCE SLIDER-' ) ],
+				[ sg.Button( 'Exit', size = (10, 1) ) ]
+		]
+
+		# create the window and show it without the plot
+		window = sg.Window( 'OpenCV Integration', layout,
+			location=(800, 400),
+			keep_on_top=True,
+			right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
+
+		cap = cv2.VideoCapture( 0 )
+
+		while True:
+			event, values = window.read( timeout = 20 )
+			if event == 'Exit' or event == sg.WIN_CLOSED:
+				break
+
+			ret, frame = cap.read( )
+
+			if values[ '-THRESH-' ]:
+				frame = cv2.cvtColor( frame, cv2.COLOR_BGR2LAB )[ :, :, 0 ]
+				frame = cv2.threshold( frame, values[ '-THRESH SLIDER-' ], 255, cv2.THRESH_BINARY )[ 1 ]
+			elif values[ '-CANNY-' ]:
+				frame = cv2.Canny( frame, values[ '-CANNY SLIDER A-' ], values[ '-CANNY SLIDER B-' ] )
+			elif values[ '-BLUR-' ]:
+				frame = cv2.GaussianBlur( frame, (21, 21), values[ '-BLUR SLIDER-' ] )
+			elif values[ '-HUE-' ]:
+				frame = cv2.cvtColor( frame, cv2.COLOR_BGR2HSV )
+				frame[ :, :, 0 ] += int( values[ '-HUE SLIDER-' ] )
+				frame = cv2.cvtColor( frame, cv2.COLOR_HSV2BGR )
+			elif values[ '-ENHANCE-' ]:
+				enh_val = values[ '-ENHANCE SLIDER-' ] / 40
+				clahe = cv2.createCLAHE( clipLimit = enh_val, tileGridSize = (8, 8) )
+				lab = cv2.cvtColor( frame, cv2.COLOR_BGR2LAB )
+				lab[ :, :, 0 ] = clahe.apply( lab[ :, :, 0 ] )
+				frame = cv2.cvtColor( lab, cv2.COLOR_LAB2BGR )
+
+			imgbytes = cv2.imencode( '.png', frame )[ 1 ].tobytes( )
+			window[ '-IMAGE-' ].update( data = imgbytes )
+
+		window.close( )
+
+
+
