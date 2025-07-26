@@ -70,7 +70,7 @@ from minion import App
 import traceback
 import urllib.request
 import webbrowser
-from typing import Dict, List, Tuple, Any, Text
+from typing import Dict, List, Tuple, Any, Text, Optional
 
 class Error( Exception ):
 	'''
@@ -251,7 +251,7 @@ class TitleIcon( ):
 		return [ 'folder', 'name', 'authority_filepath' ]
 
 
-class Dark( BaseModel ):
+class Dark(  ):
 	'''
 
         Constructor:
@@ -264,25 +264,7 @@ class Dark( BaseModel ):
 
     '''
 
-	theme_background: str
-	theme_textcolor: str
-	element_forecolor: str
-	element_backcolor: str
-	text_backcolor: str
-	text_forecolor: str
-	input_forecolor: str
-	input_backcolor: str
-	button_backcolor: str
-	button_forecolor: str
-	button_color: tuple[ str, str ]
-
-	class Config:
-		arbitrary_types_allowed = True
-		extra = 'ignore'
-		allow_mutation = True
-
 	def __init__( self ):
-		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
 		sg.theme_element_text_color( '#69B1EF' )

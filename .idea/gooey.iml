@@ -8,4 +8,9 @@
     <orderEntry type="jdk" jdkName="Gooey ( Conda )" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PackageRequirementsSettings">
+    <option name="removeUnused" value="true" />
+    <option name="modifyBaseFiles" value="true" />
+    <option name="keepMatchingSpecifier" value="false" />
+  </component>
 </module>
