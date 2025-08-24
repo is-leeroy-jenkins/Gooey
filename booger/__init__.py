@@ -95,6 +95,13 @@ class Error( Exception ):
                 method: str=None, module: str=None )
 
     '''
+	error: Optional[ Exception ]
+	heading: Optional[ str ]
+	cause: Optional[ str ]
+	method: Optional[ str ]
+	type: Optional[ BaseException ]
+	trace: Optional[ str ]
+	info: Optional[ str ]
 
 	def __init__( self, error: Exception, heading: str=None, cause: str=None,
 	              method: str=None, module: str=None ):
@@ -270,6 +277,20 @@ class Dark(  ):
 		Class representing the theme
 
     '''
+	theme_background: Optional[ str ]
+	theme_textcolor: Optional[ str ]
+	element_forecolor: Optional[ str ]
+	text_backcolor: Optional[ str ]
+	text_forecolor: Optional[ str ]
+	input_forecolor: Optional[ str ]
+	input_backcolor: Optional[ str ]
+	button_backcolor: Optional[ str ]
+	button_forecolor: Optional[ str ]
+	button_color: Optional[ Tuple[ str, str ] ]
+	icon_path: Optional[ str ]
+	theme_font: Optional[ Tuple[ str, int ] ]
+	scrollbar_color: Optional[ str ]
+	form_size: Optional[ Tuple[ int, int ] ]
 
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
