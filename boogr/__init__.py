@@ -873,7 +873,7 @@ class GoogleDialog( Dark ):
 		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\boogr\resources\theme' )
 		self.form_size = (500, 235)
-		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\app\web\google.png'
+		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\web\google.png'
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
