@@ -3310,7 +3310,7 @@ class CalendarDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\copy.ico'
 		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		self.selected_item = None
@@ -3456,8 +3456,8 @@ class ComboBoxDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\filter.ico'
+		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
 		sg.set_options( font=self.theme_font )
@@ -3615,7 +3615,7 @@ class ListBoxDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\filter.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -3791,7 +3791,7 @@ class ColorDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\chart.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -4585,16 +4585,16 @@ class ColorDialog( Dark ):
 			_window.close( )
 
 			sg.popup_quick_message( 'Building _window... one moment please...',
-				background_color = self.theme_background,
-				icon = self.icon_path,
-				text_color = self.theme_textcolor,
-				font = self.theme_font )
+				background_color=self.theme_background,
+				icon=self.icon_path,
+				text_color=self.theme_textcolor,
+				font=self.theme_font )
 
-			sg.set_options( button_element_size = (12, 1),
-				element_padding = (0, 0),
-				auto_size_buttons = False,
-				border_width = 1,
-				tooltip_time = 100 )
+			sg.set_options( button_element_size=(12, 1),
+				element_padding=(0, 0),
+				auto_size_buttons=False,
+				border_width=1,
+				tooltip_time=100 )
 		except Exception as e:
 			_exception = Error( e )
 			_exception.module = 'boogr'
