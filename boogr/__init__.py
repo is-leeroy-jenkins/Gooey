@@ -44,12 +44,11 @@
   '''
 from __future__ import annotations
 import base64
+import cv2
 from enum import Enum
 import FreeSimpleGUI as sg
-import fitz
 from FreeSimpleGUI import Text, Frame, Sizegrip
 from googlesearch import search
-import random
 import io
 import matplotlib.pyplot as plt
 import matplotlib.figure
@@ -66,14 +65,14 @@ from pandas import read_csv as CsvReader
 from pandas import read_excel as ExcelReader
 from pydantic import BaseModel
 from PIL import Image, ImageTk, ImageSequence
+import random
 from random import randint
-from static import EXT, Client
+from .static import EXT, Client
 from sys import exit, exc_info
-from minion import App
+from .minion import App
 import traceback
 import urllib.request
 import webbrowser
-import cv2
 from typing import Dict, List, Tuple, Any, Text, Optional
 from mpl_toolkits.mplot3d.axes3d import get_test_data
 from matplotlib.ticker import NullFormatter
@@ -131,7 +130,8 @@ class Error( Exception ):
 			str | None
 
 		'''
-		return self.info
+		if self.info is not None:
+				return self.info
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -188,7 +188,8 @@ class ButtonIcon( ):
 			str | None
 
 		'''
-		return self.name
+		if self.name is not None:
+				return self.name
 
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -291,6 +292,9 @@ class Dark(  ):
 	theme_font: Optional[ Tuple[ str, int ] ]
 	scrollbar_color: Optional[ str ]
 	form_size: Optional[ Tuple[ int, int ] ]
+	keep_on_top: Optional[ bool ]
+	top_level: Optional[ bool ]
+	resizeable: Optional[ bool ]
 
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
@@ -312,11 +316,13 @@ class Dark(  ):
 		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		self.form_size = (400, 200)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True,
 		sg.set_global_icon( icon=self.icon_path )
 		sg.set_options( font=self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
-
-
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -333,12 +339,24 @@ class Dark(  ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color' ]
+		return [ 'form_size',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color'
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 class FileDialog( Dark ):
 	'''
@@ -353,7 +371,7 @@ class FileDialog( Dark ):
 
 	'''
 
-	def __init__( self, extension = EXT.XLSX ):
+	def __init__( self, extension=EXT.XLSX ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -373,10 +391,13 @@ class FileDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 240)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 		self.selected_item = None
 		self.message = 'Grab File'
 		self.extension = extension
@@ -406,7 +427,7 @@ class FileDialog( Dark ):
 
 		'''
 		return self.selected_item
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -423,14 +444,36 @@ class FileDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'original', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'original', 'selected_item', 'show',
-		         'message', 'extension', 'excel', 'csv', 'pdf', 'sql',
-		         'pages', 'access', 'sqlite', 'sqlserver' ]
+		return [ 'form_size',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color'
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'selected_item',
+		         'show',
+		         'message',
+		         'extension',
+		         'excel',
+		         'csv',
+		         'pdf',
+		         'sql',
+		         'pages',
+		         'access',
+		         'sqlite',
+		         'sqlserver' ]
 
 	def show( self ) -> None:
 		'''
@@ -457,11 +500,11 @@ class FileDialog( Dark ):
 			            [ sg.Text( ) ],
 			            [ sg.OK( size = (8, 1), ), sg.Cancel( size = (10, 1) ) ] ]
 
-			_window = sg.Window( ' Booger', _layout,
+			_window = sg.Window( ' Gooey', _layout,
 				font=self.theme_font,
 				size=self.form_size,
 				icon=self.icon_path,
-				keep_on_top=True )
+				keep_on_top=self.keep_on_top )
 
 			while True:
 				_event, _values = _window.read( )
@@ -474,7 +517,7 @@ class FileDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'FileDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -518,6 +561,9 @@ class FolderDialog( Dark ):
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 250)
 		self.selected_item = None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 
 	def __str__( self ) -> str | None:
 		'''
@@ -535,7 +581,7 @@ class FolderDialog( Dark ):
 			str | None
 
 		'''
-		if isinstance( self.selected_item, str ):
+		if self.selected_item is not None:
 			return self.selected_item
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -554,12 +600,28 @@ class FolderDialog( Dark ):
 			str | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'original', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'original', 'selected_item', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'original',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'selected_item',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -586,11 +648,13 @@ class FolderDialog( Dark ):
 			            [ sg.Text( size = (100, 1) ) ],
 			            [ sg.OK( size = (8, 1) ), sg.Cancel( size = (10, 1) ) ] ]
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				font=self.theme_font,
 				size=self.form_size,
 				icon=self.icon_path,
-				keep_on_top=True )
+				keep_on_top=self.keep_on_top,
+				resizable=self.resizable,
+				force_toplevel=self.top_level )
 
 			while True:
 				_event, _values = _window.read( )
@@ -606,6 +670,7 @@ class FolderDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
+			exception.module = 'boogr'
 			exception.cause = 'FolderDialog'
 			exception.method = 'show( self )'
 			_error = ErrorDialog( exception )
@@ -623,6 +688,7 @@ class SaveFileDialog( Dark ):
         Class define object that provides a dialog to locate file destinations
 
     '''
+	original: Optional[ str ]
 
 	def __init__( self, path='' ):
 		super( ).__init__( )
@@ -647,9 +713,12 @@ class SaveFileDialog( Dark ):
 		self.file_name = None
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'\resources\theme' )
-		self.form_size = (400, 250)
-		self.original = path
+		sg.user_settings_save( 'Gooey', r'\resources\theme' )
+		self.form_size = (550, 250)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.original = None
 
 	def __str__( self ) -> str | None:
 		'''
@@ -686,12 +755,26 @@ class SaveFileDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'original', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'original', 'file_name', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'original',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'original',
+		         'file_name',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -712,20 +795,22 @@ class SaveFileDialog( Dark ):
 		try:
 			_username = os.environ.get( 'USERNAME' )
 			_filename = sg.popup_get_file( 'Select Location / Enter File Name',
-				title = '  Booger',
-				font = self.theme_font,
-				icon = self.icon_path,
+				title='  Gooey',
+				font=self.theme_font,
+				icon= self.icon_path,
 				save_as=True,
-				keep_on_top=True )
+				keep_on_top=self.keep_on_top )
 
 			self.file_name = _filename
 
-			if os.path.exists( self.original ):
+			if (self.original is not None and
+					self.original != self.file_name and
+					os.path.exists( self.original )):
 				_src = io.open( self.original ).read( )
 				_dest = io.open( _filename, 'w+' ).write( _src )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'SaveFileDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -765,13 +850,16 @@ class GoogleDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		self.results = None
+		self.results = [ ]
 		self.querytext = None
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 235)
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\web\google.png'
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 
 	def __str__( self ) -> str | None:
 		'''
@@ -789,7 +877,7 @@ class GoogleDialog( Dark ):
 			str | None
 
 		'''
-		if isinstance( self.results, list ):
+		if self.results is not None:
 			return self.results[ 0 ]
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -808,12 +896,25 @@ class GoogleDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'original', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'image', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'original',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'image',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -833,19 +934,19 @@ class GoogleDialog( Dark ):
 		'''
 		try:
 			_layout = [ [ sg.Text( ) ],
-			            [ sg.Image( source = self.image ) ],
-			            [ sg.Text( size = (10, 1) ),
-			              sg.Input( key = '-QUERY-', size = (40, 2) ) ],
-			            [ sg.Text( size = (100, 1) ) ],
-			            [ sg.Text( size = (100, 1) ) ],
-			            [ sg.Text( size = (10, 1) ), sg.Submit( size = (15, 1) ),
-			              sg.Text( size = (5, 1) ), sg.Cancel( size = (15, 1) ) ] ]
+			            [ sg.Image( source=self.image ) ],
+			            [ sg.Text( size=(10, 1) ),
+			              sg.Input( key='-QUERY-', size=(40, 2) ) ],
+			            [ sg.Text( size=(100, 1) ) ],
+			            [ sg.Text( size=(100, 1) ) ],
+			            [ sg.Text( size=(10, 1) ), sg.Submit( size=(15, 1) ),
+			              sg.Text( size=(5, 1) ), sg.Cancel( size=(15, 1) ) ] ]
 
-			_window = sg.Window( '  Booger', _layout,
-				icon = self.icon_path,
-				font = self.theme_font,
-				size = self.form_size,
-				keep_on_top = True )
+			_window = sg.Window( '  Gooey', _layout,
+				icon=self.icon_path,
+				font=self.theme_font,
+				size=self.form_size,
+				resizable=self.resizable )
 
 			while True:
 				_event, _values = _window.read( )
@@ -853,16 +954,16 @@ class GoogleDialog( Dark ):
 					break
 				elif _event == 'Submit':
 					self.querytext = _values[ '-QUERY-' ]
-					_google = search( term = self.querytext, num_results = 5 )
+					_query = 'www.google.com\\search?q=' + self.querytext
+					_google = search( term=self.querytext )
 					_app = App( Client.Edge )
-					for result in list( _google ):
-						self.results.append( result )
-						_app.run_args( result )
+					_app.run_args( _query )
+					break
 
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'GoogleDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -883,8 +984,8 @@ class EmailDialog( Dark ):
 
     '''
 
-	def __init__( self, sender: str = None, receiver: list[ str ] = None,
-	              subject: str = None, message: list[ str ] = None ):
+	def __init__( self, sender: str=None, receiver: list[ str ]=None,
+	              subject: str=None, message: list[ str ]=None ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -906,9 +1007,12 @@ class EmailDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\web\outlook.png'
 		self.form_size = (570, 550)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 		self.sender = sender
 		self.receiver = receiver
 		self.subject = subject
@@ -949,15 +1053,31 @@ class EmailDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'progressbar_color',
-		         'sender', 'reciever', 'message',
-		         'subject', 'others', 'password',
-		         'username', 'show' ]
+		return [ 'size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'progressbar_color',
+		         'sender',
+		         'reciever',
+		         'message',
+		         'subject',
+		         'others',
+		         'password',
+		         'username',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -1008,9 +1128,9 @@ class EmailDialog( Dark ):
 			              sg.Text( ' ', size = _btn ), sg.Button( 'Cancel', size = _btn ) ] ]
 
 			_window = sg.Window( '  Send Message', _layout,
-				icon = self.icon_path,
-				size = self.form_size,
-				keep_on_top=True )
+				icon=self.icon_path,
+				size=self.form_size,
+				keep_on_top=self.keep_on_top )
 
 			while True:  # Event Loop
 				_event, _values = _window.read( )
@@ -1022,7 +1142,7 @@ class EmailDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'EmailDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1038,11 +1158,9 @@ class MessageDialog( Dark ):
 	    Construcotr:  MessageDialog( documents = '' )
 
     '''
+	text: Optional[ str ]
 
-	# Fields
-	text: str = None
-
-	def __init__( self, text: str = None ):
+	def __init__( self, text: str=None ):
 		self.text = text
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
@@ -1065,8 +1183,11 @@ class MessageDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (450, 250)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 
 	def __str__( self ) -> str | None:
 		'''
@@ -1158,7 +1279,7 @@ class MessageDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'MessageDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1204,8 +1325,11 @@ class ErrorDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 300)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 		self.error = error
 		self.heading = error.heading
 		self.module = error.module
@@ -1288,7 +1412,7 @@ class ErrorDialog( Dark ):
 		            [ sg.Text( size = (20, 1) ), sg.Cancel( size = (15, 1), key = '-CANCEL-' ),
 		              sg.Text( size = (10, 1) ), sg.Ok( size = (15, 1), key = '-OK-' ) ] ]
 
-		_window = sg.Window( r' Booger', _layout,
+		_window = sg.Window( r' Gooey', _layout,
 			icon = self.icon_path,
 			font = self.theme_font,
 			size = self.form_size,
@@ -1336,9 +1460,12 @@ class InputDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 250)
 		self.selected_item = None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 
 	def __str__( self ) -> str | None:
 		'''
@@ -1356,9 +1483,9 @@ class InputDialog( Dark ):
 			str | None
 
 		'''
-		if isinstance( self.response, str ):
+		if self.response is not None:
 			return self.response
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -1375,12 +1502,24 @@ class InputDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -1400,10 +1539,10 @@ class InputDialog( Dark ):
 		'''
 		try:
 			_layout = [ [ sg.Text( ) ],
-			            [ sg.Text( self.question, font = ('Roboto', 9, 'bold') ) ],
+			            [ sg.Text( self.question, font=('Roboto', 11 ) ) ],
 			            [ sg.Text( ) ],
-			            [ sg.Text( 'Enter:', size = (10, 2) ),
-			              sg.InputText( key = '-INPUT-', size = (40, 2) ) ],
+			            [ sg.Text( 'Enter:', size=(10, 2) ),
+			              sg.InputText( key='-INPUT-', size=(40, 2) ) ],
 			            [ sg.Text( size = (100, 1) ) ],
 			            [ sg.Text( size = (100, 1) ) ],
 			            [ sg.Text( size = (10, 1) ),
@@ -1411,11 +1550,13 @@ class InputDialog( Dark ):
 			              sg.Text( size = (5, 1) ),
 			              sg.Cancel( size = (15, 1), key = '-CANCEL-' ) ] ]
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				icon = self.icon_path,
 				font = self.theme_font,
 				size = self.form_size,
-				keep_on_top=True )
+				keep_on_top=self.keep_on_top,
+				resizable=self.resizable,
+				force_toplevel=self.top_level )
 
 			while True:
 				_event, _values = _window.read( )
@@ -1431,7 +1572,7 @@ class InputDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'InputDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1450,7 +1591,7 @@ class ScrollingDialog( Dark ):
 
 	'''
 
-	def __init__( self, text = '' ):
+	def __init__( self, text: str=None ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -1472,9 +1613,12 @@ class ScrollingDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (700, 600)
-		self.text = text if isinstance( text, str ) and text != '' else None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.text = text
 
 	def __str__( self ) -> str | None:
 		'''
@@ -1511,12 +1655,23 @@ class ScrollingDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -1554,7 +1709,7 @@ class ScrollingDialog( Dark ):
 			              sg.Text( size = (15, 1) ), sg.Button( 'Exit', size = _btnsize ),
 			              sg.Text( size = _space ), ] ]
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				icon = self.icon_path,
 				size = self.form_size,
 				font = self.theme_font,
@@ -1569,7 +1724,7 @@ class ScrollingDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ScrollingDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1606,9 +1761,12 @@ class ContactForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\web\outlook.png'
 		self.form_size = (500, 300)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -1626,12 +1784,24 @@ class ContactForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
@@ -1664,11 +1834,13 @@ class ContactForm( Dark ):
 			            [ sg.Text( size = (10, 1) ), sg.Submit( size = (10, 1) ),
 			              sg.Text( size = (20, 1) ), sg.Cancel( size = (10, 1) ) ] ]
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				icon=self.icon_path,
 				font=self.theme_font,
 				size=self.form_size,
-				keep_on_top=True )
+				keep_on_top=self.keep_on_top,
+				force_toplevel=self.top_level,
+				resizable=self.resizable )
 
 			while True:
 				_event, _values = _window.read( )
@@ -1684,7 +1856,7 @@ class ContactForm( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ContactForm'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1721,7 +1893,7 @@ class GridForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.width = (17, 1)
 		self.rows = rows
 		self.columns = columns
@@ -1785,7 +1957,7 @@ class GridForm( Dark ):
 			# noinspection PyTypeChecker
 			_layout = _space + _header + _records + _buttons
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				finalize = True,
 				size = self.form_size,
 				icon = self.icon_path,
@@ -1800,7 +1972,7 @@ class GridForm( Dark ):
 				_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'GridForm'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1837,7 +2009,7 @@ class LoadingPanel( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\loaders\loading.gif'
 		self.form_size = (800, 600)
 		self.timeout = 6000
@@ -1908,7 +2080,7 @@ class LoadingPanel( Dark ):
 					_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'LoadingPanel'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -1944,7 +2116,7 @@ class WaitingPanel( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\loaders\loader.gif'
 		self.theme_font = ('Roboto', 11)
 		self.form_size = (800, 600)
@@ -2017,7 +2189,7 @@ class WaitingPanel( Dark ):
 					_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'WaitingPanel'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -2054,7 +2226,7 @@ class ProcessingPanel( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\loaders\processing.gif'
 		self.form_size = (800, 600)
 		self.timeout = None
@@ -2130,7 +2302,7 @@ class ProcessingPanel( Dark ):
 					_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ProcessingPanel'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -2167,7 +2339,7 @@ class SplashPanel( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\BudgetEx.png'
 		self.form_size = (800, 600)
 		self.timeout = 6000
@@ -2220,7 +2392,7 @@ class SplashPanel( Dark ):
 			            [ sg.Text( size = _space ), sg.Text( size = _line ) ],
 			            [ sg.Text( size = _space ),
 			              sg.Image( filename = self.image, size = _imgsize ) ] ]
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				no_titlebar = True,
 				keep_on_top = True,
 				grab_anywhere = True,
@@ -2232,7 +2404,7 @@ class SplashPanel( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'SplashPanel'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -2247,7 +2419,7 @@ class Notification( Dark ):
 
 	'''
 
-	def __init__( self ):
+	def __init__( self, message: Optional[ str ] ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -2267,9 +2439,9 @@ class Notification( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 		self.success = b'iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U' \
 		               b'/gAAAACXBIWXMAAAEKAAABCgEWpLzLAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5r' \
@@ -2342,8 +2514,7 @@ class Notification( Dark ):
 		             b'kDVx/sobu1mfCpdVfllJszthT0J/8eu0CtpCI778VgUnAhEES3LZFYp99QQj5jFbRcC5' \
 		             b'QKrUI9F3+KYn4j4YjAN07D3GzAoqbFRB98Kbf8PsM98bIAVl6HghD2P8Avm6w' \
 		             b'ywIVvIgAAAAASUVORK5CYII='
-		self.message = '\r\nThe action you have performed \
-                          has been successful!'
+		self.message = '\r\n ' + message if message is not None else '\r\nThe action you have performed has been successful!'
 
 	def __str__( self ) -> str | None:
 		'''
@@ -2380,12 +2551,24 @@ class Notification( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show' ]
 
 	def show( self ) -> int | None:
 		'''
@@ -2405,7 +2588,7 @@ class Notification( Dark ):
 		'''
 		try:
 			return sg.popup_notify( self.message,
-				title = 'Booger Notification',
+				title = 'Notification',
 				icon = self.ninja,
 				display_duration_in_ms = 10000,
 				fade_in_duration = 5000,
@@ -2413,7 +2596,7 @@ class Notification( Dark ):
 
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'Notification'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -2454,7 +2637,7 @@ class ImageSizeEncoder( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -2703,7 +2886,7 @@ class PdfForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (600, 800)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -2890,7 +3073,7 @@ class PdfForm( Dark ):
 			# goto.TKStringVar.pairs(str(cur_page + 1))
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'PdfForm'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -2932,7 +3115,7 @@ class CalendarDialog( Dark ):
 		self.selected_item = None
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 250)
 
 	def __str__( self ) -> str | None:
@@ -3017,7 +3200,7 @@ class CalendarDialog( Dark ):
 			self.selected_item = _cal
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'CalendarDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -3057,7 +3240,7 @@ class ComboBoxDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (400, 150)
 		self.items = data
 
@@ -3138,7 +3321,7 @@ class ComboBoxDialog( Dark ):
 			                                                                               1) ),
 			              sg.Cancel( size = _btnsz ) ] ]
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				icon=self.icon_path,
 				keep_on_top=True,
 				size=self.form_size )
@@ -3157,7 +3340,7 @@ class ComboBoxDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ComboBoxDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -3200,7 +3383,7 @@ class ListBoxDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (400, 250)
 		self.image = os.getcwd( ) + r'\resources\img\app\dialog\lookup.png'
 		self.items = data
@@ -3291,7 +3474,7 @@ class ListBoxDialog( Dark ):
 			              sg.Button( 'Select', size = _btnsize, enable_events = True ),
 			              sg.Text( size = (3, 1) ), sg.Button( 'Exit', size = _btnsize ) ] ]
 
-			_window = sg.Window( '  Booger', _layout,
+			_window = sg.Window( '  Gooey', _layout,
 				size=self.form_size,
 				keep_on_top=True,
 				font=self.theme_font )
@@ -3318,7 +3501,7 @@ class ListBoxDialog( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ListBoxDialog'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -3359,7 +3542,7 @@ class ColorDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (450, 450)
 		self.rgb = None
 		self.hex = None
@@ -4090,7 +4273,7 @@ class ColorDialog( Dark ):
 				_layout.append( [ sg.Text( ' ', size = (10, 1) ), ] )
 				_layout.append( [ sg.Text( ' ', size = (50, 1) ), sg.Cancel( size = (20, 1) ), ] )
 
-				return sg.Window( ' Booger', _layout,
+				return sg.Window( ' Gooey', _layout,
 					font = self.theme_font,
 					size = self.form_size,
 					element_padding = (1, 1),
@@ -4142,7 +4325,7 @@ class ColorDialog( Dark ):
 				tooltip_time = 100 )
 		except Exception as e:
 			_exception = Error( e )
-			_exception.module = 'Booger'
+			_exception.module = 'boogr'
 			_exception.cause = 'ColorDialog'
 			_exception.method = 'show( self )'
 			_error = ErrorDialog( _exception )
@@ -4192,7 +4375,7 @@ class BudgetForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (1200, 650)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -4255,7 +4438,7 @@ class BudgetForm( Dark ):
 				return _title
 			except Exception as e:
 				exception = Error( e )
-				exception.module = 'Booger'
+				exception.module = 'boogr'
 				exception.cause = 'BudgetForm'
 				exception.method = 'create_title( self, items )'
 				error = ErrorDialog( exception )
@@ -4290,7 +4473,7 @@ class BudgetForm( Dark ):
 				return _header
 			except Exception as e:
 				exception = Error( e )
-				exception.module = 'Booger'
+				exception.module = 'boogr'
 				exception.cause = 'BudgetForm'
 				exception.method = 'create_header( self, items )'
 				error = ErrorDialog( exception )
@@ -4329,7 +4512,7 @@ class BudgetForm( Dark ):
 				return _first
 			except Exception as e:
 				exception = Error( e )
-				exception.module = 'Booger'
+				exception.module = 'boogr'
 				exception.cause = 'BudgetForm'
 				exception.method = 'create_first( self, items: get_list ) -> get_list'
 				error = ErrorDialog( exception )
@@ -4368,7 +4551,7 @@ class BudgetForm( Dark ):
 				return _second
 			except Exception as e:
 				exception = Error( e )
-				exception.module = 'Booger'
+				exception.module = 'boogr'
 				exception.cause = 'BudgetForm'
 				exception.method = 'create_second( self, items )'
 				error = ErrorDialog( exception )
@@ -4407,7 +4590,7 @@ class BudgetForm( Dark ):
 				return _third
 			except Exception as e:
 				exception = Error( e )
-				exception.module = 'Booger'
+				exception.module = 'boogr'
 				exception.cause = 'BudgetForm'
 				exception.method = 'create_third( self, items: get_list )'
 				error = ErrorDialog( exception )
@@ -4446,7 +4629,7 @@ class BudgetForm( Dark ):
 				return _fourth
 			except Exception as e:
 				exception = Error( e )
-				exception.module = 'Booger'
+				exception.module = 'boogr'
 				exception.cause = 'BudgetForm'
 				exception.method = 'create_fourth( self, items: get_list )'
 				error = ErrorDialog( exception )
@@ -4504,7 +4687,7 @@ class BudgetForm( Dark ):
 			return _layout
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'BudgetForm'
 			exception.method = 'set_layout( self, items )'
 			error = ErrorDialog( exception )
@@ -4630,7 +4813,7 @@ class BudgetForm( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'BudgetForm'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -4669,7 +4852,7 @@ class ChartPanel( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (750, 650)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -4759,7 +4942,7 @@ class ChartPanel( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ChartForm'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -4798,7 +4981,7 @@ class CsvForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
 
@@ -4892,7 +5075,7 @@ class CsvForm( Dark ):
 			_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'CsvForm'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -4931,7 +5114,7 @@ class ExcelForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (1250, 700)
 
 
@@ -5030,7 +5213,7 @@ class ExcelForm( Dark ):
 			              sg.Text( size = _spc ), sg.Button( 'Close', size = _med, key = '-CLOSE-'
 			            ) ],
 			            [ sg.Sizegrip( ) ], ]
-			_window = sg.Window( ' Booger', _layout,
+			_window = sg.Window( ' Gooey', _layout,
 				size=self.form_size,
 				keep_on_top=True,
 				grab_anywhere=True,
@@ -5048,7 +5231,7 @@ class ExcelForm( Dark ):
 				_window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ExcelForm'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -5087,7 +5270,7 @@ class GraphForm( Dark ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -5336,7 +5519,7 @@ class FileBrowser( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (400, 200)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -5432,7 +5615,7 @@ class ChatWindow( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -5503,7 +5686,7 @@ class ChatWindow( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ChatWindow'
 			exception.method = 'show( self )'
 			error = ErrorDialog( exception )
@@ -5534,7 +5717,7 @@ class ChatBot( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
 
@@ -5635,7 +5818,7 @@ class ChatBot( ):
 					window[ '-QUERY-' ].update( '' )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ChatBot'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -5696,7 +5879,7 @@ class InputWindow( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (520, 550)
 
 	def __dir__( self ) -> List[ str ] | None:
@@ -5807,7 +5990,7 @@ class InputWindow( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'InputWindow'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -5848,10 +6031,9 @@ class ThemeSelector( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (300, 400)
-
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5868,12 +6050,24 @@ class ThemeSelector( ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show' ]
 
 
 	def show( self ) -> None:
@@ -5894,14 +6088,13 @@ class ThemeSelector( ):
 		'''
 		try:
 			layout = [ [ sg.Text( 'UI Theme Browser' ) ],
-			           [ sg.Text( 'Click a look and feel color to see demo window' ) ],
+			           [ sg.Text( 'Click a theme to see demo window' ) ],
 			           [ sg.Listbox( values = sg.theme_list( ),
-				           size = (20, 20), key = '-LIST-', enable_events = True ) ],
+				           size=(20, 20), key='-LIST-', enable_events=True ) ],
 			           [ sg.Button( 'Exit' ) ] ]
 
-			window = sg.Window( 'Look and Feel Browser', layout,
-				size=self.form_size,
-				keep_on_top=True )
+			window = sg.Window( 'UI Theme Browser', layout,
+				size=self.form_size, resizable=True )
 
 			# Event Loop
 			while True:
@@ -5915,7 +6108,7 @@ class ThemeSelector( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'ThemeSelector'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -5955,7 +6148,7 @@ class UrlImageViewer( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
 
 
@@ -6014,7 +6207,7 @@ class UrlImageViewer( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'UrlImageViewer'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -6075,7 +6268,7 @@ class AutoComplete( ):
 		self.list_element = None
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 
 	def show( self ) -> None:
@@ -6174,7 +6367,7 @@ class AutoComplete( ):
 			self.window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'UrlImageViewer'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -6219,7 +6412,7 @@ class CheckBox( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.checked = \
 			(
 					b'iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAKMGlDQ1BJQ0MgUHJvZmlsZQAAeJydlndUVNcWh8'
@@ -6276,7 +6469,7 @@ class CheckBox( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'UrlImageViewer'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -6321,7 +6514,7 @@ class MachineLearningWindow( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	def __build_window( self ):
 		'''
@@ -6399,7 +6592,7 @@ class MachineLearningWindow( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'MachineLearningWindow'
 			exception.method = 'build_window( self)'
 			error = ErrorDialog( exception )
@@ -6445,7 +6638,7 @@ class MachineLearningWindow( ):
 			window.CloseNonBlocking( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'MachineLearningWindow'
 			exception.method = '__custom_meter( self)'
 			error = ErrorDialog( exception )
@@ -6472,7 +6665,7 @@ class MachineLearningWindow( ):
 			self.__build_window( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'MachineLearningWindow'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -6501,7 +6694,7 @@ class AnimatedGraph( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	# noinspection PyUnusedLocal
 	def show( self ):
@@ -6564,7 +6757,7 @@ class AnimatedGraph( ):
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
-			exception.module = 'Booger'
+			exception.module = 'boogr'
 			exception.cause = 'AnimatedGraph'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
@@ -6593,7 +6786,7 @@ class BarGraph( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	def draw_figure( self, canvas, figure ):
 		figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
@@ -6657,7 +6850,7 @@ class ScatterGraph( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	def draw_figure( self, canvas, figure ):
 		figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
@@ -6724,7 +6917,7 @@ class StyleGraph( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	def create_axis_grid( self ):
 		plt.close( 'all' )
@@ -6929,7 +7122,7 @@ class WebCamera( ):
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon = self.icon_path )
 		sg.set_options( font = self.theme_font )
-		sg.user_settings_save( 'Boo', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	def show( self ):
 		sg.theme( 'LightGreen' )

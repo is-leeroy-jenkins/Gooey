@@ -43,8 +43,7 @@
   ******************************************************************************************
   '''
 import subprocess as sp
-from booger import *
-from static import Client
+from .static import Client
 
 class App( ):
     '''
@@ -152,7 +151,7 @@ class App( ):
                 if os.path.isfile( args ):
                     sp.Popen( [ self.excel, args ] )
             elif args is not None and self.app == Client.Edge:
-                    sp.Popen( args )
+                    sp.Popen( [ self.edge, args ] )
             elif args is not None and self.app == Client.Chrome:
                     sp.Popen( [ self.chrome, args ] )
             elif args is not None and self.app == Client.Outlook:

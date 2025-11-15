@@ -68,7 +68,7 @@ def Launcher2():
             print('''
                 Or  copy files to your github folder.
                 Or anything else you type on the command line''')
-            # copyfile(booger, dest)
+            # copyfile(boogr, dest)
         elif event == 'Run':
             for index, file in enumerate(values['demolist']):
                 print('Launching %s' % file)
