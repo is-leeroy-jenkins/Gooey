@@ -46,6 +46,7 @@ from __future__ import annotations
 import base64
 import cv2
 from enum import Enum
+import fitz
 import FreeSimpleGUI as sg
 from FreeSimpleGUI import Text, Frame, Sizegrip
 from googlesearch import search
@@ -65,6 +66,7 @@ from pandas import read_csv as CsvReader
 from pandas import read_excel as ExcelReader
 from pydantic import BaseModel
 from PIL import Image, ImageTk, ImageSequence
+import pymupdf
 import random
 from random import randint
 from .static import EXT, Client
@@ -2888,7 +2890,7 @@ class PdfForm( Dark ):
 		sg.set_options( font = self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (600, 800)
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -2905,12 +2907,23 @@ class PdfForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show' ]
 
 	def show( self ) -> None:
 		'''
