@@ -134,7 +134,7 @@ class Error( Exception ):
 		'''
 		if self.info is not None:
 				return self.info
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -151,9 +151,14 @@ class Error( Exception ):
 			List[ str ] | None
 
 		'''
-		return [ 'message', 'cause', 'error',
-		         'method', 'module', 'scaler',
-		         'stack_trace', 'info' ]
+		return [ 'message',
+		         'cause',
+		         'error',
+		         'method',
+		         'module',
+		         'scaler',
+		         'stack_trace',
+		         'info' ]
 
 class ButtonIcon( ):
 	'''
@@ -297,6 +302,7 @@ class Dark(  ):
 	keep_on_top: Optional[ bool ]
 	top_level: Optional[ bool ]
 	resizeable: Optional[ bool ]
+	context_menu: Optional[ List[ List[ str ] ] ]
 
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
@@ -321,6 +327,7 @@ class Dark(  ):
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True,
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT
 		sg.set_global_icon( icon=self.icon_path )
 		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
@@ -358,7 +365,8 @@ class Dark(  ):
 		         'scrollbar_color'
 		         'keep_on_top',
 		         'top_level',
-		         'resizeable' ]
+		         'resizeable',
+		         'context_menu', ]
 
 class FileDialog( Dark ):
 	'''
@@ -400,6 +408,7 @@ class FileDialog( Dark ):
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT
 		self.selected_item = None
 		self.message = 'Grab File'
 		self.extension = extension
@@ -495,12 +504,12 @@ class FileDialog( Dark ):
 		'''
 		try:
 			_layout = [ [ sg.Text( ) ],
-			            [ sg.Text( self.message, font = ('Roboto', 11) ) ],
+			            [ sg.Text( self.message, font = ( 'Roboto', 11 ) ) ],
 			            [ sg.Text( ) ],
-			            [ sg.Input( key = '-PATH-' ), sg.FileBrowse( size = (15, 1) ) ],
+			            [ sg.Input( key='-PATH-' ), sg.FileBrowse( size=( 15, 1 ) ) ],
 			            [ sg.Text( ) ],
 			            [ sg.Text( ) ],
-			            [ sg.OK( size = (8, 1), ), sg.Cancel( size = (10, 1) ) ] ]
+			            [ sg.OK( size=( 8, 1 ), ), sg.Cancel( size=( 10, 1 ) ) ] ]
 
 			_window = sg.Window( ' Gooey', _layout,
 				font=self.theme_font,
@@ -510,7 +519,7 @@ class FileDialog( Dark ):
 
 			while True:
 				_event, _values = _window.read( )
-				if _event in (sg.WIN_CLOSED, sg.WIN_X_EVENT, 'Cancel'):
+				if _event in ( sg.WIN_CLOSED, sg.WIN_X_EVENT, 'Cancel' ):
 					break
 				elif _event == 'OK':
 					self.selected_item = _values[ '-PATH-' ]
@@ -558,14 +567,15 @@ class FolderDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 250)
 		self.selected_item = None
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT
 
 	def __str__( self ) -> str | None:
 		'''
@@ -619,11 +629,12 @@ class FolderDialog( Dark ):
 		         'icon_path',
 		         'theme_font',
 		         'scrollbar_color',
+		         'context_menu',
+		         'selected_item',
+		         'show',
 		         'keep_on_top',
 		         'top_level',
-		         'resizeable',
-		         'selected_item',
-		         'show' ]
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -645,15 +656,16 @@ class FolderDialog( Dark ):
 			_layout = [ [ sg.Text( ) ],
 			            [ sg.Text( 'Search for Directory' ) ],
 			            [ sg.Text( ) ],
-			            [ sg.Input( key = '-PATH-' ), sg.FolderBrowse( size = (15, 1) ) ],
-			            [ sg.Text( size = (100, 1) ) ],
-			            [ sg.Text( size = (100, 1) ) ],
-			            [ sg.OK( size = (8, 1) ), sg.Cancel( size = (10, 1) ) ] ]
+			            [ sg.Input( key='-PATH-' ), sg.FolderBrowse( size=( 15, 1 ) ) ],
+			            [ sg.Text( size=( 100, 1 ) ) ],
+			            [ sg.Text( size=( 100, 1 ) ) ],
+			            [ sg.OK( size=( 8, 1 ) ), sg.Cancel( size=( 10, 1 ) ) ] ]
 
 			_window = sg.Window( '  Gooey', _layout,
 				font=self.theme_font,
 				size=self.form_size,
 				icon=self.icon_path,
+				right_click_menu=self.context_menu,
 				keep_on_top=self.keep_on_top,
 				resizable=self.resizable,
 				force_toplevel=self.top_level )
@@ -665,9 +677,9 @@ class FolderDialog( Dark ):
 				elif _event == 'OK':
 					self.selected_item = _values[ '-PATH-' ]
 					sg.popup_ok( self.selected_item,
-						title = 'Results',
-						icon = self.icon_path,
-						font = self.theme_font )
+						title='Results',
+						icon=self.icon_path,
+						font=self.theme_font )
 
 			_window.close( )
 		except Exception as e:
@@ -713,8 +725,8 @@ class SaveFileDialog( Dark ):
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		self.file_name = None
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'\resources\theme' )
 		self.form_size = (550, 250)
 		self.keep_on_top = True
@@ -776,7 +788,10 @@ class SaveFileDialog( Dark ):
 		         'scrollbar_color',
 		         'original',
 		         'file_name',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -854,8 +869,8 @@ class GoogleDialog( Dark ):
 		self.scrollbar_color = '#755600'
 		self.results = [ ]
 		self.querytext = None
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 235)
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\web\google.png'
@@ -916,7 +931,10 @@ class GoogleDialog( Dark ):
 		         'theme_font',
 		         'scrollbar_color',
 		         'image',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -1007,14 +1025,15 @@ class EmailDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\web\outlook.png'
 		self.form_size = (570, 550)
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 		self.sender = sender
 		self.receiver = receiver
 		self.subject = subject
@@ -1079,7 +1098,10 @@ class EmailDialog( Dark ):
 		         'others',
 		         'password',
 		         'username',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -1183,8 +1205,8 @@ class MessageDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (450, 250)
 		self.keep_on_top = True
@@ -1209,7 +1231,7 @@ class MessageDialog( Dark ):
 		'''
 		if self.text is not None:
 			return self.text
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -1226,12 +1248,28 @@ class MessageDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'original', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'image', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'original',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'image',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -1325,13 +1363,14 @@ class ErrorDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 300)
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 		self.error = error
 		self.heading = error.heading
 		self.module = error.module
@@ -1357,7 +1396,7 @@ class ErrorDialog( Dark ):
 		'''
 		if isinstance( self.info, str ):
 			return self.info
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -1374,14 +1413,32 @@ class ErrorDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'progressbar_color',
-		         'info', 'cause', 'method', 'error', 'heading'
-		                                             'module', 'scaler', 'message' 'show' ]
+		return [ 'size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'progressbar_color',
+		         'info',
+		         'cause',
+		         'method',
+		         'error',
+		         'heading',
+		         'module',
+		         'scaler',
+		         'message',
+		         'show', ]
 
 	def show( self ) -> object:
 		'''
@@ -1460,14 +1517,15 @@ class InputDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 250)
 		self.selected_item = None
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def __str__( self ) -> str | None:
 		'''
@@ -1521,7 +1579,10 @@ class InputDialog( Dark ):
 		         'theme_font',
 		         'scrollbar_color',
 		         'input_text',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -1613,13 +1674,14 @@ class ScrollingDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (700, 600)
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 		self.text = text
 
 	def __str__( self ) -> str | None:
@@ -1673,7 +1735,10 @@ class ScrollingDialog( Dark ):
 		         'icon_path',
 		         'theme_font',
 		         'scrollbar_color',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -1735,12 +1800,17 @@ class ScrollingDialog( Dark ):
 class ContactForm( Dark ):
 	'''
 
-        Construcotr: ContactForm( contact )
+        Construcotr:
+        ------------
+        ContactForm( contact )
 
-        Purpose:  class that produces a contact path form
+        Purpose:
+        --------
+        class that produces a contact path form
 
 	'''
-
+	input_text: Optional[ str ]
+	
 	def __init__( self ):
 		super( ).__init__( )
 		sg.theme( 'DarkGrey15' )
@@ -1761,14 +1831,16 @@ class ContactForm( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\web\outlook.png'
 		self.form_size = (500, 300)
+		self.input_text = None
 		self.keep_on_top = True
 		self.top_level = True
 		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -1803,7 +1875,10 @@ class ContactForm( Dark ):
 		         'theme_font',
 		         'scrollbar_color',
 		         'input_text',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -1893,14 +1968,18 @@ class GridForm( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.width = (17, 1)
 		self.rows = rows
 		self.columns = columns
 		self.form_size = (1250, 650)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -1917,13 +1996,29 @@ class GridForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'theme_background', 'theme_textcolor',
-		         'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'progressbar_color',
-		         'field_width', 'rows', 'columns', 'show' ]
+		return [ 'form_size',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'progressbar_color',
+		         'field_width',
+		         'rows',
+		         'columns',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2009,13 +2104,16 @@ class LoadingPanel( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\loaders\loading.gif'
 		self.form_size = (800, 600)
 		self.timeout = 6000
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -2032,12 +2130,27 @@ class LoadingPanel( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2116,14 +2229,17 @@ class WaitingPanel( Dark ):
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\loaders\loader.gif'
 		self.theme_font = ('Roboto', 11)
 		self.form_size = (800, 600)
 		self.timeout = 6000
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -2140,12 +2256,27 @@ class WaitingPanel( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2226,13 +2357,16 @@ class ProcessingPanel( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\loaders\processing.gif'
 		self.form_size = (800, 600)
 		self.timeout = None
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -2249,12 +2383,26 @@ class ProcessingPanel( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2339,13 +2487,16 @@ class SplashPanel( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\BudgetEx.png'
 		self.form_size = (800, 600)
 		self.timeout = 6000
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -2362,12 +2513,26 @@ class SplashPanel( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2637,11 +2802,14 @@ class ImageSizeEncoder( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -2658,12 +2826,26 @@ class ImageSizeEncoder( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2859,10 +3041,10 @@ class PdfForm( Dark ):
 	'''
 
         Construcotr:
-            PdfForm( )
+        PdfForm( )
 
         Purpose:
-            Creates form to view a PDF
+        Creates form to view a PDF
 
 	'''
 
@@ -2884,12 +3066,16 @@ class PdfForm( Dark ):
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
+		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
-		self.form_size = (600, 800)
+		self.form_size = ( 600, 800 )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -2922,8 +3108,10 @@ class PdfForm( Dark ):
 		         'icon_path',
 		         'theme_font',
 		         'scrollbar_color',
-		         'input_text',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -2996,17 +3184,17 @@ class PdfForm( Dark ):
 				goto = sg.InputText( str( cur_page + 1 ), size = (5, 1) )
 				layout = [
 						[
-								sg.Button( 'Prev' ),
-								sg.Button( 'Next' ),
-								sg.Text( 'Page:' ),
-								goto,
+							sg.Button( 'Prev' ),
+							sg.Button( 'Next' ),
+							sg.Text( 'Page:' ),
+							goto,
 						],
 						[
-								sg.Text( "Zoom:" ),
-								sg.Button( 'Top-L' ),
-								sg.Button( 'Top-R' ),
-								sg.Button( 'Bot-L' ),
-								sg.Button( 'Bot-R' ),
+							sg.Text( "Zoom:" ),
+							sg.Button( 'Top-L' ),
+							sg.Button( 'Top-R' ),
+							sg.Button( 'Bot-L' ),
+							sg.Button( 'Bot-R' ),
 						],
 						[ image_elem ],
 				]
@@ -3123,13 +3311,17 @@ class CalendarDialog( Dark ):
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
+		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		self.selected_item = None
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (500, 250)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def __str__( self ) -> str | None:
 		'''
@@ -3153,7 +3345,7 @@ class CalendarDialog( Dark ):
 			day = str( self.selected_item[ 1 ] ).zfill( 2 )
 			date = f'{year}/{month}/{day}'
 			return date
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -3170,12 +3362,28 @@ class CalendarDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'context_menu', ]
 
 	def show( self ) -> None:
 		'''
@@ -3251,10 +3459,13 @@ class ComboBoxDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (400, 150)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 		self.items = data
 
 
@@ -3276,8 +3487,7 @@ class ComboBoxDialog( Dark ):
 		'''
 		if self.selected_item is not None:
 			return self.selected_item
-
-
+	
 	def __dir__( self ) -> List[ str ]:
 		'''
 
@@ -3294,12 +3504,26 @@ class ComboBoxDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 
 	def show( self ) -> None:
@@ -3394,10 +3618,13 @@ class ListBoxDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (400, 250)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 		self.image = os.getcwd( ) + r'\resources\img\app\dialog\lookup.png'
 		self.items = data
 		self.selected_item = None
@@ -3420,7 +3647,7 @@ class ListBoxDialog( Dark ):
 		'''
 		if self.selected_item is not None:
 			return self.selected_item
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -3437,13 +3664,27 @@ class ListBoxDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
-
+		return [ 'form_size',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
+	
 	def show( self ) -> None:
 		'''
 
@@ -3489,7 +3730,7 @@ class ListBoxDialog( Dark ):
 
 			_window = sg.Window( '  Gooey', _layout,
 				size=self.form_size,
-				keep_on_top=True,
+				keep_on_top=self.keep_on_top,
 				font=self.theme_font )
 
 			while True:
@@ -3553,15 +3794,18 @@ class ColorDialog( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (450, 450)
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
 		self.rgb = None
 		self.hex = None
 		self.argb = None
 		self.html = None
-
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -3578,12 +3822,27 @@ class ColorDialog( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -4386,11 +4645,15 @@ class BudgetForm( Dark ):
 		self.image = r'C:\Users\terry\source\repos\Gooey\resources\img\app\Application.png'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (1200, 650)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -4407,17 +4670,43 @@ class BudgetForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'progressbar_color',
-		         'title_items', 'header_items', 'first_items',
-		         'second_items', 'third_items', 'form_size',
-		         'image', 'show', 'create_title', 'create_header',
-		         'create_first', 'create_second', 'create_third',
-		         'create_fourth', 'set_layout', 'show' ]
+		return [ 'size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'progressbar_color',
+		         'title_items',
+		         'header_items',
+		         'first_items',
+		         'second_items',
+		         'third_items',
+		         'form_size',
+		         'image',
+		         'show',
+		         'create_title',
+		         'create_header',
+		         'create_first',
+		         'create_second',
+		         'create_third',
+		         'create_fourth',
+		         'set_layout',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'context_menu', ]
 
 	def create_title( self, items: list ) -> list[ list[ Text | Any ] ] | None:
 		'''
@@ -4452,7 +4741,7 @@ class BudgetForm( Dark ):
 			except Exception as e:
 				exception = Error( e )
 				exception.module = 'boogr'
-				exception.cause = 'BudgetForm'
+				exception.cause = 'GooeyForm'
 				exception.method = 'create_title( self, items )'
 				error = ErrorDialog( exception )
 				error.show( )
@@ -4487,7 +4776,7 @@ class BudgetForm( Dark ):
 			except Exception as e:
 				exception = Error( e )
 				exception.module = 'boogr'
-				exception.cause = 'BudgetForm'
+				exception.cause = 'GooeyForm'
 				exception.method = 'create_header( self, items )'
 				error = ErrorDialog( exception )
 				error.show( )
@@ -4803,7 +5092,7 @@ class BudgetForm( Dark ):
 						  pad = BPAD_LEFT, background_color = _blu, border_width = 0,
 						  expand_x = True, expand_y = True ), ],
 					[ sg.Sizegrip( background_color = _mblk ) ] ]
-			_window = sg.Window( '  Booger', self.formlayout,
+			_window = sg.Window( 'Gooey', self.formlayout,
 				size=self.form_size,
 				margins=(0, 0),
 				background_color=_blk,
@@ -4863,11 +5152,14 @@ class ChartPanel( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (750, 650)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -4884,12 +5176,26 @@ class ChartPanel( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -4926,11 +5232,11 @@ class ChartPanel( Dark ):
 			              sg.Text( size = _lg ), sg.Exit( size = _md ) ],
 			            [ sg.Sizegrip( background_color = _black ) ] ]
 
-			_window = sg.Window( 'Booger', _layout,
+			_window = sg.Window( 'Gooey', _layout,
 				finalize=True,
-				resizable=True,
+				resizable=self.resizable,
 				icon=self.icon_path,
-				keep_on_top=True,
+				keep_on_top=self.keep_on_top,
 				font=self.theme_font,
 				size=self.form_size )
 
@@ -4992,12 +5298,14 @@ class CsvForm( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
-
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5014,12 +5322,26 @@ class CsvForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 
 	def show( self ) -> None:
@@ -5053,14 +5375,13 @@ class CsvForm( Dark ):
 
 			_data = [ ]
 			_header = [ ]
-
 			_button = sg.popup_yes_no( 'Does file have column column_names?',
-				icon = self.icon_path,
-				font = self.theme_font )
+				icon=self.icon_path,
+				font=self.theme_font )
 
 			if _path is not None:
 				try:
-					_frame = CsvReader( _path, sep = ',', engine = 'python', header = None )
+					_frame = CsvReader( _path, sep=',', engine='python', header=None )
 					_data = _frame.values.tolist( )
 					if _button == 'Yes':
 						_header = _frame.iloc[ 0 ].tolist( )
@@ -5082,7 +5403,7 @@ class CsvForm( Dark ):
 				alternating_row_color = '#EDF3F8', border_width = 1, text_color = '#000000',
 				expand_x = True, expand_y = True, sbar_relief = sg.RELIEF_FLAT,
 				num_rows = min( 26, len( _data ) ) ), ], ]
-			_window = sg.Window( '  Booger', _datagrid, icon = self.icon_path,
+			_window = sg.Window( 'Gooey', _datagrid, icon = self.icon_path,
 				font = self.theme_font, resizable = True )
 			_event, _values = _window.read( )
 			_window.close( )
@@ -5123,14 +5444,16 @@ class ExcelForm( Dark ):
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
+		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (1250, 700)
-
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5147,13 +5470,26 @@ class ExcelForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
-
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -5281,11 +5617,14 @@ class GraphForm( Dark ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5302,12 +5641,25 @@ class GraphForm( Dark ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'theme_background',
-		         'theme_textcolor', 'element_forecolor', 'element_backcolor',
-		         'text_backcolor', 'text_forecolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'show' ]
+		return [ 'form_size',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_forecolor',
+		         'element_backcolor',
+		         'text_backcolor',
+		         'text_forecolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -5464,7 +5816,7 @@ class GraphForm( Dark ):
 			            [ sg.Col( _leftcolumn ), sg.Image( key = '-IMAGE-' ) ],
 			            [ sg.B( 'Draw' ), sg.B( 'Exit' ) ] ]
 
-			_win = sg.Window( 'Booger', _layout,
+			_win = sg.Window( 'Gooey', _layout,
 				keep_on_top=True, finalize=True )
 
 			return _win
@@ -5530,11 +5882,14 @@ class FileBrowser( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (400, 200)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5551,12 +5906,27 @@ class FileBrowser( ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 
 	def show( self ) -> None:
@@ -5626,11 +5996,15 @@ class ChatWindow( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5647,12 +6021,27 @@ class ChatWindow( ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 	def show( self ) -> None:
 		'''
@@ -5728,12 +6117,15 @@ class ChatBot( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
-
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5750,12 +6142,27 @@ class ChatBot( ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
 
 
 	def show( self ) -> None:
@@ -5787,13 +6194,14 @@ class ChatBot( ):
 			             sg.Button( 'EXIT',
 				             button_color = (sg.YELLOWS[ 0 ], sg.GREENS[ 0 ]) ) ] ]
 
-			window = sg.Window( 'Chat window with history', layout,
+			window = sg.Window( 'Boogr Bot', layout,
 				default_element_size=(30, 2),
 				font=('Roboto', ' 11'),
 				default_button_element_size=(8, 2),
 				return_keyboard_events=True,
+				right_click_menu=self.context_menu,
 				size=self.form_size,
-				keep_on_top=True )
+				keep_on_top=self.keep_on_top )
 
 			# ---===--- Loop taking in user path and using it  --- #
 			command_history = [ ]
@@ -5890,11 +6298,15 @@ class InputWindow( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (520, 550)
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -5911,12 +6323,28 @@ class InputWindow( ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'context_menu', ]
 
 	def show( self ) -> None:
 		'''
@@ -5970,9 +6398,7 @@ class InputWindow( ):
 						                               sg.Button( 'Copy',
 							                               key = '-LOC-' ) ],
 						                             [ sg.Text( 'Notes:' ) ],
-						                             [ sg.Multiline(
-							                             key = '-NOTES-',
-							                             size = (25, 3) ) ],
+						                             [ sg.Multiline( key = '-NOTES-', size = (25, 3) ) ],
 						                             ], size = (235, 350),
 							pad = (0, 0) ) ] ] ) ], ], pad = (0, 0) )
 
@@ -6040,12 +6466,16 @@ class ThemeSelector( ):
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
-		self.theme_font = ('Roboto', 11)
+		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
-		self.form_size = (300, 400)
+		self.form_size = ( 300, 400 )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
@@ -6080,7 +6510,11 @@ class ThemeSelector( ):
 		         'theme_font',
 		         'scrollbar_color',
 		         'input_text',
-		         'show' ]
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'context_menu', ]
 
 
 	def show( self ) -> None:
@@ -6159,12 +6593,15 @@ class UrlImageViewer( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.form_size = (800, 600)
-
-
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
 	def __dir__( self ) -> List[ str ] | None:
 		'''
 
@@ -6181,14 +6618,29 @@ class UrlImageViewer( ):
 			List[ str ] | None
 
 		'''
-		return [ 'form_size', 'settings_path', 'theme_background',
-		         'theme_textcolor', 'element_backcolor', 'element_forecolor',
-		         'text_forecolor', 'text_backcolor', 'input_backcolor',
-		         'input_forecolor', 'button_color', 'button_backcolor',
-		         'button_forecolor', 'icon_path', 'theme_font',
-		         'scrollbar_color', 'input_text', 'show' ]
-
-
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable',
+		         'context_menu', ]
+	
 	def show( self ) -> None:
 		'''
 
@@ -6216,7 +6668,7 @@ class UrlImageViewer( ):
 				event, values = window.read( )
 				if event == sg.WIN_CLOSED or event == 'Exit':
 					break
-
+			
 			window.close( )
 		except Exception as e:
 			exception = Error( e )
@@ -6255,7 +6707,6 @@ class AutoComplete( ):
 	window: sg.Window
 	layout: list
 
-
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
 		sg.theme_input_text_color( '#FFFFFF' )
@@ -6279,8 +6730,8 @@ class AutoComplete( ):
 		self.input_width = None
 		self.num_items_to_show = None
 		self.list_element = None
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 
@@ -6302,10 +6753,8 @@ class AutoComplete( ):
 		'''
 		try:
 			self.choices = sorted( [ elem.__name__ for elem in sg.Element.__subclasses__( ) ] )
-
 			self.input_width = 20
 			self.num_items_to_show = 4
-
 			self.layout = [
 					[ sg.CB( 'Ignore Case', k = '-IGNORE CASE-' ) ],
 					[ sg.Text( 'Input PySimpleGUI Element Name:' ) ],
@@ -6319,9 +6768,9 @@ class AutoComplete( ):
 			]
 
 			self.window = sg.Window( 'AutoComplete', self.layout,
-				return_keyboard_events = True,
-				finalize = True,
-				font = ('Roboto', 11) )
+				return_keyboard_events=True,
+				finalize=True,
+				font=('Roboto', 11) )
 
 			self.list_element = self.window.Element( '-BOX-' )
 			self.prediction_list, self.input_text, self.selected_item = [ ], "", 0
@@ -6423,8 +6872,8 @@ class CheckBox( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 		self.checked = \
 			(
@@ -6453,16 +6902,16 @@ class CheckBox( ):
 		'''
 		try:
 			layout = [ [ sg.Text( 'Fancy Checkboxes... Simply' ) ],
-			           [ sg.Image( self.checked, key = ('-IMAGE-', 1), metadata = True,
+			           [ sg.Image( self.checked, key=('-IMAGE-', 1), metadata=True,
 				           enable_events = True ),
-			             sg.Text( True, enable_events = True, k = ('-TEXT-', 1) ) ],
-			           [ sg.Image( self.unchecked, key = ('-IMAGE-', 2), metadata = False,
-				           enable_events = True ),
-			             sg.Text( False, enable_events = True, k = ('-TEXT-', 2) ) ],
+			             sg.Text( True, enable_events=True, k=('-TEXT-', 1) ) ],
+			           [ sg.Image( self.unchecked, key=('-IMAGE-', 2), metadata=False,
+				           enable_events=True ),
+			             sg.Text( False, enable_events=True, k=('-TEXT-', 2) ) ],
 			           [ sg.Button( 'Go' ), sg.Button( 'Exit' ) ] ]
 
 			window = sg.Window( 'Custom Checkboxes', layout,
-				font = ( 'Roboto', 14 ),
+				font = ( 'Roboto', 11 ),
 				keep_on_top=True )
 			while True:
 				event, values = window.read( )
@@ -6525,9 +6974,13 @@ class MachineLearningWindow( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def __build_window( self ):
 		'''
@@ -6548,7 +7001,6 @@ class MachineLearningWindow( ):
 		'''
 		try:
 			sg.set_options( text_justification = 'right' )
-
 			flags = [ [ sg.CB( 'Normalize', size = (12, 1), default = True ),
 			            sg.CB( 'Verbose', size = (20, 1) ) ],
 			          [ sg.CB( 'BaseCluster', size = (12, 1) ), sg.CB(
@@ -6561,7 +7013,6 @@ class MachineLearningWindow( ):
 				          'Flush Output', size = (20, 1), default = True ) ],
 			          [ sg.CB( 'Write Results', size = (12, 1) ),
 			            sg.CB( 'Keep Intermediate Data', size = (20, 1) ) ], ]
-
 			loss_functions = [ [ sg.Rad( 'Cross-Entropy', 'loss', size = (12, 1) ),
 			                     sg.Rad( 'Logistic', 'loss', default = True, size = (12, 1) ) ],
 			                   [ sg.Rad( 'Hinge', 'loss', size = (12, 1) ),
@@ -6570,7 +7021,6 @@ class MachineLearningWindow( ):
 			                     sg.Rad( 'MAE(L1)', 'loss', size = (12, 1) ) ],
 			                   [ sg.Rad( 'MSE(L2)', 'loss', size = (12, 1) ),
 			                     sg.Rad( 'MB(L0)', 'loss', size = (12, 1) ) ], ]
-
 			command_line_parms = [ [ sg.Text( 'Passes', size = (8, 1) ),
 			                         sg.Spin( values = [ i for i in range( 1, 1000 ) ],
 				                         initial_value = 20, size = (6, 1) ),
@@ -6589,18 +7039,18 @@ class MachineLearningWindow( ):
 			                         sg.Input( default_text = '0.4', size = (8, 1) ),
 			                         sg.Text( 'Layers', size = (8, 1) ),
 			                         sg.Drop( values = ('BatchNorm', 'other') ) ], ]
-
 			layout = [ [ sg.Frame( 'Command Line Parameteres', command_line_parms,
 				title_color = 'green', font = 'Any 12' ) ],
 			           [ sg.Frame( 'Flags', flags, font = 'Any 12', title_color = 'blue' ) ],
 			           [ sg.Frame( 'Loss Functions', loss_functions,
 				           font = 'Any 12', title_color = 'red' ) ],
 			           [ sg.Submit( ), sg.Cancel( ) ] ]
-
 			sg.set_options( text_justification = 'left' )
-
 			window = sg.Window( 'Machine Learning', layout,
-				font=("Helvetica", 12), keep_on_top=True )
+				font=self.theme_font,
+				right_click_menu=self.context_menu,
+				keep_on_top=self.keep_on_top,
+				force_toplevel=self.top_level )
 			window.read( )
 			window.close( )
 		except Exception as e:
@@ -6705,9 +7155,13 @@ class AnimatedGraph( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	# noinspection PyUnusedLocal
 	def show( self ):
@@ -6736,8 +7190,9 @@ class AnimatedGraph( ):
 			# create the form and show it without the plot
 			window = sg.Window( 'Embedding Matplotlib In Booger', layout,
 				finalize=True,
-				keep_on_top=True,
-				right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT)
+				keep_on_top=self.keep_on_top,
+				force_toplevel=self.top_level,
+				right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
 
 			canvas_elem = window[ '-CANVAS-' ]
 			slider_elem = window[ '-SLIDER-' ]
@@ -6797,9 +7252,13 @@ class BarGraph( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def draw_figure( self, canvas, figure ):
 		figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
@@ -6829,16 +7288,16 @@ class BarGraph( ):
 		           [ sg.Canvas( size=(figure_w, figure_h), key='-CANVAS-' ) ],
 		           [ sg.OK( pad=((figure_w / 2, 0), 3), size=(4, 2) ) ] ]
 		window = sg.Window( 'Embedding Matplotlib', layout,
-			force_toplevel=True,
+			force_toplevel=self.top_level,
 			finalize=True,
-			keep_on_top=True,
+			keep_on_top=self.keep_on_top,
 			right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
 		self.draw_figure( window[ '-CANVAS-' ].TKCanvas, fig )
 		event, values = window.read( )
-		if event in ('Exit', 'Cancel', None):
+		if event in ( 'Exit', 'Cancel', None ):
 			window.close( )
 
-		window.close()
+		window.close( )
 
 class ScatterGraph( ):
 
@@ -6861,9 +7320,13 @@ class ScatterGraph( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def draw_figure( self, canvas, figure ):
 		figure_canvas_agg = FigureCanvasTkAgg( figure, canvas )
@@ -6878,10 +7341,10 @@ class ScatterGraph( ):
 		           [ sg.Button( 'Exit', size=(10, 2), pad=((280, 0), 3), font='Helvetica 14' ) ] ]
 
 		# create the form and show it without the plot
-		window = sg.Window( 'Embedding Matplotlib With Booger', layout,
+		window = sg.Window( 'Matplotlib With Gooey', layout,
 			finalize=True,
-			keep_on_top=True,
-			right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT )
+			keep_on_top=self.keep_on_top,
+			right_click_menu=self.context_menu )
 
 		canvas_elem = window[ '-CANVAS-' ]
 		canvas = canvas_elem.TKCanvas
@@ -6928,9 +7391,13 @@ class StyleGraph( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
 
 	def create_axis_grid( self ):
 		plt.close( 'all' )
@@ -7133,8 +7600,8 @@ class WebCamera( ):
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
-		sg.set_global_icon( icon = self.icon_path )
-		sg.set_options( font = self.theme_font )
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\resources\theme' )
 
 	def show( self ):
