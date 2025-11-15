@@ -4960,32 +4960,32 @@ class BudgetForm( Dark ):
 			_frasz = (450, 150)
 			_hdrsz = (920, 100)
 			_layout = [
-					[ sg.Frame( '', self.__titlelayout, pad = (0, 0), background_color = _mblk,
+					[ sg.Frame( '', self.titlelayout, pad = (0, 0), background_color = _mblk,
 						expand_x = True,
 						border_width = 0, grab = True ) ],
-					[ sg.Frame( '', self.__headerlayout, size = _hdrsz, pad = BPAD_TOP,
+					[ sg.Frame( '', self.headerlayout, size = _hdrsz, pad = BPAD_TOP,
 						expand_x = True,
 						relief = sg.RELIEF_FLAT, border_width = 0 ) ],
 					[ sg.Frame( '',
-						[ [ sg.Frame( '', self.__firstlayout, size = _frasz, pad =
+						[ [ sg.Frame( '', self.firstlayout, size = _frasz, pad =
 						BPAD_LEFT_INSIDE,
 							border_width = 0, expand_x = True, expand_y = True, ) ],
-						  [ sg.Frame( '', self.__thirdlayout, size = _frasz, pad =
+						  [ sg.Frame( '', self.thirdlayout, size = _frasz, pad =
 						  BPAD_LEFT_INSIDE,
 							  border_width = 0, expand_x = True, expand_y = True ) ] ],
 						pad = BPAD_LEFT, background_color = _blk, border_width = 0,
 						expand_x = True, expand_y = True ),
 					  sg.Frame( '',
-						  [ [ sg.Frame( '', self.__secondlayout, size = _frasz,
+						  [ [ sg.Frame( '', self.secondlayout, size = _frasz,
 							  pad = BPAD_LEFT_INSIDE,
 							  border_width = 0, expand_x = True, expand_y = True ) ],
-						    [ sg.Frame( '', self.__fourthlayout, size = _frasz,
+						    [ sg.Frame( '', self.fourthlayout, size = _frasz,
 							    pad = BPAD_LEFT_INSIDE,
 							    border_width = 0, expand_x = True, expand_y = True ) ] ],
 						  pad = BPAD_LEFT, background_color = _blk, border_width = 0,
 						  expand_x = True, expand_y = True ), ],
 					[ sg.Sizegrip( background_color = _mblk ) ] ]
-			self.__formlayout = _layout
+			self.formlayout = _layout
 			return _layout
 		except Exception as e:
 			exception = Error( e )
@@ -5066,27 +5066,27 @@ class BudgetForm( Dark ):
 					[ sg.Push( ), sg.Text( 'Block 4 line 5', font = _hdr ), sg.Push( ) ],
 					[ sg.Push( ), sg.Text( 'Block 4 line 6', font = _hdr ), sg.Push( ) ] ]
 			self.formlayout = [
-					[ sg.Frame( '', self.__titlelayout, pad = (0, 0), background_color = _mblk,
+					[ sg.Frame( '', self.titlelayout, pad = (0, 0), background_color = _mblk,
 						expand_x = True, border_width = 0, grab = True ) ],
 					[ sg.Frame( '',
-						[ [ sg.Frame( '', self.__headerlayout, size = _frasz, pad = BPAD_TOP,
+						[ [ sg.Frame( '', self.headerlayout, size = _frasz, pad = BPAD_TOP,
 							expand_x = True,
 							relief = sg.RELIEF_FLAT, border_width = 0 ) ] ], pad = BPAD_LEFT,
 						background_color = _blu, border_width = 0, expand_x = True ), ],
 					[ sg.Frame( '',
-						[ [ sg.Frame( '', self.__firstlayout, size = _frasz, pad =
+						[ [ sg.Frame( '', self.firstlayout, size = _frasz, pad =
 						BPAD_LEFT_INSIDE,
 							border_width = 0, expand_x = True, expand_y = True, ) ],
-						  [ sg.Frame( '', self.__thirdlayout, size = _frasz, pad =
+						  [ sg.Frame( '', self.thirdlayout, size = _frasz, pad =
 						  BPAD_LEFT_INSIDE,
 							  border_width = 0, expand_x = True, expand_y = True ) ] ],
 						pad = BPAD_LEFT, background_color = _blu, border_width = 0,
 						expand_x = True, expand_y = True ),
 					  sg.Frame( '',
-						  [ [ sg.Frame( '', self.__secondlayout, size = _frasz,
+						  [ [ sg.Frame( '', self.secondlayout, size = _frasz,
 							  pad = BPAD_LEFT_INSIDE,
 							  border_width = 0, expand_x = True, expand_y = True ) ],
-						    [ sg.Frame( '', self.__fourthlayout, size = _frasz,
+						    [ sg.Frame( '', self.fourthlayout, size = _frasz,
 							    pad = BPAD_LEFT_INSIDE,
 							    border_width = 0, expand_x = True, expand_y = True ) ] ],
 						  pad = BPAD_LEFT, background_color = _blu, border_width = 0,
