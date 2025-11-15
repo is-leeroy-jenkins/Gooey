@@ -4642,7 +4642,7 @@ class BudgetForm( Dark ):
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
 		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
-		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\app\Application.png'
+		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\boogr.png'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
