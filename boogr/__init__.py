@@ -398,7 +398,7 @@ class FileDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\file_browse.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -564,7 +564,7 @@ class FolderDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\folder_browse.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -721,7 +721,7 @@ class SaveFileDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\Save.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		self.file_name = None
@@ -1202,7 +1202,7 @@ class MessageDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\message.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -1360,7 +1360,7 @@ class ErrorDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\resources\ico\error.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
