@@ -511,7 +511,7 @@ class FileDialog( Dark ):
 			            [ sg.Text( ) ],
 			            [ sg.OK( size=( 8, 1 ), ), sg.Cancel( size=( 10, 1 ) ) ] ]
 
-			_window = sg.Window( ' Gooey', _layout,
+			_window = sg.Window( ' File Search', _layout,
 				font=self.theme_font,
 				size=self.form_size,
 				icon=self.icon_path,
@@ -654,7 +654,7 @@ class FolderDialog( Dark ):
 		'''
 		try:
 			_layout = [ [ sg.Text( ) ],
-			            [ sg.Text( 'Search for Directory' ) ],
+			            [ sg.Text( 'Folder Search' ) ],
 			            [ sg.Text( ) ],
 			            [ sg.Input( key='-PATH-' ), sg.FolderBrowse( size=( 15, 1 ) ) ],
 			            [ sg.Text( size=( 100, 1 ) ) ],
@@ -962,7 +962,7 @@ class GoogleDialog( Dark ):
 			            [ sg.Text( size=(10, 1) ), sg.Submit( size=(15, 1) ),
 			              sg.Text( size=(5, 1) ), sg.Cancel( size=(15, 1) ) ] ]
 
-			_window = sg.Window( '  Gooey', _layout,
+			_window = sg.Window( ' Search', _layout,
 				icon=self.icon_path,
 				font=self.theme_font,
 				size=self.form_size,
@@ -1151,7 +1151,7 @@ class EmailDialog( Dark ):
 			            [ sg.Text( ' ', size = _spc ), sg.Button( 'Send', size = _btn ),
 			              sg.Text( ' ', size = _btn ), sg.Button( 'Cancel', size = _btn ) ] ]
 
-			_window = sg.Window( '  Send Message', _layout,
+			_window = sg.Window( '  Email', _layout,
 				icon=self.icon_path,
 				size=self.form_size,
 				keep_on_top=self.keep_on_top )
@@ -1202,7 +1202,7 @@ class MessageDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\message.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boo.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -1305,7 +1305,7 @@ class MessageDialog( Dark ):
 			            [ sg.Text( size = (5, 1) ), sg.Ok( size = _btnsz ),
 			              sg.Text( size = (15, 1) ), sg.Cancel( size = _btnsz ) ] ]
 
-			_window = sg.Window( r'  Booger', _layout,
+			_window = sg.Window( r' Message', _layout,
 				icon=self.icon_path,
 				font=self.theme_font,
 				size=self.form_size,
@@ -1471,7 +1471,7 @@ class ErrorDialog( Dark ):
 		            [ sg.Text( size = (20, 1) ), sg.Cancel( size = (15, 1), key = '-CANCEL-' ),
 		              sg.Text( size = (10, 1) ), sg.Ok( size = (15, 1), key = '-OK-' ) ] ]
 
-		_window = sg.Window( r' Gooey', _layout,
+		_window = sg.Window( r' Message', _layout,
 			icon = self.icon_path,
 			font = self.theme_font,
 			size = self.form_size,
@@ -1613,7 +1613,7 @@ class InputDialog( Dark ):
 			              sg.Text( size = (5, 1) ),
 			              sg.Cancel( size = (15, 1), key = '-CANCEL-' ) ] ]
 
-			_window = sg.Window( '  Gooey', _layout,
+			_window = sg.Window( '  Input', _layout,
 				icon = self.icon_path,
 				font = self.theme_font,
 				size = self.form_size,
@@ -1776,7 +1776,7 @@ class ScrollingDialog( Dark ):
 			              sg.Text( size = (15, 1) ), sg.Button( 'Exit', size = _btnsize ),
 			              sg.Text( size = _space ), ] ]
 
-			_window = sg.Window( '  Gooey', _layout,
+			_window = sg.Window( '  Scroll', _layout,
 				icon = self.icon_path,
 				size = self.form_size,
 				font = self.theme_font,
@@ -1911,7 +1911,7 @@ class ContactForm( Dark ):
 			            [ sg.Text( size = (10, 1) ), sg.Submit( size = (10, 1) ),
 			              sg.Text( size = (20, 1) ), sg.Cancel( size = (10, 1) ) ] ]
 
-			_window = sg.Window( '  Gooey', _layout,
+			_window = sg.Window( '  Information', _layout,
 				icon=self.icon_path,
 				font=self.theme_font,
 				size=self.form_size,
@@ -5149,7 +5149,7 @@ class ChartPanel( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\chart.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
