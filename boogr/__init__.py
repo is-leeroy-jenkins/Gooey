@@ -10,8 +10,8 @@
   ******************************************************************************************
   <copyright file="init.py" company="Terry D. Eppler">
 
-	     Boo is a df analysis tool integrating GenAI, Text Processing, and Machine-Learning
-	     algorithms for federal analysts.
+	     init.py is part of a data analysis tool integrating GenAI, Text Processing,
+	     and Machine-Learning algorithms for federal analysts.
 	     Copyright ©  2022  Terry Eppler
 
      Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,7 +38,7 @@
 
   </copyright>
   <summary>
-    Boogr.py
+    init.py
   </summary>
   ******************************************************************************************
   '''
