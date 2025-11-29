@@ -2666,20 +2666,25 @@ class LoadingPanel( Dark ):
 				font = ('Bodoni MT', 40) ) ], [ sg.Image( key = '-IMAGE-' ) ] ]
 
 			_window = sg.Window( '  Loading...', _layout,
-				icon = self.icon_path,
-				element_justification = 'c',
-				margins = (0, 0),
-				size = (800, 600),
-				element_padding = (0, 0), finalize = True )
+				icon=self.icon_path,
+				element_justification='c',
+				margins=(0, 0),
+				size=(800, 600),
+				element_padding=(0, 0),
+				finalize=True )
 
 			_window[ '-T-' ].expand( True, True )
+
 			_interframe_duration = Image.open( self.image ).info[ 'duration' ]
+			self.timeout = _interframe_duration
 
 			while True:
 				for frame in ImageSequence.Iterator( Image.open( self.image ) ):
-					_event, _values = _window.read( timeout = _interframe_duration )
+					_event, _values = _window.read( timeout = self.timeout,
+						timeout_key = '-TIMEOUT-' )
 					if _event == sg.WIN_CLOSED or _event == sg.WIN_X_EVENT:
 						exit( 0 )
+
 					_window[ '-IMAGE-' ].update( data = ImageTk.PhotoImage( frame ) )
 					_window.close( )
 		except Exception as e:
@@ -2792,21 +2797,27 @@ class WaitingPanel( Dark ):
 				font = ('Bodoni MT', 40) ) ], [ sg.Image( key = '-IMAGE-' ) ] ]
 
 			_window = sg.Window( '  Waiting...', _layout,
-				icon = self.icon_path,
-				element_justification = 'c',
-				margins = (0, 0),
-				element_padding = (0, 0),
-				size = (800, 600),
-				finalize = True )
+				icon=self.icon_path,
+				force_toplevel=self.top_level,
+				keep_on_top=self.keep_on_top,
+				element_justification='c',
+				margins=(0, 0),
+				element_padding=(0, 0),
+				size=(800, 600),
+				finalize=True )
 
 			_window[ '-T-' ].expand( True, True )
+
 			_interframe_duration = Image.open( self.image ).info[ 'duration' ]
+			self.timeout = _interframe_duration
 
 			while True:
 				for frame in ImageSequence.Iterator( Image.open( self.image ) ):
-					_event, _values = _window.read( timeout = _interframe_duration )
-					if _event == sg.WIN_CLOSED:
+					_event, _values = _window.read( timeout = self.timeout,
+						timeout_key = '-TIMEOUT-' )
+					if _event == sg.WIN_CLOSED or _event == sg.WIN_X_EVENT:
 						exit( 0 )
+
 					_window[ '-IMAGE-' ].update( data = ImageTk.PhotoImage( frame ) )
 					_window.close( )
 		except Exception as e:
@@ -2979,7 +2990,7 @@ class SplashPanel( Dark ):
 		sg.set_global_icon( icon=self.icon_path )
 		sg.set_options( font=self.theme_font )
 		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\boogr\resources\theme' )
-		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\BudgetEx.png'
+		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\gooey.png'
 		self.form_size = (800, 600)
 		self.timeout = 6000
 		self.keep_on_top = True
