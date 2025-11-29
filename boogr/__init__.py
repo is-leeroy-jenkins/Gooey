@@ -7550,6 +7550,7 @@ class ParameterWindow( ):
 				font=self.theme_font,
 				right_click_menu=self.context_menu,
 				keep_on_top=self.keep_on_top,
+				resizable=self.resizable,
 				force_toplevel=self.top_level )
 			window.read( )
 			window.close( )
