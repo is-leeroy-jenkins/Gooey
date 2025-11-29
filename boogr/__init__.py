@@ -7557,7 +7557,7 @@ class ParameterWindow( ):
 		except Exception as e:
 			exception = Error( e )
 			exception.module = 'boogr'
-			exception.cause = 'MachineLearningWindow'
+			exception.cause = 'ParameterWindow'
 			exception.method = 'build_window( self)'
 			error = ErrorDialog( exception )
 			error.show( )
@@ -7603,7 +7603,7 @@ class ParameterWindow( ):
 		except Exception as e:
 			exception = Error( e )
 			exception.module = 'boogr'
-			exception.cause = 'MachineLearningWindow'
+			exception.cause = 'ParameterWindow'
 			exception.method = '__custom_meter( self)'
 			error = ErrorDialog( exception )
 			error.show( )
@@ -7630,7 +7630,7 @@ class ParameterWindow( ):
 		except Exception as e:
 			exception = Error( e )
 			exception.module = 'boogr'
-			exception.cause = 'MachineLearningWindow'
+			exception.cause = 'ParameterWindow'
 			exception.method = 'show( self)'
 			error = ErrorDialog( exception )
 			error.show( )
