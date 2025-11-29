@@ -10,10 +10,8 @@ column1 = [
     [sg.Text('Pick operation', size = (15,1), font = ('Calibri', 12, 'bold'))],
     [sg.InputCombo(['Add','Subtract','Multiply','Divide'], size = (10,6))],
     [sg.Text('', size =(1,4))]]
-column2 = [
-    [sg.ReadButton('Submit', font = ('Calibri', 12, 'bold'), button_color = ('White', 'Red'))],
-    [sg.Text('Result:', font = ('Calibri', 12, 'bold'))],[sg.InputText(size = (12,1), key = '_result_')]
-    ]
+column2 = [  [sg.ReadButton('Submit', font = ('Calibri', 12, 'bold'), button_color = ('White', 'Red'))],
+    [sg.Text('Result:', font = ('Calibri', 12, 'bold'))],[sg.InputText(size = (12,1), key = '_result_') ] ]
 
 
 layout = [

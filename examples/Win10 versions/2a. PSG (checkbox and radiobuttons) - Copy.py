@@ -5,7 +5,7 @@
 import FreeSimpleGUI as sg
 
 #Set colour scheme and font
-sg.ChangeLookAndFeel('GreenTan')
+sg.ChangeLookAndFeel('DarkGrey15')
 sg.SetOptions (font =('Calibri',12,'bold'))
 
 

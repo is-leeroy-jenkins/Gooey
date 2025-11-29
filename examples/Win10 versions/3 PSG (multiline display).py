@@ -5,25 +5,25 @@
 
 import FreeSimpleGUI as sg
 
-sg.ChangeLookAndFeel('GreenTan')
+sg.ChangeLookAndFeel('DarkGrey15')
 
-sg.SetOptions(font = ('Courier New', 12))
+sg.SetOptions(font = ('Roboto', 12))
 
 
 
 layout = [
-    [sg.Text('Enter and Add Data to Display', font = ('Calibri', 14,'bold'))],
+    [sg.Text('Enter and Add Data to Display', font = ('Roboto', 14,'bold'))],
     [sg.Text('Race:', size = (5,1)), sg.InputText(size = (8,1)),
     sg.Text('Club:', size = (5,1)), sg.InputText(size = (8,1))],
     [sg.Text('Name:', size = (5,1)), sg.InputText(size = (8,1)),
     sg.Text('Time:', size = (5,1)), sg.InputText(size = (8,1)),sg.Text(' '),
-     sg.ReadButton('Add Data', font = ('Calibri', 12, 'bold'))],
+     sg.ReadButton('Add Data', font = ('Roboto', 12, 'bold'))],
     [sg.Text('_'*40)],
     [sg.Text('  Race   Club       Name          Time')],
     [sg.Multiline(size =(40,6),key = '_multiline_')]
  ]
 
-window = sg.Window('Enter & Display Data').Layout(layout)
+window = sg.Window('Data Entry').Layout(layout)
 
 string = ''
 S=[]

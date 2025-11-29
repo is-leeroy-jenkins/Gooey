@@ -320,7 +320,7 @@ class Dark(  ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		self.form_size = (400, 200)
@@ -1022,7 +1022,7 @@ class EmailDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -1514,7 +1514,7 @@ class InputDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -1641,18 +1641,215 @@ class InputDialog( Dark ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+class DataEntryDialog( Dark ):
+	'''
+	
+		Purpose:
+		--------
+		Class defining multiple fields for input.
+	
+	'''
+	question: Optional[ str ]
+	layout: Optional[ List[ [ ] ] ]
+	
+	def __init__( self ):
+		super( ).__init__( )
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
+		self.theme_font = ( 'Roboto', 12 )
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\boogr\resources\theme' )
+		self.form_size = ( 500, 250 )
+		self.selected_item = None
+		self.question = None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT
+		self.layout = None
+		
+		
+	def __init__( self ):
+		super( ).__init__( )
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
+		self.theme_font = ('Roboto', 11)
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\boogr\resources\theme' )
+		self.form_size = (500, 250)
+		self.selected_item = None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_LOC_EXIT
+	
+	def __str__( self ) -> str | None:
+		'''
+
+            Purpose:
+            --------
+			returns a string reprentation of the object
+
+            Parameters:
+            ----------
+			self
+
+            Returns:
+            ---------
+			str | None
+
+		'''
+		if self.selected_item is not None:
+			return self.selected_item
+	
+	def __dir__( self ) -> List[ str ] | None:
+		'''
+
+		    Purpose:
+		    --------
+		    Creates a List[ str ] of type members
+
+		    Parameters:
+		    ----------
+			self
+
+		    Returns:
+		    ---------
+			List[ str ] | None
+
+		'''
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'input_text',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
+	
+	def show( self ):
+		'''
+			
+			Purpose:
+			-------
+			Method that creates the layout and displays the final window.
+			
+		'''
+		self.layout = [  [sg.Text('Enter a Name and four Numbers')],
+		    [sg.Text('Name:', size =(10,1)), sg.InputText(size = (12,1), key = '_name_')],
+		     [sg.Text('Mark1:', size =(10,1)), sg.InputText(size = (6,1), key = '_m1_')],
+		         [sg.Text('Mark2:', size =(10,1)), sg.InputText(size = (6,1), key = '_m2_')],
+		         [sg.Text('Mark3:', size =(10,1)), sg.InputText(size = (6,1), key = '_m3_')],
+		         [sg.Text('Mark4:', size =(10,1)), sg.InputText(size = (6,1), key = '_m4_')],
+		    [sg.ReadButton('Save', size = (8,1),key = '_save_'),  sg.Text('Press to Save to file')],
+		    [sg.ReadButton('Display',size = (8,1), key = '_display_'), sg.Text('To retrieve and Display')],
+		    [sg.Multiline(size = (28,4), key = '_multiline_')]]
+		
+		window = sg.Window( 'Gooey', layout=self.layout,
+			icon=self.icon_path,
+			font=self.theme_font,
+			keep_on_top=self.keep_on_top,
+			force_toplevel=self.top_level )
+		
+		
+		while True:
+		    button, value = window.Read()   #value is a dictionary holding name and marks (4)
+		    if button is not None:
+		        #initialise variables
+		        total = 0.0
+		        index = ''
+		        name = value['_name_']
+		        #get pathname to current file
+		        dirname, filename = os.path.split(os.path.abspath(__file__))
+		        #add desired file name for saving to path
+		        pathname = os.path.join(dirname , 'results.txt' )
+		
+		        #needs validation and try/catch error checking, will crash if blank or text entry for marks
+		
+		        if button == '_save_':
+		            #create dictionary index _m1_ ... _m4_
+		            for i in range (1,5):
+		                index = '_m' + str(i) + '_'
+		                total += float(value[index])
+		            average = total/4
+		            #open file and save
+		            f = open( pathname, 'w' )
+		            print (name, file = f)
+		            print (total, file = f)
+		            print (average, file = f)
+		            f.close()
+		
+		        #some error checking for missing file needed here
+		
+		        if button == '_display_':
+		            #This loads the file line by line into a list called data.
+		            #the strip() removes whitespaces from beginning and end of each line.
+		            data = [line.strip() for line in open(pathname)]
+		            #create single string to display in multiline object.
+		            string = 'Name:  ' + data[0] +'\nTotal:  ' + str(data[1]) + '\nAverage:  ' + str(data[2])
+		            window.FindElement('_multiline_').Update(string)
+		    else:
+		        break
+	
+	
 class ScrollingDialog( Dark ):
 	'''
 
-        'Construcotr:
-
-            ScrollingDialog( documents = '' )
+        Construcotr:
+		-----------=
+        ScrollingDialog( documents = '' )
 
         Purpose:
-
-            Provides form for multiline path/cleaned_lines
+		---------
+        Provides form for multiline path/cleaned_lines
 
 	'''
+	arrowcolor: Optional[ str ]
 
 	def __init__( self, text: str=None ):
 		super( ).__init__( )
@@ -1671,7 +1868,8 @@ class ScrollingDialog( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.arrowcolor = '#755600'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -1761,7 +1959,7 @@ class ScrollingDialog( Dark ):
 			_space = (5, 1)
 			_btnsize = (25, 1)
 			_arrow = self.arrowcolor
-			_back = super( ).button_backcolor
+			_back = self.theme_background
 			_padsz = (3, 3, 3, 3)
 			_layout = [ [ sg.Text( ' ', size = _line ) ],
 			            [ sg.Text( ' ', size = _line ) ],
@@ -1797,6 +1995,297 @@ class ScrollingDialog( Dark ):
 			error = ErrorDialog( exception )
 			error.show( )
 
+class SliderComboDialog( Dark ):
+	'''
+	
+		Purpose:
+		--------
+		Class defining dialog with sliders and comboboxes
+		
+	'''
+	column1: Optional[ List[ [ ] ] ]
+	column2: Optional[ List[ [ ] ] ]
+	layout: Optional[ List[ [ ] ] ]
+	
+	def __init__( self ):
+		super( ).__init__( )
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
+		self.theme_font = ( 'Roboto', 12 )
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\boogr\resources\theme' )
+		self.form_size = ( 500, 250 )
+		self.selected_item = None
+		self.question = None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT
+		self.layout = None
+		self.column1 = None
+		self.column2 = None
+		
+	def __str__( self ) -> str | None:
+		'''
+
+            Purpose:
+            --------
+			returns a string reprentation of the object
+
+            Parameters:
+            ----------
+			self
+
+            Returns:
+            ---------
+			str | None
+
+		'''
+		if isinstance( self.text, str ):
+			return self.text
+	
+	def __dir__( self ) -> List[ str ] | None:
+		'''
+
+		    Purpose:
+		    --------
+		    Creates a List[ str ] of type members
+
+		    Parameters:
+		    ----------
+			self
+
+		    Returns:
+		    ---------
+			List[ str ] | None
+
+		'''
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
+
+	def show( self ):
+		'''
+			
+			Purpose:
+			--------
+			Method creating sliders and combo boxes and displays a dialog.
+			
+		'''
+		self.column1 = [ [sg.Text('Pick operation', size = (15,1), font = ('Roboto', 12, 'bold'))],
+		    [sg.InputCombo(['Add','Subtract','Multiply','Divide'], size = (10,6))],
+		    [sg.Text('', size =(1,4)) ] ]
+		self.column2 = [  [sg.ReadButton('Submit', font = ('Roboto', 12, 'bold'), button_color = ('White', 'Red'))],
+            [sg.Text('Result:', font = ('Roboto', 12, 'bold'))],[sg.InputText(size = (12,1), key = '_result_') ] ]
+		self.layout = [ [ sg.Text('Slider and Combo box demo', font = ('Roboto', 14,'bold')) ],
+		    [ sg.Slider(range = (-9, 9),orientation = 'v', size = (5,20), default_value = 0),
+		      sg.Slider(range = (-9, 9),orientation = 'v', size = (5, 20), default_value = 0),
+		      sg.Text('   '), sg.Column( self.column1 ), sg.Column( self.column2 ) ] ]
+
+		#added grab_anywhere to when moving slider, who window doesn't move.
+		window = sg.Window( 'Enter Data', layout=self.layout,
+			grab_anywhere=False,
+			icon=self.icon_path,
+			keep_on_top=self.keep_on_top,
+			force_toplevel=self.keep_on_top )
+		
+		#Get selection from combo: value[2]
+		#Slider values: value[0] and value[1]
+		while True:
+		    button, value = window.Read()
+		    if button is not None:
+		        if value[2] == 'Add':
+		            result = value[0] + value[1]
+		        elif value[2] == 'Multiply':
+		            result = value[0] * value[1]
+		        elif value[2] == 'Subtract':
+		            result = value[0] - value[1]
+		        elif value[2] == 'Divide':              #check for zero
+		            if value[1] ==0:
+		                sg.Popup('Second value can\'t be zero')
+		                result = 'NA'
+		            else:
+		                result = value[0] / value[1]
+		        window.FindElement('_result_').Update(result)
+		    else:
+		        break
+		
+class SpinnerComboDialog( Dark ):
+	'''
+		
+		Purpose:
+		--------
+		Class defining spinners and combo boxes
+		
+	'''
+	layout: Optional[ List[ [ ] ] ]
+	
+	def __init__( self ):
+		super( ).__init__( )
+		sg.theme( 'DarkGrey15' )
+		sg.theme_input_text_color( '#FFFFFF' )
+		sg.theme_element_text_color( '#69B1EF' )
+		sg.theme_text_color( '#69B1EF' )
+		self.theme_background = sg.theme_background_color( )
+		self.theme_textcolor = sg.theme_text_color( )
+		self.element_forecolor = sg.theme_element_text_color( )
+		self.element_backcolor = sg.theme_background_color( )
+		self.text_backcolor = sg.theme_text_element_background_color( )
+		self.text_forecolor = sg.theme_element_text_color( )
+		self.input_forecolor = sg.theme_input_text_color( )
+		self.input_backcolor = sg.theme_input_background_color( )
+		self.button_backcolor = sg.theme_button_color_background( )
+		self.button_forecolor = sg.theme_button_color_text( )
+		self.button_color = sg.theme_button_color( )
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
+		self.theme_font = ( 'Roboto', 12 )
+		self.scrollbar_color = '#755600'
+		sg.set_global_icon( icon=self.icon_path )
+		sg.set_options( font=self.theme_font )
+		sg.user_settings_save( 'Gooey', r'C:\Users\terry\source\repos\Gooey\boogr\resources\theme' )
+		self.form_size = ( 500, 250 )
+		self.selected_item = None
+		self.question = None
+		self.keep_on_top = True
+		self.top_level = True
+		self.resizable = True
+		self.context_menu = sg.MENU_RIGHT_CLICK_EDITME_VER_SETTINGS_EXIT
+		self.layout = None
+		
+	def __str__( self ) -> str | None:
+		'''
+
+            Purpose:
+            --------
+			returns a string reprentation of the object
+
+            Parameters:
+            ----------
+			self
+
+            Returns:
+            ---------
+			str | None
+
+		'''
+		if isinstance( self.selected_item, str ):
+			return self.selected_item,
+	
+	def __dir__( self ) -> List[ str ] | None:
+		'''
+
+		    Purpose:
+		    --------
+		    Creates a List[ str ] of type members
+
+		    Parameters:
+		    ----------
+			self
+
+		    Returns:
+		    ---------
+			List[ str ] | None
+
+		'''
+		return [ 'form_size',
+		         'settings_path',
+		         'theme_background',
+		         'theme_textcolor',
+		         'element_backcolor',
+		         'element_forecolor',
+		         'text_forecolor',
+		         'text_backcolor',
+		         'input_backcolor',
+		         'input_forecolor',
+		         'button_color',
+		         'button_backcolor',
+		         'button_forecolor',
+		         'icon_path',
+		         'theme_font',
+		         'scrollbar_color',
+		         'show',
+		         'keep_on_top',
+		         'top_level',
+		         'resizeable' ]
+	
+	def show( self ):
+		'''
+		
+			Purpose:
+			-------
+			Method creating and displaying dialog window.
+			
+		'''
+		self.layout = [ [sg.Text('Spinners and Combos', font = ('Roboto', 14, 'bold'))],
+		    [sg.Spin([sz for sz in range (-9,10)], size = (2,1),initial_value = 0),
+		    sg.Spin([sz for sz in range (-9,10)], size = (2,1), initial_value = 0),
+		    sg.Text('Pick operation ->', size = (15,1)),
+		    sg.InputCombo(['Add','Subtract','Multiply','Divide'], size = (8,6))],
+		    [sg.Text('Result:   ')],[sg.InputText(size = (5,1), key = '_result_'),
+		     sg.ReadButton('Calculate', button_color = ('White', 'Red'))]]
+
+		window = sg.Window( 'Gooey', layout=self.layout,
+			grab_anywhere=False,
+			keep_on_top=self.keep_on_top,
+			force_toplevel=self.top_level,
+			resizable=self.resizable,
+			icon=self.icon_path )
+		
+		while True:
+		    button, value = window.Read()
+		
+		    if button is not None:
+		        #convert returned values to integers
+		        val = [int(value[0]), int(value[1])]
+		        if value[2] == 'Add':
+		            result = val[0] + val[1]
+		        elif value[2] == 'Multiply':
+		            result = val[0] * val[1]
+		        elif value[2] == 'Subtract':
+		            result = val[0] - val[1]
+		        elif value[2] == 'Divide':
+		            if val[1] ==0:
+		                sg.Popup('Second value can\'t be zero')
+		                result = 'NA'
+		            else:
+		                result = round( val[0] / val[1], 3)
+		        window.FindElement('_result_').Update(result)
+		    else:
+		        break
+	
 class ContactForm( Dark ):
 	'''
 
@@ -1828,7 +2317,7 @@ class ContactForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -1965,7 +2454,7 @@ class GridForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -2101,7 +2590,7 @@ class LoadingPanel( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -2227,7 +2716,7 @@ class WaitingPanel( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
 		sg.set_options( font=self.theme_font )
@@ -2354,7 +2843,7 @@ class ProcessingPanel( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -2484,7 +2973,7 @@ class SplashPanel( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -2603,7 +3092,7 @@ class Notification( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -2799,7 +3288,7 @@ class ImageSizeEncoder( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -3065,7 +3554,7 @@ class PdfForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -4641,7 +5130,7 @@ class BudgetForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.image = r'C:\Users\terry\source\repos\Gooey\boogr\resources\img\boogr.png'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
@@ -5295,7 +5784,7 @@ class CsvForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -5443,7 +5932,7 @@ class ExcelForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -5614,7 +6103,7 @@ class GraphForm( Dark ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -5879,7 +6368,7 @@ class FileBrowser( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -5993,7 +6482,7 @@ class ChatWindow( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -6114,7 +6603,7 @@ class ChatBot( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -6295,7 +6784,7 @@ class InputWindow( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -6465,7 +6954,7 @@ class ThemeSelector( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ( 'Roboto', 11 )
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -6590,7 +7079,7 @@ class UrlImageViewer( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -6723,7 +7212,7 @@ class AutoComplete( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		self.choices = None
@@ -6869,7 +7358,7 @@ class CheckBox( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -6937,7 +7426,7 @@ class CheckBox( ):
 			error = ErrorDialog( exception )
 			error.show( )
 
-class MachineLearningWindow( ):
+class ParameterWindow( ):
 	'''
 
 	    Purpose:
@@ -6971,7 +7460,7 @@ class MachineLearningWindow( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -7152,7 +7641,7 @@ class AnimatedGraph( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -7249,7 +7738,7 @@ class BarGraph( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -7317,7 +7806,7 @@ class ScatterGraph( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -7388,7 +7877,7 @@ class StyleGraph( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )
@@ -7579,7 +8068,7 @@ class StyleGraph( ):
 
 		window.close( )
 
-class WebCamera( ):
+class WebcamWindow( ):
 
 	def __init__( self ):
 		sg.theme( 'DarkGrey15' )
@@ -7597,7 +8086,7 @@ class WebCamera( ):
 		self.button_backcolor = sg.theme_button_color_background( )
 		self.button_forecolor = sg.theme_button_color_text( )
 		self.button_color = sg.theme_button_color( )
-		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\ninja.ico'
+		self.icon_path = r'C:\Users\terry\source\repos\Gooey\boogr\resources\ico\boogr.ico'
 		self.theme_font = ('Roboto', 11)
 		self.scrollbar_color = '#755600'
 		sg.set_global_icon( icon=self.icon_path )

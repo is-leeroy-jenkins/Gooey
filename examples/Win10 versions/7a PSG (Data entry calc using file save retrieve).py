@@ -5,11 +5,11 @@
 import FreeSimpleGUI as sg
 import os                       #to work with windows OS
 
-sg.ChangeLookAndFeel('GreenTan')
+sg.ChangeLookAndFeel('DarkGrey15')
 sg.SetOptions(font = ('Calibri', 12, 'bold'))
 
 layout = [
-    [sg.Text('Enter a Name and four Marks')],
+    [sg.Text('Enter a Name and four Numbers')],
     [sg.Text('Name:', size =(10,1)), sg.InputText(size = (12,1), key = '_name_')],
      [sg.Text('Mark1:', size =(10,1)), sg.InputText(size = (6,1), key = '_m1_')],
          [sg.Text('Mark2:', size =(10,1)), sg.InputText(size = (6,1), key = '_m2_')],
