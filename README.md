@@ -4,11 +4,13 @@
   <img src="https://github.com/is-leeroy-jenkins/Gooey/blob/main/images/app/Gooey-Github.png">
 </p>
 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/is-leeroy-jenkins/Gooey/blob/main/ipynb/widgets.ipynb)
 ```bash
 pip install Gooey
 ```
 
-To migrate from FreeSimpleGUI:
+- To migrate from FreeSimpleGUI:
 
 ```diff
 - import FreeSimpleGUI as sg
@@ -17,15 +19,15 @@ To migrate from FreeSimpleGUI:
 
 ### Support
 
-If you encounter any issues or have any questions, please feel welcome
+- If you encounter any issues or have any questions, please feel welcome
 to [open an issue](https://github.com/is-leeroy-jenkins/Gooey/issues/new).
 
-Documentation for Gooey is available at: https://freesimplegui.readthedocs.io/en/latest/.
+- Documentation for Gooey is available at: https://freesimplegui.readthedocs.io/en/latest/.
 Gooey.org is still in progress.
 
 ### Contributions
 
-Contributions are welcome! Contributions can be made via pull request. Ideally, please try to make
+- Contributions are welcome! Contributions can be made via pull request. Ideally, please try to make
 sure there is an open [issue](https://github.com/is-leeroy-jenkins/Gooey/issues) associated with
 your pull request first or create one if necessary.
 
